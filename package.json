@@ -24,8 +24,5 @@
   },
   "workspaces": [
     "apps/*"
-  ],
-  "dependencies": {
-    "@prisma/client": "^5.19.1"
-  }
+  ]
 }
