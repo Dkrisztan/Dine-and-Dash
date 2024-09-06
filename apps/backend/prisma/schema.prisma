@@ -42,10 +42,8 @@ model Food {
   price        Float
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId String
-  Cart         Cart?      @relation(fields: [cartId], references: [id])
-  cartId       String?
-  Order        Order?     @relation(fields: [orderId], references: [id])
-  orderId      String?
+  orders       Order[]
+  carts        Cart[]
 }
 
 model Cart {
@@ -65,14 +63,14 @@ model Order {
   total        Float
   items        Food[]
   status       Status     @default(PENDING)
-  createdAt    DateTime
+  createdAt    DateTime   @default(now())
 }
 
 model Restaurant {
   id          String    @id @default(uuid())
   name        String
   description String
-  address     String[]
+  addresses   String[]
   rating      Decimal[]
   foods       Food[]
   order       Order[]

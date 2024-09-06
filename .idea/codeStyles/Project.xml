@@ -34,7 +34,7 @@
       <option name="INTERPOLATION_NEW_LINE_BEFORE_END_DELIMITER" value="false" />
     </VueCodeStyleSettings>
     <codeStyleSettings language="HTML">
-      <option name="SOFT_MARGINS" value="250" />
+      <option name="SOFT_MARGINS" value="120" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
         <option name="CONTINUATION_INDENT_SIZE" value="2" />
@@ -59,7 +59,7 @@
       <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />
       <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
       <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
-      <option name="SOFT_MARGINS" value="250" />
+      <option name="SOFT_MARGINS" value="120" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
         <option name="CONTINUATION_INDENT_SIZE" value="2" />
@@ -67,7 +67,7 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="TypeScript">
-      <option name="SOFT_MARGINS" value="250" />
+      <option name="SOFT_MARGINS" value="120" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
         <option name="CONTINUATION_INDENT_SIZE" value="2" />
@@ -75,7 +75,7 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="Vue">
-      <option name="SOFT_MARGINS" value="250" />
+      <option name="SOFT_MARGINS" value="120" />
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="2" />
       </indentOptions>
