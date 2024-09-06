@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +5,77 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+  MEMBER
+  OWNER
+}
+
+enum Status {
+  PENDING
+  ONGOING
+  FINISHED
+  CANCELLED
+}
+
+model User {
+  id        String      @id @default(uuid())
+  name      String
+  email     String      @unique
+  password  String
+  phone     String
+  addresses String[]
+  role      Role        @default(CUSTOMER)
+  image     String?
+  orders    Order[]
+  cart      Cart?
+  ownerOf   Restaurant?
+}
+
+model Food {
+  id           String     @id @default(uuid())
+  name         String
+  description  String
+  price        Float
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId String
+  Cart         Cart?      @relation(fields: [cartId], references: [id])
+  cartId       String?
+  Order        Order?     @relation(fields: [orderId], references: [id])
+  orderId      String?
+}
+
+model Cart {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+  total  Float
+  items  Food[]
+}
+
+model Order {
+  id           String     @id @default(uuid())
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String     @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String     @unique
+  total        Float
+  items        Food[]
+  status       Status     @default(PENDING)
+  createdAt    DateTime
+}
+
+model Restaurant {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  address     String[]
+  rating      Decimal[]
+  foods       Food[]
+  order       Order[]
+  owner       User      @relation(fields: [ownerId], references: [id])
+  ownerId     String    @unique
 }
