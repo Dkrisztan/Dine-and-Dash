@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Run ESLint check
-        run: npm lint
+        run: npm run lint
 
   format-check:
     name: Prettier Check
@@ -45,7 +45,7 @@ jobs:
         run: npm install
 
       - name: Run Prettier check
-        run: npm format:check
+        run: npm run format:check
 
   build:
     name: Build
@@ -66,4 +66,4 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm build:backend
+        run: npm run build:backend
