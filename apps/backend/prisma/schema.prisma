@@ -67,13 +67,13 @@ model Order {
 }
 
 model Restaurant {
-  id          String    @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   description String
   addresses   String[]
-  rating      Decimal[]
+  rating      Float[]
   foods       Food[]
   order       Order[]
-  owner       User      @relation(fields: [ownerId], references: [id])
-  ownerId     String    @unique
+  owner       User     @relation(fields: [ownerId], references: [id])
+  ownerId     String   @unique
 }

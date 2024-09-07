@@ -1,6 +1,6 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { FoodDto } from './food.dto';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class OrderDto {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
@@ -39,14 +39,17 @@ export class OrderDto {
 export class CreateOrderDto extends OmitType(OrderDto, ['id']) {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   @IsString()
+  @IsNotEmpty()
   userId: string;
 
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   @IsString()
+  @IsNotEmpty()
   restaurantId: string;
 
   @ApiProperty({ example: ['1500'] })
   @IsNumber()
+  @IsNotEmpty()
   total: number;
 }
 

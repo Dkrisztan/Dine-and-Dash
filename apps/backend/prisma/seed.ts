@@ -17,6 +17,7 @@ const MockFood = {
   name: 'Hamburger',
   price: 1000,
   description: 'Delicious hamburger',
+  image: 'https://example.com/hamburger.jpg',
 };
 
 const MockOrder = {

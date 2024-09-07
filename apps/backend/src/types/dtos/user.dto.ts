@@ -45,25 +45,21 @@ export class CreateUserDto extends OmitType(UserDto, ['id']) {
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @ApiProperty({ example: 'John Doe' })
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
   name: string;
 
   @ApiProperty({ example: 'johndoe@email.com' })
-  @IsNotEmpty()
   @IsEmail()
   @IsOptional()
   email: string;
 
   @ApiProperty({ example: '+3620111222' })
-  @IsNotEmpty()
   @IsPhoneNumber()
   @IsString()
   @IsOptional()
   phone: string;
 
   @ApiProperty({ example: ['1010 Budapest, Kossuth Lajos utca 1.'] })
-  @IsNotEmpty()
   @IsString({ each: true })
   @IsArray()
   @IsOptional()

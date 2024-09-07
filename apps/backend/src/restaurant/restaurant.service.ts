@@ -1,25 +1,53 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRestaurantDto, UpdateRestaurantDto } from '../types/dtos/restaurant.dto';
+import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { CreateRestaurantDto, RestaurantDto, UpdateRestaurantDto } from '../types/dtos/restaurant.dto';
+import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
 export class RestaurantService {
-  create(createRestaurantDto: CreateRestaurantDto) {
-    return 'This action adds a new restaurant';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createRestaurantDto: CreateRestaurantDto): Promise<RestaurantDto> {
+    try {
+      const { ownerId, ...rest } = createRestaurantDto;
+      const restaurant = await this.prisma.restaurant.create({
+        data: {
+          ...rest,
+          owner: {
+            connect: { id: ownerId },
+          },
+        },
+      });
+      Logger.debug(`Created restaurant with id: ${restaurant.id}`, RestaurantService.name);
+      return restaurant;
+    } catch (error) {
+      throw new InternalServerErrorException('Error creating restaurant');
+    }
   }
 
-  findAll() {
-    return `This action returns all restaurant`;
+  async findAll(): Promise<RestaurantDto[]> {
+    return this.prisma.restaurant.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} restaurant`;
+  async findOne(id: string): Promise<RestaurantDto> {
+    const restaurant = await this.prisma.restaurant.findUnique({ where: { id } });
+    if (!restaurant) {
+      throw new NotFoundException(`Restaurant with id ${id} not found`);
+    }
+    return restaurant;
   }
 
-  update(id: number, updateRestaurantDto: UpdateRestaurantDto) {
-    return `This action updates a #${id} restaurant`;
+  async update(id: string, updateRestaurantDto: UpdateRestaurantDto): Promise<RestaurantDto> {
+    try {
+      const restaurant = this.prisma.restaurant.update({ where: { id }, data: updateRestaurantDto });
+      Logger.debug(`Updated restaurant with id: ${id}`, RestaurantService.name);
+      return restaurant;
+    } catch (error) {
+      Logger.error(`Error updating restaurant: ${error.message}`);
+      throw new InternalServerErrorException('Error updating restaurant');
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} restaurant`;
+  async remove(id: string): Promise<RestaurantDto> {
+    return this.prisma.restaurant.delete({ where: { id } });
   }
 }
