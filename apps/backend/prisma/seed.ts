@@ -5,7 +5,6 @@ const client = new PrismaClient();
 const MockUser = {
   name: 'John Doe',
   email: 'johndoe@email.com',
-  password: 'password',
   phone: '+3620404040',
   addresses: ['1093, Budapest, Közraktár u. 4.'],
 };
