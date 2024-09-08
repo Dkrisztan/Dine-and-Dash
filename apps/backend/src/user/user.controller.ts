@@ -1,6 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto, UserDto } from '../types/dtos/user.dto';
+import { JwtAuth } from '../auth/guards/jwt-auth.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../types/dtos/role.dto';
 
 @Controller('user')
 export class UserController {
@@ -12,6 +15,8 @@ export class UserController {
   }
 
   @Get()
+  @JwtAuth()
+  @Roles(Role.ADMIN, Role.CUSTOMER)
   async findAll(): Promise<UserDto[]> {
     return this.userService.findAll();
   }
