@@ -30,9 +30,9 @@ export class CreateUserDto extends OmitType(UserDto, ['id']) {
   email: string;
 
   @ApiProperty({ example: '+3620111222' })
-  @IsNotEmpty()
   @IsPhoneNumber()
   @IsString()
+  @IsNotEmpty()
   phone: string;
 
   @ApiProperty({ example: ['1010 Budapest, Kossuth Lajos utca 1.'] })
@@ -40,6 +40,11 @@ export class CreateUserDto extends OmitType(UserDto, ['id']) {
   @IsString({ each: true })
   @IsArray()
   addresses: string[];
+
+  @ApiProperty({ example: 'https://example.com/image.jpg' })
+  @IsString()
+  @IsNotEmpty()
+  image: string;
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
@@ -64,4 +69,9 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsArray()
   @IsOptional()
   addresses: string[];
+
+  @ApiProperty({ example: 'https://example.com/image.jpg' })
+  @IsString()
+  @IsOptional()
+  image: string;
 }

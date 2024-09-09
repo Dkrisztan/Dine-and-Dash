@@ -9,12 +9,19 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async validateOAuthUser(profile: any) {
-    const { email } = profile;
+  async validateOAuthUser(profile: { email: string; name: string; image: string }) {
+    const { email, name, image } = profile;
 
     const user = await this.userService.findByEmail(email);
+
     if (!user) {
-      return await this.userService.create(profile);
+      return await this.userService.create({
+        email,
+        name,
+        image,
+        addresses: [''],
+        phone: '',
+      });
     }
 
     return user;
