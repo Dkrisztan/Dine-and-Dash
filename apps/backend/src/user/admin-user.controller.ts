@@ -1,0 +1,42 @@
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { UserService } from './user.service';
+import { CreateUserDto, UpdateUserDto, UserDto } from '../types/dtos/user.dto';
+import { JwtAuth } from '../auth/guards/jwt-auth.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../types/dtos/role.dto';
+
+@Controller('admin/user')
+@JwtAuth()
+export class AdminUserController {
+  constructor(private readonly userService: UserService) {}
+
+  @Post()
+  @Roles(Role.ADMIN)
+  async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
+    return this.userService.create(createUserDto);
+  }
+
+  @Get()
+  @Roles(Role.ADMIN)
+  async findAll(): Promise<UserDto[]> {
+    return this.userService.findAll();
+  }
+
+  @Get(':id')
+  @Roles(Role.ADMIN)
+  async findOne(@Param('id') id: string): Promise<UserDto> {
+    return this.userService.findOne(id);
+  }
+
+  @Patch(':id')
+  @Roles(Role.ADMIN)
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
+    return this.userService.update(id, updateUserDto);
+  }
+
+  @Delete(':id')
+  @Roles(Role.ADMIN)
+  async remove(@Param('id') id: string): Promise<UserDto> {
+    return this.userService.remove(id);
+  }
+}

@@ -8,6 +8,7 @@ export class AuthController {
 
   @Get('google/login')
   @UseGuards(AuthGuard('google'))
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async googleAuth(@Req() req) {
     // initiates the Google OAuth2 login process
   }
