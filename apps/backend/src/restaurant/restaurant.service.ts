@@ -1,4 +1,10 @@
-import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateRestaurantDto, RestaurantDto, UpdateRestaurantDto } from '../types/dtos/restaurant.dto';
 import { PrismaService } from 'nestjs-prisma';
 
@@ -6,18 +12,30 @@ import { PrismaService } from 'nestjs-prisma';
 export class RestaurantService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createRestaurantDto: CreateRestaurantDto): Promise<RestaurantDto> {
+  async create(id: string, createRestaurantDto: CreateRestaurantDto): Promise<RestaurantDto> {
     try {
-      const { ownerId, ...rest } = createRestaurantDto;
       const restaurant = await this.prisma.restaurant.create({
         data: {
-          ...rest,
+          ...createRestaurantDto,
           owner: {
-            connect: { id: ownerId },
+            connect: { id },
           },
         },
       });
+
       Logger.debug(`Created restaurant with id: ${restaurant.id}`, RestaurantService.name);
+
+      await this.prisma.user.update({
+        where: { id },
+        data: {
+          role: {
+            set: 'OWNER',
+          },
+        },
+      });
+
+      Logger.debug(`Updated user with id: ${id} to OWNER role`, RestaurantService.name);
+
       return restaurant;
     } catch (error) {
       throw new InternalServerErrorException('Error creating restaurant');
@@ -47,7 +65,35 @@ export class RestaurantService {
     }
   }
 
+  async updateSelf(userId: string, updateRestaurantDto: UpdateRestaurantDto): Promise<RestaurantDto> {
+    const { id } = await this.prisma.restaurant.findFirst({ where: { ownerId: userId } });
+    if (!id) {
+      throw new NotFoundException(`Restaurant for user with id ${userId} not found`);
+    } else {
+      return this.update(id, updateRestaurantDto);
+    }
+  }
+
   async remove(id: string): Promise<RestaurantDto> {
-    return this.prisma.restaurant.delete({ where: { id } });
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    const { role } = user;
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    } else if (role !== 'OWNER') {
+      throw new ForbiddenException('You do not own any restaurant!');
+    }
+    const resturantDeleted = this.prisma.restaurant.delete({ where: { ownerId: id } });
+
+    await this.prisma.user.update({
+      where: { id },
+      data: {
+        role: {
+          set: 'CUSTOMER',
+        },
+      },
+    });
+
+    return resturantDeleted;
   }
 }

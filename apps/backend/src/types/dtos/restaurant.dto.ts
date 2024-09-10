@@ -21,7 +21,7 @@ export class RestaurantDto {
   ownerId: string;
 }
 
-export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id']) {
+export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id', 'ownerId']) {
   @ApiProperty({ example: 'Pizza Place' })
   @IsString()
   @IsNotEmpty()
@@ -37,11 +37,6 @@ export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id']) {
   @IsArray()
   @IsNotEmpty()
   addresses: string[];
-
-  @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
-  @IsString()
-  @IsNotEmpty()
-  ownerId: string;
 }
 
 export class UpdateRestaurantDto extends PartialType(CreateRestaurantDto) {

@@ -7,35 +7,31 @@ import { Role } from '../types/dtos/role.dto';
 
 @Controller('admin/user')
 @JwtAuth()
+@Roles(Role.ADMIN)
 export class AdminUserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @Roles(Role.ADMIN)
   async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
     return this.userService.create(createUserDto);
   }
 
   @Get()
-  @Roles(Role.ADMIN)
   async findAll(): Promise<UserDto[]> {
     return this.userService.findAll();
   }
 
   @Get(':id')
-  @Roles(Role.ADMIN)
   async findOne(@Param('id') id: string): Promise<UserDto> {
     return this.userService.findOne(id);
   }
 
   @Patch(':id')
-  @Roles(Role.ADMIN)
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
     return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  @Roles(Role.ADMIN)
   async remove(@Param('id') id: string): Promise<UserDto> {
     return this.userService.remove(id);
   }

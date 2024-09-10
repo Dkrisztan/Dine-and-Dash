@@ -8,23 +8,21 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @Controller('user')
 @JwtAuth()
+@Roles(Role.ADMIN, Role.CUSTOMER, Role.COURIER, Role.OWNER)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
-  @Roles(Role.ADMIN, Role.CUSTOMER, Role.COURIER, Role.OWNER)
   async me(@CurrentUser() user: UserDto): Promise<UserDto> {
     return this.userService.findOne(user.id);
   }
 
   @Patch('me')
-  @Roles(Role.ADMIN, Role.CUSTOMER, Role.COURIER, Role.OWNER)
   async updateProfile(@CurrentUser() user: UserDto, updateDto: UpdateUserDto): Promise<UserDto> {
     return this.userService.update(user.id, updateDto);
   }
 
   @Delete('me')
-  @Roles(Role.ADMIN, Role.CUSTOMER, Role.COURIER, Role.OWNER)
   async deleteProfile(@CurrentUser() user: UserDto): Promise<UserDto> {
     return this.userService.remove(user.id);
   }
