@@ -1,60 +1,68 @@
-import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
-import { CreateOrderDto, OrderDto } from '../types/dtos/order.dto';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
+import { UserDto } from '../types/dtos/user.dto';
+import { OrderDto } from '../types/dtos/order.dto';
 
 @Injectable()
 export class OrderService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createOrderDto: CreateOrderDto): Promise<OrderDto> {
-    try {
-      const { userId, restaurantId, total, ...rest } = createOrderDto;
-      const order = await this.prisma.order.create({
-        data: {
-          ...rest,
-          total: parseFloat(total.toString()),
-          items: {
-            connect: createOrderDto.items.map((item) => ({ id: item.id })),
-          },
-          user: {
-            connect: { id: userId },
-          },
-          restaurant: {
-            connect: { id: restaurantId },
+  async createOrderFromCart(user: UserDto): Promise<OrderDto> {
+    const cart = await this.prisma.cart.findUnique({
+      where: { id: user.cart.id },
+      include: { items: true },
+    });
+
+    const cartItems = await this.prisma.cartItem.findMany({
+      where: {
+        cartId: user.cart.id,
+      },
+      select: {
+        food: {
+          select: {
+            restaurantId: true,
           },
         },
+      },
+    });
+
+    const [restaurantId] = cartItems.map((item) => item.food.restaurantId);
+
+    const items = [];
+    const order = await this.prisma.order.create({
+      data: {
+        userId: user.id,
+        restaurantId: restaurantId,
+        total: cart.total,
+      },
+    });
+
+    for (const item of cart.items) {
+      const newItem = await this.prisma.orderItem.create({
+        data: {
+          foodId: item.foodId,
+          orderId: order.id,
+        },
       });
-      Logger.debug(`Created order with id: ${order.id}`, OrderService.name);
-      return order;
-    } catch (error) {
-      throw new InternalServerErrorException('Error creating order' + error.message);
+      items.push(newItem);
     }
-  }
 
-  async findAll(): Promise<OrderDto[]> {
-    return this.prisma.order.findMany();
-  }
+    await this.prisma.cartItem.deleteMany({
+      where: {
+        cartId: user.cart.id,
+      },
+    });
 
-  async findOne(id: string): Promise<OrderDto> {
-    const order = await this.prisma.order.findUnique({ where: { id }, include: { items: true } });
-    if (!order) {
-      throw new NotFoundException(`Order with id ${id} not found`);
-    }
-    return order;
-  }
+    await this.prisma.cart.update({
+      where: { id: user.cart.id },
+      data: {
+        total: 0,
+      },
+    });
 
-  // async update(id: string, updateOrderDto: UpdateOrderDto): Promise<OrderDto> {
-  //   try {
-  //     const order = this.prisma.order.update({ where: { id }, data: updateOrderDto });
-  //     Logger.debug(`Updated order with id: ${id}`, OrderService.name);
-  //     return order;
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw new InternalServerErrorException('Error updating order');
-  //   }
-  // }
-
-  async remove(id: string): Promise<OrderDto> {
-    return this.prisma.order.delete({ where: { id } });
+    return {
+      ...order,
+      items,
+    };
   }
 }

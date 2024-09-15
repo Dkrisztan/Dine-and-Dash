@@ -12,12 +12,12 @@ export class AdminCartController {
   constructor(private readonly cartService: CartService) {}
 
   @Get()
-  async getCarts(): Promise<CartDto[]> {
+  async getAllCarts(): Promise<CartDto[]> {
     return this.cartService.getAllCarts();
   }
 
   @Get(':id')
-  async getCart(@Param('id') id: string): Promise<CartDto> {
+  async getCartById(@Param('id') id: string): Promise<CartDto> {
     return this.cartService.getCartById(id);
   }
 }

@@ -30,6 +30,27 @@ export class CartService {
   }
 
   async addToCart(user: UserDto, cartItem: AddToCartDto): Promise<CartDto> {
+    const existingCartItems = await this.prisma.cartItem.findMany({
+      where: { cartId: user.cart.id },
+      include: { food: true },
+    });
+
+    const foodToAdd = await this.prisma.food.findUnique({
+      where: { id: cartItem.foodId },
+    });
+
+    if (!foodToAdd) {
+      throw new Error('Food item not found');
+    }
+
+    if (existingCartItems.length > 0) {
+      const existingRestaurantId = existingCartItems[0].food.restaurantId;
+
+      if (existingRestaurantId !== foodToAdd.restaurantId) {
+        throw new Error('You can only add items from the same restaurant to the cart.');
+      }
+    }
+
     for (let i = 0; i < cartItem.quantity; i++) {
       await this.prisma.cartItem.create({
         data: {
@@ -39,7 +60,7 @@ export class CartService {
       });
     }
 
-    return this.upDateCartTotal(user.cart.id);
+    return this.updateCartTotal(user.cart.id);
   }
 
   async removeFromCart(user: UserDto, foodId: string): Promise<CartDto> {
@@ -53,10 +74,10 @@ export class CartService {
 
     await this.prisma.cartItem.delete({ where: { id: cartItem.id } });
 
-    return this.upDateCartTotal(user.cart.id);
+    return this.updateCartTotal(user.cart.id);
   }
 
-  async upDateCartTotal(cartId: string): Promise<CartDto> {
+  async updateCartTotal(cartId: string): Promise<CartDto> {
     const itemsInCart = await this.prisma.cartItem.findMany({
       where: { cartId: cartId },
       include: { food: true },
