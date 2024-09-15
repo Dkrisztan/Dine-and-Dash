@@ -12,7 +12,7 @@ export class AdminRestaurantController {
   constructor(private readonly restaurantService: RestaurantService) {}
 
   @Post()
-  async createForCurrentUser(userId: string, @Body() createRestaurantDto: CreateRestaurantDto): Promise<RestaurantDto> {
+  async createForUser(userId: string, @Body() createRestaurantDto: CreateRestaurantDto): Promise<RestaurantDto> {
     return this.restaurantService.create(userId, createRestaurantDto);
   }
 

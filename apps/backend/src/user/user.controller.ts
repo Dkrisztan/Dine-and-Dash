@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto, UserDto } from '../types/dtos/user.dto';
 import { JwtAuth } from '../auth/guards/jwt-auth.guard';
@@ -18,7 +18,7 @@ export class UserController {
   }
 
   @Patch('me')
-  async updateProfile(@CurrentUser() user: UserDto, updateDto: UpdateUserDto): Promise<UserDto> {
+  async updateProfile(@CurrentUser() user: UserDto, @Body() updateDto: UpdateUserDto): Promise<UserDto> {
     return this.userService.update(user.id, updateDto);
   }
 

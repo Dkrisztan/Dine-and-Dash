@@ -16,9 +16,6 @@ export class FoodDto {
 
   @ApiProperty({ example: 'https://www.example.com/pizza.jpg' })
   image: string;
-
-  @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
-  restaurantId: string;
 }
 
 export class CreateFoodDto extends OmitType(FoodDto, ['id']) {

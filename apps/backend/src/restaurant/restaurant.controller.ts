@@ -12,6 +12,7 @@ export class RestaurantController {
   constructor(private readonly restaurantService: RestaurantService) {}
 
   @Post()
+  @JwtAuth()
   @Roles(Role.ADMIN, Role.CUSTOMER, Role.COURIER)
   async createForCurrentUser(
     @CurrentUser() user: UserDto,

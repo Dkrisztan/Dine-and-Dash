@@ -25,16 +25,18 @@ export class RestaurantService {
 
       Logger.debug(`Created restaurant with id: ${restaurant.id}`, RestaurantService.name);
 
-      await this.prisma.user.update({
-        where: { id },
-        data: {
-          role: {
-            set: 'OWNER',
+      const user = await this.prisma.user.findUnique({ where: { id } });
+      if (user.role !== 'ADMIN') {
+        await this.prisma.user.update({
+          where: { id },
+          data: {
+            role: {
+              set: 'OWNER',
+            },
           },
-        },
-      });
-
-      Logger.debug(`Updated user with id: ${id} to OWNER role`, RestaurantService.name);
+        });
+        Logger.debug(`Updated user with id: ${id} to OWNER role`, RestaurantService.name);
+      }
 
       return restaurant;
     } catch (error) {
@@ -43,11 +45,11 @@ export class RestaurantService {
   }
 
   async findAll(): Promise<RestaurantDto[]> {
-    return this.prisma.restaurant.findMany();
+    return this.prisma.restaurant.findMany({ include: { foods: true } });
   }
 
   async findOne(id: string): Promise<RestaurantDto> {
-    const restaurant = await this.prisma.restaurant.findUnique({ where: { id } });
+    const restaurant = await this.prisma.restaurant.findUnique({ where: { id }, include: { foods: true } });
     if (!restaurant) {
       throw new NotFoundException(`Restaurant with id ${id} not found`);
     }
@@ -66,21 +68,20 @@ export class RestaurantService {
   }
 
   async updateSelf(userId: string, updateRestaurantDto: UpdateRestaurantDto): Promise<RestaurantDto> {
-    const { id } = await this.prisma.restaurant.findFirst({ where: { ownerId: userId } });
-    if (!id) {
+    const user = await this.prisma.restaurant.findFirst({ where: { ownerId: userId } });
+    if (!user) {
       throw new NotFoundException(`Restaurant for user with id ${userId} not found`);
     } else {
-      return this.update(id, updateRestaurantDto);
+      return this.update(user.id, updateRestaurantDto);
     }
   }
 
   async remove(id: string): Promise<RestaurantDto> {
     const user = await this.prisma.user.findUnique({ where: { id } });
-    const { role } = user;
 
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
-    } else if (role !== 'OWNER') {
+    } else if (user.role !== 'OWNER') {
       throw new ForbiddenException('You do not own any restaurant!');
     }
     const resturantDeleted = this.prisma.restaurant.delete({ where: { ownerId: id } });
@@ -88,9 +89,7 @@ export class RestaurantService {
     await this.prisma.user.update({
       where: { id },
       data: {
-        role: {
-          set: 'CUSTOMER',
-        },
+        role: 'CUSTOMER',
       },
     });
 

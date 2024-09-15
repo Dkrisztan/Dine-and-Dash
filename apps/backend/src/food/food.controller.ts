@@ -1,33 +1,47 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { FoodService } from './food.service';
-import { CreateFoodDto, UpdateFoodDto } from '../types/dtos/food.dto';
+import { CreateFoodDto, FoodDto, UpdateFoodDto } from '../types/dtos/food.dto';
+import { JwtAuth } from '../auth/guards/jwt-auth.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../types/dtos/role.dto';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { UserDto } from '../types/dtos/user.dto';
 
 @Controller('food')
+@JwtAuth()
+@Roles(Role.ADMIN, Role.OWNER)
 export class FoodController {
   constructor(private readonly foodService: FoodService) {}
 
   @Post()
-  create(@Body() createFoodDto: CreateFoodDto) {
-    return this.foodService.create(createFoodDto);
+  async addFoodToCurrentUserRestaurant(
+    @CurrentUser() user: UserDto,
+    @Body() createFoodDto: CreateFoodDto
+  ): Promise<FoodDto> {
+    return this.foodService.create(user.ownerOf.id, createFoodDto);
   }
 
   @Get()
-  findAll() {
-    return this.foodService.findAll();
+  async findAll(@CurrentUser() user: UserDto): Promise<FoodDto[]> {
+    return this.foodService.findAllForRestaurant(user.ownerOf.id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.foodService.findOne(+id);
+  async findOne(@CurrentUser() user: UserDto, @Param('id') id: string): Promise<FoodDto> {
+    return this.foodService.findOneForRestaurant(user.ownerOf.id, id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFoodDto: UpdateFoodDto) {
-    return this.foodService.update(+id, updateFoodDto);
+  async update(
+    @CurrentUser() user: UserDto,
+    @Param('id') id: string,
+    @Body() updateFoodDto: UpdateFoodDto
+  ): Promise<FoodDto> {
+    return this.foodService.updateOneForRestaurant(user.ownerOf.id, id, updateFoodDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.foodService.remove(+id);
+  async remove(@CurrentUser() user: UserDto, @Param('id') id: string): Promise<FoodDto> {
+    return this.foodService.removeFromRestaurant(user.ownerOf.id, id);
   }
 }

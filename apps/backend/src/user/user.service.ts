@@ -18,11 +18,11 @@ export class UserService {
   }
 
   async findAll(): Promise<UserDto[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({ include: { ownerOf: true } });
   }
 
   async findOne(id: string): Promise<UserDto> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
+    const user = await this.prisma.user.findUnique({ where: { id }, include: { ownerOf: true } });
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
@@ -45,6 +45,6 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({ where: { email } });
+    return this.prisma.user.findUnique({ where: { email }, include: { ownerOf: true } });
   }
 }
