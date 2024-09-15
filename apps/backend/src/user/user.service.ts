@@ -10,6 +10,7 @@ export class UserService {
     try {
       const user = await this.prisma.user.create({ data: createUserDto });
       Logger.debug(`Created user with id: ${user.id}`, UserService.name);
+      await this.prisma.cart.create({ data: { user: { connect: { id: user.id } } } });
       return user;
     } catch (error) {
       Logger.error(`Error creating user: ${error.message}`);
@@ -18,11 +19,11 @@ export class UserService {
   }
 
   async findAll(): Promise<UserDto[]> {
-    return this.prisma.user.findMany({ include: { ownerOf: true } });
+    return this.prisma.user.findMany({ include: { ownerOf: true, cart: true } });
   }
 
   async findOne(id: string): Promise<UserDto> {
-    const user = await this.prisma.user.findUnique({ where: { id }, include: { ownerOf: true } });
+    const user = await this.prisma.user.findUnique({ where: { id }, include: { ownerOf: true, cart: true } });
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
@@ -45,6 +46,6 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({ where: { email }, include: { ownerOf: true } });
+    return this.prisma.user.findUnique({ where: { email }, include: { ownerOf: true, cart: true } });
   }
 }

@@ -22,17 +22,17 @@ export class FoodController {
   }
 
   @Get()
-  async findAll(@CurrentUser() user: UserDto): Promise<FoodDto[]> {
+  async findAllForRestaurant(@CurrentUser() user: UserDto): Promise<FoodDto[]> {
     return this.foodService.findAllForRestaurant(user.ownerOf.id);
   }
 
   @Get(':id')
-  async findOne(@CurrentUser() user: UserDto, @Param('id') id: string): Promise<FoodDto> {
+  async findOneForRestaurant(@CurrentUser() user: UserDto, @Param('id') id: string): Promise<FoodDto> {
     return this.foodService.findOneForRestaurant(user.ownerOf.id, id);
   }
 
   @Patch(':id')
-  async update(
+  async updateOneForRestaurant(
     @CurrentUser() user: UserDto,
     @Param('id') id: string,
     @Body() updateFoodDto: UpdateFoodDto
@@ -41,7 +41,7 @@ export class FoodController {
   }
 
   @Delete(':id')
-  async remove(@CurrentUser() user: UserDto, @Param('id') id: string): Promise<FoodDto> {
+  async removeFromRestaurant(@CurrentUser() user: UserDto, @Param('id') id: string): Promise<FoodDto> {
     return this.foodService.removeFromRestaurant(user.ownerOf.id, id);
   }
 }

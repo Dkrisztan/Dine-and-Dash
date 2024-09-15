@@ -35,35 +35,51 @@ model User {
 }
 
 model Food {
-  id           String     @id @default(uuid())
+  id           String      @id @default(uuid())
   name         String
   description  String
   price        Float
   image        String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId String
-  orders       Order[]
-  carts        Cart[]
+  orders       OrderItem[]
+  carts        CartItem[]
 }
 
 model Cart {
+  id     String     @id @default(uuid())
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String     @unique
+  total  Float      @default(0)
+  items  CartItem[]
+}
+
+model CartItem {
   id     String @id @default(uuid())
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
-  total  Float
-  items  Food[]
+  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId String
+  food   Food   @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  foodId String
 }
 
 model Order {
-  id           String     @id @default(uuid())
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String      @id @default(uuid())
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
   restaurantId String
   total        Float
-  items        Food[]
-  status       Status     @default(PENDING)
-  createdAt    DateTime   @default(now())
+  items        OrderItem[]
+  status       Status      @default(PENDING)
+  createdAt    DateTime    @default(now())
+}
+
+model OrderItem {
+  id      String @id @default(uuid())
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId String
+  food    Food   @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  foodId  String
 }
 
 model Restaurant {
