@@ -5,6 +5,7 @@ import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../types/dtos/role.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('user')
 @JwtAuth()
@@ -13,6 +14,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
+  @ApiOkResponse({ type: UserDto })
   async me(@CurrentUser() user: UserDto): Promise<UserDto> {
     return this.userService.findOne(user.id);
   }

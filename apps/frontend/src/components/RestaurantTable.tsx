@@ -5,7 +5,6 @@ import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFiltered
 import * as React from 'react';
 import { useState } from 'react';
 
-import { data } from '@/components/data';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -89,7 +88,7 @@ export const columns: ColumnDef<Person>[] = [
   },
 ];
 
-export function DataTableDemo() {
+export function RestaurantTable({ data }: { data: Person[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -120,14 +119,7 @@ export function DataTableDemo() {
 
   return (
     <div className='w-full'>
-      <div className='flex items-center py-4'>
-        {/* Global filter input */}
-        <Input
-          placeholder='Filter all columns...'
-          value={globalFilter ?? ''} // Input for the global filter
-          onChange={(event) => setGlobalFilter(event.target.value)} // Set global filter on change
-          className='max-w-sm'
-        />
+      <div className='flex items-center py-4 gap-3'>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant='outline' className='ml-auto'>
@@ -147,6 +139,13 @@ export function DataTableDemo() {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        {/* Global filter input */}
+        <Input
+          placeholder='Filter all columns...'
+          value={globalFilter ?? ''} // Input for the global filter
+          onChange={(event) => setGlobalFilter(event.target.value)} // Set global filter on change
+          className='max-w-sm'
+        />
       </div>
       <div className='rounded-md border'>
         <Table>

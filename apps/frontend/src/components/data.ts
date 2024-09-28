@@ -1,6 +1,7 @@
-import { Person } from '@/components/DataTableDemo';
-
-export const data: Person[] = [
+import { Person } from '@/components/UserTable';
+import {add}
+export const function =
+export const person: Person[] = [
   {
     id: '1',
     name: 'John Doe',
@@ -10,8 +11,8 @@ export const data: Person[] = [
   },
   {
     id: '2',
-    name: 'lady lady',
-    email: 'ladylady@asdf.com',
+    name: 'teszt elek',
+    email: 'teszt@asdf.com',
     role: 'ADMIN',
     image: 'https://randomuser.me/api/portraits/men/2.jpg',
   },
@@ -52,15 +53,15 @@ export const data: Person[] = [
   },
   {
     id: '8',
-    name: 'kamala xd',
-    email: 'kamala@xd.com',
+    name: 'jdoe',
+    email: 'jdoe@t.com',
     role: 'CUSTOMER',
     image: 'https://randomuser.me/api/portraits/men/8.jpg',
   },
   {
     id: '9',
-    name: 'yee haw',
-    email: 'yee@haw.com',
+    name: 'test test',
+    email: 'testest@test.com',
     role: 'CUSTOMER',
     image: 'https://randomuser.me/api/portraits/men/9.jpg',
   },
