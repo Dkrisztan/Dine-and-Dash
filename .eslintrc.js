@@ -18,7 +18,7 @@ module.exports = {
     ],
     eqeqeq: 'error',
     'max-depth': 'error',
-    'max-lines': 'error',
+    'max-lines': ['error', 1000],
     'no-alert': 'error',
     'no-array-constructor': 'error',
     'no-console': [

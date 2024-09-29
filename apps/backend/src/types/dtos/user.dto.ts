@@ -2,6 +2,7 @@ import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsArray, IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
 import { RestaurantDto } from './restaurant.dto';
 import { CartDto } from './cart.dto';
+import { Role } from './role.dto';
 
 export class UserDto {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
@@ -19,14 +20,20 @@ export class UserDto {
   @ApiProperty({ example: ['1010 Budapest, Kossuth Lajos utca 1.'] })
   addresses: string[];
 
+  @ApiProperty({ example: Role.CUSTOMER, enum: Role })
+  role: 'ADMIN' | 'CUSTOMER' | 'COURIER' | 'OWNER';
+
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   ownerOf?: RestaurantDto;
+
+  @ApiProperty({ example: 'https://example.com/image.jpg' })
+  image: string;
 
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   cart?: CartDto;
 }
 
-export class CreateUserDto extends OmitType(UserDto, ['id', 'ownerOf', 'cart']) {
+export class CreateUserDto extends OmitType(UserDto, ['id', 'ownerOf', 'cart', 'role']) {
   @ApiProperty({ example: 'John Doe' })
   @IsString()
   @IsNotEmpty()

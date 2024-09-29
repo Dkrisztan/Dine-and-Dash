@@ -266,10 +266,10 @@ export interface OrderDto {
     'total': number;
     /**
      * 
-     * @type {object}
+     * @type {string}
      * @memberof OrderDto
      */
-    'status': object;
+    'status': OrderDtoStatusEnum;
     /**
      * 
      * @type {string}
@@ -283,6 +283,16 @@ export interface OrderDto {
      */
     'items'?: Array<OrderItemDto>;
 }
+
+export const OrderDtoStatusEnum = {
+    Pending: 'PENDING',
+    Ongoing: 'ONGOING',
+    Finished: 'FINISHED',
+    Cancelled: 'CANCELLED'
+} as const;
+
+export type OrderDtoStatusEnum = typeof OrderDtoStatusEnum[keyof typeof OrderDtoStatusEnum];
+
 /**
  * 
  * @export
@@ -488,10 +498,22 @@ export interface UserDto {
     'addresses': Array<string>;
     /**
      * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    'role': UserDtoRoleEnum;
+    /**
+     * 
      * @type {RestaurantDto}
      * @memberof UserDto
      */
     'ownerOf'?: RestaurantDto;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    'image': string;
     /**
      * 
      * @type {CartDto}
@@ -499,6 +521,16 @@ export interface UserDto {
      */
     'cart'?: CartDto;
 }
+
+export const UserDtoRoleEnum = {
+    Admin: 'ADMIN',
+    Customer: 'CUSTOMER',
+    Courier: 'COURIER',
+    Owner: 'OWNER'
+} as const;
+
+export type UserDtoRoleEnum = typeof UserDtoRoleEnum[keyof typeof UserDtoRoleEnum];
+
 
 /**
  * DefaultApi - axios parameter creator
