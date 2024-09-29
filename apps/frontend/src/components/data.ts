@@ -1,6 +1,5 @@
 import { Person } from '@/components/UserTable';
-import {add}
-export const function =
+
 export const person: Person[] = [
   {
     id: '1',
