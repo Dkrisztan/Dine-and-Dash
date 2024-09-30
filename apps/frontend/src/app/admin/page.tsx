@@ -1,5 +1,5 @@
 import { Header } from '@/app/admin/Header';
-import { person } from '@/components/data';
+import { order, person } from '@/components/data';
 import { OrderTable } from '@/components/OrderTable';
 import { RestaurantTable } from '@/components/RestaurantTable';
 import { ModeToggle } from '@/components/ui/mode-toggle';
@@ -26,7 +26,7 @@ export default function Admin() {
             <UserTable data={person} />
           </TabsContent>
           <TabsContent value='orders'>
-            <OrderTable data={person} />
+            <OrderTable data={order} />
           </TabsContent>
           <TabsContent value='restaurants'>
             <RestaurantTable data={person} />

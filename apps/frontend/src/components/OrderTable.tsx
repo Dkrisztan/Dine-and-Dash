@@ -5,21 +5,14 @@ import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFiltered
 import * as React from 'react';
 import { useState } from 'react';
 
+import { OrderDto } from '@/api';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-export type Person = {
-  id: string;
-  name: string;
-  email: string;
-  role: 'ADMIN' | 'CUSTOMER' | 'OWNER' | 'COURIER';
-  image: string;
-};
-
-export const columns: ColumnDef<Person>[] = [
+export const columns: ColumnDef<OrderDto>[] = [
   {
     id: 'select',
     header: ({ table }) => <Checkbox checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')} onCheckedChange={(value) => table.toggleAllPageRowsSelected(Boolean(value))} aria-label='Select all' />,
@@ -29,37 +22,47 @@ export const columns: ColumnDef<Person>[] = [
   },
   {
     accessorKey: 'id',
-    header: 'ID',
-    cell: ({ row }) => <div className='capitalize'>{row.getValue('id')}</div>,
+    header: () => <div className='text-base'>ID</div>,
+    cell: ({ row }) => <div className='text-base'>{row.getValue('id')}</div>,
   },
   {
-    accessorKey: 'image',
-    header: 'Image',
-    cell: ({ row }) => <img src={row.getValue('image')} alt={row.getValue('name')} className='h-16 w-16 rounded-xl' />,
+    accessorKey: 'userId',
+    header: () => <div className='text-base'>User Id</div>,
+    cell: ({ row }) => <div className='text-base'>{row.getValue('userId')}</div>,
   },
   {
-    accessorKey: 'name',
-    header: () => <div>Name</div>,
-    cell: ({ row }) => {
-      return <div>{row.getValue('name')}</div>;
-    },
+    accessorKey: 'restaurantId',
+    header: () => <div className='text-base'>Restaurant Id</div>,
+    cell: ({ row }) => <div className='text-base'>{row.getValue('restaurantId')}</div>,
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'status',
     header: ({ column }) => {
       return (
         <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Email
+          <div className='text-base'>Status</div>
           <CaretSortIcon className='ml-2 h-4 w-4' />
         </Button>
       );
     },
-    cell: ({ row }) => <div className='lowercase'>{row.getValue('email')}</div>,
+    cell: ({ row }) => <div className='uppercase text-base'>{row.getValue('status')}</div>,
   },
   {
-    accessorKey: 'role',
-    header: 'Role',
-    cell: ({ row }) => <div className='capitalize'>{row.getValue('role')}</div>,
+    accessorKey: 'total',
+    header: () => <div className='text-base'>Total</div>,
+    cell: ({ row }) => <div className='text-base'>{row.getValue('total')}</div>,
+  },
+  {
+    accessorKey: 'createdAt',
+    header: ({ column }) => {
+      return (
+        <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+          <div className='text-base'>Created At</div>
+          <CaretSortIcon className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className='text-base'>{new Date(row.getValue('createdAt')).toISOString().slice(0, 16).replace('T', ' ')}</div>,
   },
   {
     id: 'actions',
@@ -88,7 +91,7 @@ export const columns: ColumnDef<Person>[] = [
   },
 ];
 
-export function OrderTable({ data }: { data: Person[] }) {
+export function OrderTable({ data }: { data: OrderDto[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
