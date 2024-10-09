@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function AuthCallback() {
   const router = useRouter();
@@ -21,12 +21,4 @@ export default function AuthCallback() {
   }, [searchParams, router]);
 
   return <div>Logging in...</div>;
-}
-
-export function AuthCallbackPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AuthCallback />
-    </Suspense>
-  );
 }
