@@ -5,8 +5,9 @@ import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../types/dtos/role.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('user')
 @JwtAuth()
 @Roles(Role.ADMIN, Role.CUSTOMER, Role.COURIER, Role.OWNER)
@@ -20,11 +21,13 @@ export class UserController {
   }
 
   @Patch('me')
+  @ApiOkResponse({ type: UserDto })
   async updateProfile(@CurrentUser() user: UserDto, @Body() updateDto: UpdateUserDto): Promise<UserDto> {
     return this.userService.update(user.id, updateDto);
   }
 
   @Delete('me')
+  @ApiOkResponse({ type: UserDto })
   async deleteProfile(@CurrentUser() user: UserDto): Promise<UserDto> {
     return this.userService.remove(user.id);
   }

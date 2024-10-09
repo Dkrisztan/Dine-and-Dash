@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Karla } from 'next/font/google';
 
+import { TopNav } from '@/components/TopNav';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${fredoka.className} antialiased`}>
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+          <TopNav />
           {children}
         </ThemeProvider>
       </body>
