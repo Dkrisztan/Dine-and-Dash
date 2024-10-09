@@ -1913,7 +1913,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerGoogleAuthRedirect(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async authControllerGoogleAuthRedirect(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerGoogleAuthRedirect(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.authControllerGoogleAuthRedirect']?.[localVarOperationServerIndex]?.url;
@@ -2249,7 +2249,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerGoogleAuthRedirect(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        authControllerGoogleAuthRedirect(options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.authControllerGoogleAuthRedirect(options).then((request) => request(axios, basePath));
         },
         /**
