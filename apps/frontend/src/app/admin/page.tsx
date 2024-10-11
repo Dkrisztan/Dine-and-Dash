@@ -1,8 +1,8 @@
 import { order, person } from '@/components/data';
-import { OrderTable } from '@/components/OrderTable';
-import { RestaurantTable } from '@/components/RestaurantTable';
+import { OrderTable } from '@/components/data-tables/OrderTable';
+import { RestaurantTable } from '@/components/data-tables/RestaurantTable';
+import { UserTable } from '@/components/data-tables/UserTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { UserTable } from '@/components/UserTable';
 
 export default function Admin() {
   return (

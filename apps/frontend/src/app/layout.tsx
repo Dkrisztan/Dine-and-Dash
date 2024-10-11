@@ -3,7 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Karla } from 'next/font/google';
 
-import { TopNav } from '@/components/TopNav';
+import { TopNav } from '@/components/nav/TopNav';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 
 export const metadata: Metadata = {

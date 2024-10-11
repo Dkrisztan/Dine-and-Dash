@@ -7,4 +7,4 @@ export const OrderStatus: {
   CANCELLED: 'CANCELLED',
 };
 
-export type Role = (typeof OrderStatus)[keyof typeof OrderStatus];
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];

@@ -1,5 +1,6 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { RestaurantTag } from './restaurant-tag.dto';
 
 export class RestaurantDto {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
@@ -19,6 +20,12 @@ export class RestaurantDto {
 
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   ownerId: string;
+
+  @ApiProperty({ example: [RestaurantTag.STREET, RestaurantTag.KEBAB], enum: RestaurantTag, isArray: true })
+  tags: RestaurantTag[];
+
+  @ApiProperty({ example: 'https://www.example.com/pizza.jpg' })
+  image: string;
 }
 
 export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id', 'ownerId']) {
@@ -37,6 +44,16 @@ export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id', 'ownerId
   @IsArray()
   @IsNotEmpty()
   addresses: string[];
+
+  @ApiProperty({ example: [RestaurantTag.STREET, RestaurantTag.KEBAB], enum: RestaurantTag, isArray: true })
+  @IsArray()
+  @IsNotEmpty()
+  tags: RestaurantTag[];
+
+  @ApiProperty({ example: 'https://www.example.com/pizza.jpg' })
+  @IsString()
+  @IsOptional()
+  image: string;
 }
 
 export class UpdateRestaurantDto extends PartialType(CreateRestaurantDto) {
@@ -55,4 +72,14 @@ export class UpdateRestaurantDto extends PartialType(CreateRestaurantDto) {
   @IsArray()
   @IsOptional()
   addresses: string[];
+
+  @ApiProperty({ example: [RestaurantTag.STREET, RestaurantTag.KEBAB], enum: RestaurantTag, isArray: true })
+  @IsArray()
+  @IsOptional()
+  tag: RestaurantTag[];
+
+  @ApiProperty({ example: 'https://www.example.com/pizza.jpg' })
+  @IsString()
+  @IsOptional()
+  image: string;
 }

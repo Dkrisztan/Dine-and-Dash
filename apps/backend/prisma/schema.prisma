@@ -21,6 +21,31 @@ enum Status {
   CANCELLED
 }
 
+enum Tag {
+  BURGER
+  AMERICAN
+  PIZZA
+  SALAD
+  ITALIAN
+  CHICKEN
+  BREAKFAST
+  PASTA
+  ASIAN
+  VEGETARIAN
+  VEGAN
+  SOUP
+  GYROS
+  STREET
+  DESSERT
+  THAI
+  KEBAB
+  SANDWICH
+  JAPANESE
+  MEDITERANEAN
+  MEXICAN
+  SUSHI
+}
+
 model User {
   id        String      @id @default(uuid())
   name      String
@@ -88,6 +113,8 @@ model Restaurant {
   description String
   addresses   String[]
   rating      Float[]
+  tags        Tag[]
+  image       String?
   foods       Food[]
   order       Order[]
   owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)

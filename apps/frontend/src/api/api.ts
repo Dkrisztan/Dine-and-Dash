@@ -159,7 +159,47 @@ export interface CreateRestaurantDto {
      * @memberof CreateRestaurantDto
      */
     'rating': Array<number>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreateRestaurantDto
+     */
+    'tags': Array<CreateRestaurantDtoTagsEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRestaurantDto
+     */
+    'image': string;
 }
+
+export const CreateRestaurantDtoTagsEnum = {
+    Burger: 'BURGER',
+    American: 'AMERICAN',
+    Pizza: 'PIZZA',
+    Salad: 'SALAD',
+    Italian: 'ITALIAN',
+    Chicken: 'CHICKEN',
+    Breakfast: 'BREAKFAST',
+    Pasta: 'PASTA',
+    Asian: 'ASIAN',
+    Vegetarian: 'VEGETARIAN',
+    Vegan: 'VEGAN',
+    Soup: 'SOUP',
+    Gyros: 'GYROS',
+    Street: 'STREET',
+    Dessert: 'DESSERT',
+    Thai: 'THAI',
+    Kebab: 'KEBAB',
+    Sandwich: 'SANDWICH',
+    Japanese: 'JAPANESE',
+    Mediteranean: 'MEDITERANEAN',
+    Mexican: 'MEXICAN',
+    Sushi: 'SUSHI'
+} as const;
+
+export type CreateRestaurantDtoTagsEnum = typeof CreateRestaurantDtoTagsEnum[keyof typeof CreateRestaurantDtoTagsEnum];
+
 /**
  * 
  * @export
@@ -360,7 +400,47 @@ export interface RestaurantDto {
      * @memberof RestaurantDto
      */
     'ownerId': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof RestaurantDto
+     */
+    'tags': Array<RestaurantDtoTagsEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RestaurantDto
+     */
+    'image': string;
 }
+
+export const RestaurantDtoTagsEnum = {
+    Burger: 'BURGER',
+    American: 'AMERICAN',
+    Pizza: 'PIZZA',
+    Salad: 'SALAD',
+    Italian: 'ITALIAN',
+    Chicken: 'CHICKEN',
+    Breakfast: 'BREAKFAST',
+    Pasta: 'PASTA',
+    Asian: 'ASIAN',
+    Vegetarian: 'VEGETARIAN',
+    Vegan: 'VEGAN',
+    Soup: 'SOUP',
+    Gyros: 'GYROS',
+    Street: 'STREET',
+    Dessert: 'DESSERT',
+    Thai: 'THAI',
+    Kebab: 'KEBAB',
+    Sandwich: 'SANDWICH',
+    Japanese: 'JAPANESE',
+    Mediteranean: 'MEDITERANEAN',
+    Mexican: 'MEXICAN',
+    Sushi: 'SUSHI'
+} as const;
+
+export type RestaurantDtoTagsEnum = typeof RestaurantDtoTagsEnum[keyof typeof RestaurantDtoTagsEnum];
+
 /**
  * 
  * @export
@@ -422,7 +502,79 @@ export interface UpdateRestaurantDto {
      * @memberof UpdateRestaurantDto
      */
     'rating'?: Array<number>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateRestaurantDto
+     */
+    'tags'?: Array<UpdateRestaurantDtoTagsEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateRestaurantDto
+     */
+    'image'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateRestaurantDto
+     */
+    'tag': Array<UpdateRestaurantDtoTagEnum>;
 }
+
+export const UpdateRestaurantDtoTagsEnum = {
+    Burger: 'BURGER',
+    American: 'AMERICAN',
+    Pizza: 'PIZZA',
+    Salad: 'SALAD',
+    Italian: 'ITALIAN',
+    Chicken: 'CHICKEN',
+    Breakfast: 'BREAKFAST',
+    Pasta: 'PASTA',
+    Asian: 'ASIAN',
+    Vegetarian: 'VEGETARIAN',
+    Vegan: 'VEGAN',
+    Soup: 'SOUP',
+    Gyros: 'GYROS',
+    Street: 'STREET',
+    Dessert: 'DESSERT',
+    Thai: 'THAI',
+    Kebab: 'KEBAB',
+    Sandwich: 'SANDWICH',
+    Japanese: 'JAPANESE',
+    Mediteranean: 'MEDITERANEAN',
+    Mexican: 'MEXICAN',
+    Sushi: 'SUSHI'
+} as const;
+
+export type UpdateRestaurantDtoTagsEnum = typeof UpdateRestaurantDtoTagsEnum[keyof typeof UpdateRestaurantDtoTagsEnum];
+export const UpdateRestaurantDtoTagEnum = {
+    Burger: 'BURGER',
+    American: 'AMERICAN',
+    Pizza: 'PIZZA',
+    Salad: 'SALAD',
+    Italian: 'ITALIAN',
+    Chicken: 'CHICKEN',
+    Breakfast: 'BREAKFAST',
+    Pasta: 'PASTA',
+    Asian: 'ASIAN',
+    Vegetarian: 'VEGETARIAN',
+    Vegan: 'VEGAN',
+    Soup: 'SOUP',
+    Gyros: 'GYROS',
+    Street: 'STREET',
+    Dessert: 'DESSERT',
+    Thai: 'THAI',
+    Kebab: 'KEBAB',
+    Sandwich: 'SANDWICH',
+    Japanese: 'JAPANESE',
+    Mediteranean: 'MEDITERANEAN',
+    Mexican: 'MEXICAN',
+    Sushi: 'SUSHI'
+} as const;
+
+export type UpdateRestaurantDtoTagEnum = typeof UpdateRestaurantDtoTagEnum[keyof typeof UpdateRestaurantDtoTagEnum];
+
 /**
  * 
  * @export

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { IoCartOutline } from 'react-icons/io5';
 
-import Logo from '@/components/Logo';
+import Logo from '@/components/logo/Logo';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 
 export function TopNav() {
