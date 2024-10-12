@@ -494,7 +494,7 @@ export const restaurant: RestaurantDto[] = [
     name: 'Pizza Place',
     description: 'The best pizza place in town',
     addresses: ['Bp utca 1.'],
-    rating: [4.5],
+    rating: [4.5, 2.3, 1.2, 1.0, 1.0],
     tags: ['ITALIAN', 'PIZZA'],
     image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
     ownerId: randomUUID(),
@@ -506,7 +506,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 2.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pizza/pizza2.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -516,7 +516,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 3.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pizza/pizza3.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -526,7 +526,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 4.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pizza/pizza4.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -536,7 +536,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 5.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pizza/pizza5.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -546,7 +546,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 6.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/burger/burger1.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -556,7 +556,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 7.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/burger/burger2.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -566,7 +566,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 8.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/burger/burger3.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -576,7 +576,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 9.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/burger/burger4.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -586,7 +586,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 10.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/burger/burger5.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -596,7 +596,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 11.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pasta/pasta1.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -606,7 +606,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 12.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pasta/pasta2.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -616,7 +616,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 13.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pasta/pasta3.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -626,7 +626,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 14.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pasta/pasta4.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -636,7 +636,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 15.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/pasta/pasta5.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -646,7 +646,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 16.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/rice/rice1.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -656,7 +656,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 17.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/rice/rice2.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -666,7 +666,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 18.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/rice/rice3.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -676,7 +676,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 19.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/rice/rice4.jpg',
     ownerId: randomUUID(),
   },
   {
@@ -686,7 +686,7 @@ export const restaurant: RestaurantDto[] = [
     addresses: ['Bp utca 20.'],
     rating: [4.5],
     tags: ['ITALIAN', 'PIZZA'],
-    image: 'https://foodish-api.com/images/pizza/pizza1.jpg',
+    image: 'https://foodish-api.com/images/rice/rice5.jpg',
     ownerId: randomUUID(),
   },
 ];

@@ -3,10 +3,10 @@ import RestaurantCard from '@/components/RestaurantCard';
 
 export default function Home() {
   return (
-    <div className='mt-10 flex flex-start flex-wrap sm:gap-4 md:gap-0'>
+    <div className='px-8 mt-10 grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-1 gap-6'>
       {restaurant.map((item, index) => {
         return (
-          <div key={index} className='md:w-1/5'>
+          <div key={index}>
             <RestaurantCard restaurant={item} />
           </div>
         );

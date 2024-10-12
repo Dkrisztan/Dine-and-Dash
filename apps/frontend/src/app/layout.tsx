@@ -3,7 +3,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Karla } from 'next/font/google';
 
-import { TopNav } from '@/components/nav/TopNav';
+import Footer from '@/components/footer/Footer';
+import { TopNav } from '@/components/navbar/TopNav';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <TopNav />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
