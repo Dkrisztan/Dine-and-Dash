@@ -6,7 +6,9 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { UserDto } from '../types/dtos/user.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../types/dtos/role.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('restaurant')
 @Controller('restaurant')
 export class RestaurantController {
   constructor(private readonly restaurantService: RestaurantService) {}

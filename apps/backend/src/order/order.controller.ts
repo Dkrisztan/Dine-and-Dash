@@ -6,7 +6,9 @@ import { Role } from '../types/dtos/role.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { UserDto } from '../types/dtos/user.dto';
 import { OrderDto } from '../types/dtos/order.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('order')
 @Controller('order')
 @JwtAuth()
 @Roles(Role.ADMIN, Role.CUSTOMER, Role.OWNER, Role.COURIER)
