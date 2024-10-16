@@ -1,21 +1,21 @@
-import { restaurant } from '@/components/data';
 import RestaurantCard from '@/components/RestaurantCard';
 import Test from '@/components/test';
-import { restaurantApi } from '@/network/api.service';
+import { restaurantApi } from '@/network/api';
 
-export default async function Home() {
-  const restaurants = await restaurantApi.restaurantControllerFindAll();
-  console.log(restaurants.data);
+export default async function HomePage() {
+  const { data: restaurants } = await restaurantApi.restaurantControllerFindAll();
   return (
-    <div className='px-8 mt-10 grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-1 gap-6'>
+    <div className='flex flex-col items-center'>
       <Test />
-      {restaurant.map((item, index) => {
-        return (
-          <div key={index}>
-            <RestaurantCard restaurant={item} />
-          </div>
-        );
-      })}
+      <div className='px-8 mt-10 grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-1 gap-6'>
+        {restaurants.map((item, index) => {
+          return (
+            <div key={index}>
+              <RestaurantCard restaurant={item} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

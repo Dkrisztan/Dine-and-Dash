@@ -4,7 +4,7 @@ import { RestaurantTable } from '@/components/data-tables/RestaurantTable';
 import { UserTable } from '@/components/data-tables/UserTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-export default function Admin() {
+export default function AdminPage() {
   return (
     <>
       {/*<Test />*/}

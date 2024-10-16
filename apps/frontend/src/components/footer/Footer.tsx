@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div>
+    <div className='w-full mt-auto'>
       <hr />
       <footer className='text-center py-4'>
         <p>&copy; 2024 Dine & Dash</p>

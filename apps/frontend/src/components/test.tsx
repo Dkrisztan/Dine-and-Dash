@@ -9,5 +9,9 @@ export default function Test() {
     window.location.href = 'http://localhost:3001/auth/google/login';
   };
 
-  return <Button onClick={getAccessToken}>Click me</Button>;
+  return (
+    <Button className='w-1/6' onClick={getAccessToken}>
+      Click me
+    </Button>
+  );
 }

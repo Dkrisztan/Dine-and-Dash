@@ -2235,7 +2235,7 @@ export const FoodApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        foodControllerFindAllForRestaurant: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        foodControllerFindAllForOwnedRestaurant: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/food`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2251,6 +2251,39 @@ export const FoodApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        foodControllerFindAllForRestaurant: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('foodControllerFindAllForRestaurant', 'id', id)
+            const localVarPath = `/food/{id}/foods`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -2407,8 +2440,20 @@ export const FoodApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async foodControllerFindAllForRestaurant(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FoodDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.foodControllerFindAllForRestaurant(options);
+        async foodControllerFindAllForOwnedRestaurant(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FoodDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.foodControllerFindAllForOwnedRestaurant(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['FoodApi.foodControllerFindAllForOwnedRestaurant']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async foodControllerFindAllForRestaurant(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FoodDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.foodControllerFindAllForRestaurant(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FoodApi.foodControllerFindAllForRestaurant']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2474,8 +2519,17 @@ export const FoodApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        foodControllerFindAllForRestaurant(options?: RawAxiosRequestConfig): AxiosPromise<Array<FoodDto>> {
-            return localVarFp.foodControllerFindAllForRestaurant(options).then((request) => request(axios, basePath));
+        foodControllerFindAllForOwnedRestaurant(options?: RawAxiosRequestConfig): AxiosPromise<Array<FoodDto>> {
+            return localVarFp.foodControllerFindAllForOwnedRestaurant(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        foodControllerFindAllForRestaurant(id: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<FoodDto>> {
+            return localVarFp.foodControllerFindAllForRestaurant(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2532,8 +2586,19 @@ export class FoodApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FoodApi
      */
-    public foodControllerFindAllForRestaurant(options?: RawAxiosRequestConfig) {
-        return FoodApiFp(this.configuration).foodControllerFindAllForRestaurant(options).then((request) => request(this.axios, this.basePath));
+    public foodControllerFindAllForOwnedRestaurant(options?: RawAxiosRequestConfig) {
+        return FoodApiFp(this.configuration).foodControllerFindAllForOwnedRestaurant(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FoodApi
+     */
+    public foodControllerFindAllForRestaurant(id: string, options?: RawAxiosRequestConfig) {
+        return FoodApiFp(this.configuration).foodControllerFindAllForRestaurant(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -10,12 +10,12 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('food')
 @Controller('food')
-@JwtAuth()
-@Roles(Role.ADMIN, Role.OWNER)
 export class FoodController {
   constructor(private readonly foodService: FoodService) {}
 
   @Post()
+  @JwtAuth()
+  @Roles(Role.ADMIN, Role.OWNER)
   async addFoodToCurrentUserRestaurant(
     @CurrentUser() user: UserDto,
     @Body() createFoodDto: CreateFoodDto
@@ -24,16 +24,27 @@ export class FoodController {
   }
 
   @Get()
-  async findAllForRestaurant(@CurrentUser() user: UserDto): Promise<FoodDto[]> {
+  @JwtAuth()
+  @Roles(Role.ADMIN, Role.OWNER)
+  async findAllForOwnedRestaurant(@CurrentUser() user: UserDto): Promise<FoodDto[]> {
     return this.foodService.findAllForRestaurant(user.ownerOf.id);
   }
 
+  @Get(':id/foods')
+  async findAllForRestaurant(@Param('id') id: string): Promise<FoodDto[]> {
+    return this.foodService.findAllForRestaurant(id);
+  }
+
   @Get(':id')
+  @JwtAuth()
+  @Roles(Role.ADMIN, Role.OWNER)
   async findOneForRestaurant(@CurrentUser() user: UserDto, @Param('id') id: string): Promise<FoodDto> {
     return this.foodService.findOneForRestaurant(user.ownerOf.id, id);
   }
 
   @Patch(':id')
+  @JwtAuth()
+  @Roles(Role.ADMIN, Role.OWNER)
   async updateOneForRestaurant(
     @CurrentUser() user: UserDto,
     @Param('id') id: string,
@@ -43,6 +54,8 @@ export class FoodController {
   }
 
   @Delete(':id')
+  @JwtAuth()
+  @Roles(Role.ADMIN, Role.OWNER)
   async removeFromRestaurant(@CurrentUser() user: UserDto, @Param('id') id: string): Promise<FoodDto> {
     return this.foodService.removeFromRestaurant(user.ownerOf.id, id);
   }
