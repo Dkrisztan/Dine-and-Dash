@@ -7,7 +7,7 @@ export default async function HomePage() {
   return (
     <div className='flex flex-col items-center'>
       <Test />
-      <div className='px-8 mt-10 grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-1 gap-6'>
+      <div className='px-8 mt-10 grid md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-1 gap-7'>
         {restaurants.map((item, index) => {
           return (
             <div key={index}>
