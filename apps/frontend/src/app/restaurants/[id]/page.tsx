@@ -2,10 +2,10 @@ import Image from 'next/image';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Param } from '@/lib/param';
-import { foodApi, restaurantApi } from '@/network/api';
+import { foodApi } from '@/network/api';
 
 export default async function RestaurantPage({ params: { id } }: Param) {
-  const { data: restaurant } = await restaurantApi.restaurantControllerFindOne(id);
+  //const { data: restaurant } = await restaurantApi.restaurantControllerFindOne(id);
   const { data: foods } = await foodApi.foodControllerFindAllForRestaurant(id);
 
   return (
