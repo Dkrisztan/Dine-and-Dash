@@ -2,8 +2,6 @@ import RestaurantCard from '@/components/RestaurantCard';
 import Test from '@/components/test';
 import { restaurantApi } from '@/network/api';
 
-export const dynamic = 'force-dynamic';
-
 export default async function RestaurantsPage() {
   const { data: restaurants } = await restaurantApi.restaurantControllerFindAll();
   return (
