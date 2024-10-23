@@ -4,7 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Param } from '@/lib/param';
 import { foodApi } from '@/network/api';
 
-export default async function RestaurantPage({ params: { id } }: Param) {
+export default async function RestaurantPage(props: Param) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   //const { data: restaurant } = await restaurantApi.restaurantControllerFindOne(id);
   const { data: foods } = await foodApi.foodControllerFindAllForRestaurant(id);
 
