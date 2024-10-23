@@ -7,9 +7,7 @@ import { foodApi } from '@/network/api';
 export default async function RestaurantPage(props: Param) {
   const params = await props.params;
 
-  const {
-    id
-  } = params;
+  const { id } = params;
 
   //const { data: restaurant } = await restaurantApi.restaurantControllerFindOne(id);
   const { data: foods } = await foodApi.foodControllerFindAllForRestaurant(id);
