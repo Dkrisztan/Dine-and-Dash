@@ -17,6 +17,8 @@ async function bootstrap() {
     })
   );
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Dine and Dash')
     .setDescription('Api description for Dine and Dash full stack food delivery application')

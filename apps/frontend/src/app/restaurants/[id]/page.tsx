@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Param } from '@/lib/param';
 import { foodApi } from '@/network/api';
 
+export const dynamic = 'force-dynamic';
+
 export default async function RestaurantPage(props: Param) {
   const params = await props.params;
 
