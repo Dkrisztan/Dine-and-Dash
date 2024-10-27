@@ -36,10 +36,8 @@ export function TopNav() {
   };
 
   useEffect(() => {
-    // Initial fetch
     fetchUser();
 
-    // Listen for auth changes
     const handleAuthChange = () => {
       fetchUser();
     };
@@ -59,6 +57,7 @@ export function TopNav() {
     Cookies.remove('accessToken');
     setUser(null);
     window.dispatchEvent(new Event('auth-changed'));
+    router.push('/');
   };
 
   const redirectToProfile = () => {
