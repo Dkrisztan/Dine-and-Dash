@@ -1,4 +1,5 @@
 import RestaurantCard from '@/components/restaurant/RestaurantCard';
+import RestaurantSkeletonCard from '@/components/restaurant/RestaurantSkeletonCard';
 import { restaurantApi } from '@/network/api';
 
 export const dynamic = 'force-dynamic';
@@ -11,6 +12,7 @@ export default async function RestaurantsPage() {
         return (
           <div key={index}>
             <RestaurantCard restaurant={item} />
+            <RestaurantSkeletonCard />
           </div>
         );
       })}

@@ -6,18 +6,21 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { IoCartOutline } from 'react-icons/io5';
-import { LuLogIn } from 'react-icons/lu';
+import { LuLogIn, LuLogOut, LuUser } from 'react-icons/lu';
 
-import { UserDto } from '@/api';
+import { CartDto, UserDto } from '@/api';
 import Logo from '@/components/logo/Logo';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import { ModeToggle } from '@/components/ui/mode-toggle';
-import { userApi } from '@/network/api';
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { cartApi, userApi } from '@/network/api';
 
 export function TopNav() {
   const router = useRouter();
   const [user, setUser] = useState<UserDto | null>(null);
+  const [cart, setCart] = useState<CartDto | null>(null);
 
   const fetchUser = async () => {
     const token = Cookies.get('accessToken');
@@ -64,6 +67,11 @@ export function TopNav() {
     router.push('/users/me');
   };
 
+  const getCartForMe = async () => {
+    const { data: cart } = await cartApi.cartControllerGetCart();
+    setCart(cart);
+  };
+
   return (
     <nav className='flex w-full justify-between border-b p-3 text-2xl font-semibold mb-2'>
       <div className='flex flex-row items-center gap-5'>
@@ -75,9 +83,38 @@ export function TopNav() {
       <div className='flex flex-row items-center gap-4 px-2'>
         <Link href='/admin'>Admin</Link>
 
-        <Link href='/cart'>
-          <IoCartOutline />
-        </Link>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant='outline' size='icon' onClick={getCartForMe}>
+              <IoCartOutline fontSize={24} />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side='right'>
+            <SheetHeader>
+              <SheetTitle>Your Cart</SheetTitle>
+              <SheetDescription>Items in your cart.</SheetDescription>
+            </SheetHeader>
+            <div className='grid gap-4 py-4'>
+              <div className='grid grid-cols-4 items-center gap-4'>
+                <label htmlFor='name' className='text-right'>
+                  Name
+                </label>
+                <Input id='name' className='col-span-3' />
+              </div>
+              <div className='grid grid-cols-4 items-center gap-4'>
+                <label htmlFor='username' className='text-right'>
+                  Username
+                </label>
+                <Input id='username' className='col-span-3' />
+              </div>
+            </div>
+            <SheetFooter>
+              <SheetClose asChild>
+                <Button type='submit'>Save changes</Button>
+              </SheetClose>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
 
         <ModeToggle />
 
@@ -90,14 +127,20 @@ export function TopNav() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={redirectToProfile}>My Account</DropdownMenuItem>
-                <DropdownMenuItem onClick={signOut}>Log out</DropdownMenuItem>
+                <DropdownMenuItem onClick={redirectToProfile} className='gap-1'>
+                  <LuUser fontSize={18} />
+                  My Account
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={signOut} className='gap-1'>
+                  <LuLogOut fontSize={18} />
+                  Log out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         ) : (
           <Button variant='outline' size='icon' onClick={signIn}>
-            <LuLogIn />
+            <LuLogIn fontSize={18} />
           </Button>
         )}
       </div>
