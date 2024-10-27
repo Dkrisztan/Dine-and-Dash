@@ -14,7 +14,7 @@ export class CartService {
   async getCartById(id: string): Promise<CartDto> {
     const cart = await this.prisma.cart.findFirst({
       where: { id },
-      include: { items: true },
+      include: { items: { include: { food: true } } },
     });
     if (!cart) {
       throw new NotFoundException('Cart not found');
@@ -25,7 +25,7 @@ export class CartService {
   async getCartByUserId(userId: string): Promise<CartDto> {
     return this.prisma.cart.findFirst({
       where: { userId },
-      include: { items: true },
+      include: { items: { include: { food: true } } },
     });
   }
 

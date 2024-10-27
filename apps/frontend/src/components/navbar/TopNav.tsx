@@ -83,7 +83,7 @@ export function TopNav() {
       <div className='flex flex-row items-center gap-4 px-2'>
         <Link href='/admin'>Admin</Link>
 
-        <Sheet>
+        <Sheet key={user?.id}>
           <SheetTrigger asChild>
             <Button variant='outline' size='icon' onClick={getCartForMe}>
               <IoCartOutline fontSize={24} />
