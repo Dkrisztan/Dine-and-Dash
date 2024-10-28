@@ -97,6 +97,12 @@ export interface CartItemDto {
      * @memberof CartItemDto
      */
     'cartId': string;
+    /**
+     * 
+     * @type {FoodDto}
+     * @memberof CartItemDto
+     */
+    'food': FoodDto;
 }
 /**
  * 

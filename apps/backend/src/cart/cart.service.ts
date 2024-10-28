@@ -8,7 +8,7 @@ export class CartService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllCarts(): Promise<CartDto[]> {
-    return this.prisma.cart.findMany({ include: { items: true } });
+    return this.prisma.cart.findMany({ include: { items: { include: { food: true } } } });
   }
 
   async getCartById(id: string): Promise<CartDto> {

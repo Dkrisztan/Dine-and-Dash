@@ -12,7 +12,6 @@ import { CartDto, UserDto } from '@/api';
 import Logo from '@/components/logo/Logo';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cartApi, userApi } from '@/network/api';
@@ -95,22 +94,21 @@ export function TopNav() {
               <SheetDescription>Items in your cart.</SheetDescription>
             </SheetHeader>
             <div className='grid gap-4 py-4'>
-              <div className='grid grid-cols-4 items-center gap-4'>
-                <label htmlFor='name' className='text-right'>
-                  Name
-                </label>
-                <Input id='name' className='col-span-3' />
-              </div>
-              <div className='grid grid-cols-4 items-center gap-4'>
-                <label htmlFor='username' className='text-right'>
-                  Username
-                </label>
-                <Input id='username' className='col-span-3' />
-              </div>
+              {cart?.items?.map((item) => {
+                return (
+                  <div key={item.id} className='flex items-center gap-4'>
+                    <Image src={item.food.image} alt={item.food.name} width={64} height={64} className='rounded-xl' />
+                    <div>
+                      <div className='text-lg font-bold'>{item.food.name}</div>
+                      <div>{item.food.description}</div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <SheetFooter>
               <SheetClose asChild>
-                <Button type='submit'>Save changes</Button>
+                <Button type='submit'>Order</Button>
               </SheetClose>
             </SheetFooter>
           </SheetContent>

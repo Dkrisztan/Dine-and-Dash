@@ -1,5 +1,6 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { FoodDto } from './food.dto';
 
 export class CartItemDto {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
@@ -10,6 +11,18 @@ export class CartItemDto {
 
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   cartId: string;
+
+  @ApiProperty({
+    example: {
+      id: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a',
+      name: 'Chicken Burger',
+      price: 1500,
+      description: 'A delicious chicken burger.',
+      image: 'https://source.unsplash.com/200x200/?burger',
+      restaurantId: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a',
+    },
+  })
+  food: FoodDto;
 }
 
 export class CartDto {
