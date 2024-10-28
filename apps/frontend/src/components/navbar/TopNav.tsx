@@ -8,18 +8,19 @@ import { useEffect, useState } from 'react';
 import { IoCartOutline } from 'react-icons/io5';
 import { LuLogIn, LuLogOut, LuUser } from 'react-icons/lu';
 
-import { CartDto, UserDto } from '@/api';
+import { UserDto } from '@/api';
 import Logo from '@/components/logo/Logo';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { cartApi, userApi } from '@/network/api';
+import { useCart } from '@/hooks/cart/useCart';
+import { userApi } from '@/network/api';
 
 export function TopNav() {
   const router = useRouter();
   const [user, setUser] = useState<UserDto | null>(null);
-  const [cart, setCart] = useState<CartDto | null>(null);
+  const { data: cart, refreshCart } = useCart();
 
   const fetchUser = async () => {
     const token = Cookies.get('accessToken');
@@ -66,11 +67,6 @@ export function TopNav() {
     router.push('/users/me');
   };
 
-  const getCartForMe = async () => {
-    const { data: cart } = await cartApi.cartControllerGetCart();
-    setCart(cart);
-  };
-
   return (
     <nav className='flex w-full justify-between border-b p-3 text-2xl font-semibold mb-2'>
       <div className='flex flex-row items-center gap-5'>
@@ -84,7 +80,7 @@ export function TopNav() {
 
         <Sheet key={user?.id}>
           <SheetTrigger asChild>
-            <Button variant='outline' size='icon' onClick={getCartForMe}>
+            <Button variant='outline' size='icon' onClick={refreshCart}>
               <IoCartOutline fontSize={24} />
             </Button>
           </SheetTrigger>
