@@ -20,7 +20,7 @@ import { userApi } from '@/network/api';
 export function TopNav() {
   const router = useRouter();
   const [user, setUser] = useState<UserDto | null>(null);
-  const { data: cart, refreshCart } = useCart();
+  const { data: cart } = useCart();
 
   const fetchUser = async () => {
     const token = Cookies.get('accessToken');
@@ -80,7 +80,7 @@ export function TopNav() {
 
         <Sheet key={user?.id}>
           <SheetTrigger asChild>
-            <Button variant='outline' size='icon' onClick={refreshCart}>
+            <Button variant='outline' size='icon'>
               <IoCartOutline fontSize={24} />
             </Button>
           </SheetTrigger>
