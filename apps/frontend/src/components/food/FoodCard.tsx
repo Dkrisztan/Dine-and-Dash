@@ -51,11 +51,19 @@ export default function FoodCard({ food }: { food: FoodCardProps }) {
             </Button>
           </div>
         </CardFooter>
-        {quantity !== 0 && (
-          <Button className='w-full' variant='outline'>
-            Add to cart
-          </Button>
-        )}
+        <div className='flex flex-col items-end'>
+          {quantity !== 0 && (
+            <Button
+              variant='outline'
+              className='self-end w-1/3 relative overflow-hidden transition-all
+                before:absolute before:bottom-0 before:left-0 before:top-0
+                before:z-0 before:h-full before:w-0 before:bg-green-700 before:transition-all
+                before:duration-500 hover:text-white hover:before:left-0 hover:before:w-full'
+            >
+              <span className='relative z-10'>Add to cart</span>
+            </Button>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
