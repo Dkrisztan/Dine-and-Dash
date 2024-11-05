@@ -5,8 +5,10 @@ import { useState } from 'react';
 import { LuMinusCircle, LuPlusCircle } from 'react-icons/lu';
 import { MdAttachMoney } from 'react-icons/md';
 
+import { AddToCartDto } from '@/api';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAddToCart } from '@/hooks/cart/useAddToCart';
 
 interface FoodCardProps {
   id: string;
@@ -18,14 +20,30 @@ interface FoodCardProps {
 
 export default function FoodCard({ food }: { food: FoodCardProps }) {
   const [quantity, setQuantity] = useState(0);
+  const [cartItem, setCartItem] = useState<AddToCartDto>({ foodId: food.id, quantity: 0 });
+  const { trigger } = useAddToCart();
 
   const addFood = () => {
-    setQuantity((prev) => prev + 1);
+    setQuantity((prevQuantity) => {
+      const newQuantity = prevQuantity + 1;
+      setCartItem((prevCartItem) => ({
+        ...prevCartItem,
+        quantity: newQuantity,
+      }));
+      return newQuantity;
+    });
   };
 
   const removeFood = () => {
     if (quantity === 0) return;
-    setQuantity((prev) => prev - 1);
+    setQuantity((prevQuantity) => {
+      const newQuantity = prevQuantity - 1;
+      setCartItem((prevCartItem) => ({
+        ...prevCartItem,
+        quantity: newQuantity,
+      }));
+      return newQuantity;
+    });
   };
 
   return (
@@ -54,6 +72,10 @@ export default function FoodCard({ food }: { food: FoodCardProps }) {
         <div className='flex flex-col items-end'>
           {quantity !== 0 && (
             <Button
+              onClick={async () => {
+                await trigger(cartItem);
+                setQuantity(0);
+              }}
               variant='outline'
               className='self-end w-1/3 relative overflow-hidden transition-all
                 before:absolute before:bottom-0 before:left-0 before:top-0
