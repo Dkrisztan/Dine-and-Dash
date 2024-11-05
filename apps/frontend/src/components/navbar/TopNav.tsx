@@ -90,17 +90,23 @@ export function TopNav() {
               <SheetDescription>Items in your cart.</SheetDescription>
             </SheetHeader>
             <div className='grid gap-4 py-4'>
-              {cart?.items?.map((item) => {
-                return (
-                  <div key={item.id} className='flex items-center gap-4'>
-                    <Image src={item.food.image} alt={item.food.name} width={64} height={64} className='rounded-xl' />
-                    <div>
-                      <div className='text-lg font-bold'>{item.food.name}</div>
-                      <div>{item.food.description}</div>
+              {cart?.items
+                ?.map((item) => item.food.id)
+                .filter((value, index, self) => self.indexOf(value) === index)
+                .map((foodId) => {
+                  const count = cart?.items?.filter((item) => item.food.id === foodId).length;
+                  const item = cart.items?.find((item) => item.food.id === foodId);
+                  return (
+                    <div key={foodId} className='flex items-center gap-4'>
+                      {item?.food.image ? <Image src={item.food.image} alt={item.food.name} width={64} height={64} className='rounded-xl' /> : <div>No image available</div>}
+                      <div>
+                        <div className='text-lg font-bold'>{item?.food.name}</div>
+                        <div>{item?.food.description}</div>
+                        <div>Amount: {count}</div>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
             <SheetFooter>
               <SheetClose asChild>
