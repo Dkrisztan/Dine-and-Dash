@@ -80,7 +80,7 @@ export function TopNav() {
 
         <Sheet key={user?.id}>
           <SheetTrigger asChild>
-            <Button variant='outline' size='icon' onClick={refreshCart}>
+            <Button variant='outline' size='icon'>
               <IoCartOutline fontSize={24} />
             </Button>
           </SheetTrigger>
