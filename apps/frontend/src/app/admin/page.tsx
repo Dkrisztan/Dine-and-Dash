@@ -1,13 +1,15 @@
-import { order, person } from '@/components/data';
+'use client';
+
 import { OrderTable } from '@/components/data-tables/OrderTable';
 import { RestaurantTable } from '@/components/data-tables/RestaurantTable';
 import { UserTable } from '@/components/data-tables/UserTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useUsers } from '@/hooks/admin/useUsers';
 
 export default function AdminPage() {
+  const { data: users } = useUsers();
   return (
     <>
-      {/*<Test />*/}
       <div className='px-8 py-1'>
         <Tabs defaultValue='users'>
           <div className='flex items-center lg:absolute lg:py-4 md:py-2'>
@@ -18,13 +20,13 @@ export default function AdminPage() {
             </TabsList>
           </div>
           <TabsContent value='users'>
-            <UserTable data={person} />
+            <UserTable data={users ?? []} />
           </TabsContent>
           <TabsContent value='orders'>
-            <OrderTable data={order} />
+            <OrderTable data={[]} />
           </TabsContent>
           <TabsContent value='restaurants'>
-            <RestaurantTable data={person} />
+            <RestaurantTable data={[]} />
           </TabsContent>
         </Tabs>
       </div>

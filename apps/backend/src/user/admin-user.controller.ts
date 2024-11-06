@@ -4,7 +4,9 @@ import { CreateUserDto, UpdateUserDto, UserDto } from '../types/dtos/user.dto';
 import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../types/dtos/role.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('admin/user')
 @Controller('admin/user')
 @JwtAuth()
 @Roles(Role.ADMIN)

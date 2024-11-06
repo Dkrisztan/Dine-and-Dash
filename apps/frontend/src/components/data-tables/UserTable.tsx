@@ -2,6 +2,7 @@
 
 import { CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from '@tanstack/react-table';
+import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
 
@@ -23,7 +24,7 @@ export const columns: ColumnDef<UserDto>[] = [
   {
     accessorKey: 'image',
     header: () => <div className='text-base'>Image</div>,
-    cell: ({ row }) => <img src={row.getValue('image')} alt={row.getValue('name')} className='h-16 w-16 rounded-xl' />,
+    cell: ({ row }) => <Image src={row.getValue('image')} alt={row.getValue('name')} width={64} height={64} className='rounded-xl w-16 h-16' />,
   },
   {
     accessorKey: 'id',
