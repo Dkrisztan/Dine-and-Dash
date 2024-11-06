@@ -20,7 +20,7 @@ import { userApi } from '@/network/api';
 export function TopNav() {
   const router = useRouter();
   const [user, setUser] = useState<UserDto | null>(null);
-  const { data: cart, refreshCart } = useCart();
+  const { data: cart } = useCart();
 
   const fetchUser = async () => {
     const token = Cookies.get('accessToken');
