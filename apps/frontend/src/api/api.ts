@@ -691,6 +691,821 @@ export type UserDtoRoleEnum = typeof UserDtoRoleEnum[keyof typeof UserDtoRoleEnu
 
 
 /**
+ * AdminCartApi - axios parameter creator
+ * @export
+ */
+export const AdminCartApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminCartControllerGetAllCarts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/cart`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminCartControllerGetCartById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('adminCartControllerGetCartById', 'id', id)
+            const localVarPath = `/admin/cart/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminCartApi - functional programming interface
+ * @export
+ */
+export const AdminCartApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminCartApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminCartControllerGetAllCarts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CartDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCartControllerGetAllCarts(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminCartApi.adminCartControllerGetAllCarts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminCartControllerGetCartById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CartDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCartControllerGetCartById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminCartApi.adminCartControllerGetCartById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminCartApi - factory interface
+ * @export
+ */
+export const AdminCartApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminCartApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminCartControllerGetAllCarts(options?: RawAxiosRequestConfig): AxiosPromise<Array<CartDto>> {
+            return localVarFp.adminCartControllerGetAllCarts(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminCartControllerGetCartById(id: string, options?: RawAxiosRequestConfig): AxiosPromise<CartDto> {
+            return localVarFp.adminCartControllerGetCartById(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminCartApi - object-oriented interface
+ * @export
+ * @class AdminCartApi
+ * @extends {BaseAPI}
+ */
+export class AdminCartApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminCartApi
+     */
+    public adminCartControllerGetAllCarts(options?: RawAxiosRequestConfig) {
+        return AdminCartApiFp(this.configuration).adminCartControllerGetAllCarts(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminCartApi
+     */
+    public adminCartControllerGetCartById(id: string, options?: RawAxiosRequestConfig) {
+        return AdminCartApiFp(this.configuration).adminCartControllerGetCartById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AdminFoodApi - axios parameter creator
+ * @export
+ */
+export const AdminFoodApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateFoodDto} createFoodDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerAddFoodToCurrentUserRestaurant: async (createFoodDto: CreateFoodDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createFoodDto' is not null or undefined
+            assertParamExists('adminFoodControllerAddFoodToCurrentUserRestaurant', 'createFoodDto', createFoodDto)
+            const localVarPath = `/admin/food`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createFoodDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerFindAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/food`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('adminFoodControllerFindOne', 'id', id)
+            const localVarPath = `/admin/food/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('adminFoodControllerRemove', 'id', id)
+            const localVarPath = `/admin/food/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateFoodDto} updateFoodDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerUpdate: async (id: string, updateFoodDto: UpdateFoodDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('adminFoodControllerUpdate', 'id', id)
+            // verify required parameter 'updateFoodDto' is not null or undefined
+            assertParamExists('adminFoodControllerUpdate', 'updateFoodDto', updateFoodDto)
+            const localVarPath = `/admin/food/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateFoodDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminFoodApi - functional programming interface
+ * @export
+ */
+export const AdminFoodApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminFoodApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateFoodDto} createFoodDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto: CreateFoodDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FoodDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminFoodApi.adminFoodControllerAddFoodToCurrentUserRestaurant']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminFoodControllerFindAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FoodDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerFindAll(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminFoodApi.adminFoodControllerFindAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminFoodControllerFindOne(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FoodDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerFindOne(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminFoodApi.adminFoodControllerFindOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminFoodControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FoodDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerRemove(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminFoodApi.adminFoodControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateFoodDto} updateFoodDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminFoodControllerUpdate(id: string, updateFoodDto: UpdateFoodDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FoodDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerUpdate(id, updateFoodDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminFoodApi.adminFoodControllerUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminFoodApi - factory interface
+ * @export
+ */
+export const AdminFoodApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminFoodApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateFoodDto} createFoodDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto: CreateFoodDto, options?: RawAxiosRequestConfig): AxiosPromise<FoodDto> {
+            return localVarFp.adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerFindAll(options?: RawAxiosRequestConfig): AxiosPromise<Array<FoodDto>> {
+            return localVarFp.adminFoodControllerFindAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerFindOne(id: string, options?: RawAxiosRequestConfig): AxiosPromise<FoodDto> {
+            return localVarFp.adminFoodControllerFindOne(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<FoodDto> {
+            return localVarFp.adminFoodControllerRemove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateFoodDto} updateFoodDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminFoodControllerUpdate(id: string, updateFoodDto: UpdateFoodDto, options?: RawAxiosRequestConfig): AxiosPromise<FoodDto> {
+            return localVarFp.adminFoodControllerUpdate(id, updateFoodDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminFoodApi - object-oriented interface
+ * @export
+ * @class AdminFoodApi
+ * @extends {BaseAPI}
+ */
+export class AdminFoodApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateFoodDto} createFoodDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminFoodApi
+     */
+    public adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto: CreateFoodDto, options?: RawAxiosRequestConfig) {
+        return AdminFoodApiFp(this.configuration).adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminFoodApi
+     */
+    public adminFoodControllerFindAll(options?: RawAxiosRequestConfig) {
+        return AdminFoodApiFp(this.configuration).adminFoodControllerFindAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminFoodApi
+     */
+    public adminFoodControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
+        return AdminFoodApiFp(this.configuration).adminFoodControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminFoodApi
+     */
+    public adminFoodControllerRemove(id: string, options?: RawAxiosRequestConfig) {
+        return AdminFoodApiFp(this.configuration).adminFoodControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateFoodDto} updateFoodDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminFoodApi
+     */
+    public adminFoodControllerUpdate(id: string, updateFoodDto: UpdateFoodDto, options?: RawAxiosRequestConfig) {
+        return AdminFoodApiFp(this.configuration).adminFoodControllerUpdate(id, updateFoodDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AdminRestaurantApi - axios parameter creator
+ * @export
+ */
+export const AdminRestaurantApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {CreateRestaurantDto} createRestaurantDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminRestaurantControllerCreateForUser: async (createRestaurantDto: CreateRestaurantDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createRestaurantDto' is not null or undefined
+            assertParamExists('adminRestaurantControllerCreateForUser', 'createRestaurantDto', createRestaurantDto)
+            const localVarPath = `/admin/restaurant`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createRestaurantDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminRestaurantControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('adminRestaurantControllerRemove', 'id', id)
+            const localVarPath = `/admin/restaurant/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRestaurantDto} updateRestaurantDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminRestaurantControllerUpdate: async (id: string, updateRestaurantDto: UpdateRestaurantDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('adminRestaurantControllerUpdate', 'id', id)
+            // verify required parameter 'updateRestaurantDto' is not null or undefined
+            assertParamExists('adminRestaurantControllerUpdate', 'updateRestaurantDto', updateRestaurantDto)
+            const localVarPath = `/admin/restaurant/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateRestaurantDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminRestaurantApi - functional programming interface
+ * @export
+ */
+export const AdminRestaurantApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminRestaurantApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateRestaurantDto} createRestaurantDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminRestaurantControllerCreateForUser(createRestaurantDto: CreateRestaurantDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestaurantDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRestaurantControllerCreateForUser(createRestaurantDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminRestaurantApi.adminRestaurantControllerCreateForUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminRestaurantControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestaurantDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRestaurantControllerRemove(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminRestaurantApi.adminRestaurantControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRestaurantDto} updateRestaurantDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminRestaurantControllerUpdate(id: string, updateRestaurantDto: UpdateRestaurantDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestaurantDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRestaurantControllerUpdate(id, updateRestaurantDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminRestaurantApi.adminRestaurantControllerUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminRestaurantApi - factory interface
+ * @export
+ */
+export const AdminRestaurantApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminRestaurantApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {CreateRestaurantDto} createRestaurantDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminRestaurantControllerCreateForUser(createRestaurantDto: CreateRestaurantDto, options?: RawAxiosRequestConfig): AxiosPromise<RestaurantDto> {
+            return localVarFp.adminRestaurantControllerCreateForUser(createRestaurantDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminRestaurantControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<RestaurantDto> {
+            return localVarFp.adminRestaurantControllerRemove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRestaurantDto} updateRestaurantDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminRestaurantControllerUpdate(id: string, updateRestaurantDto: UpdateRestaurantDto, options?: RawAxiosRequestConfig): AxiosPromise<RestaurantDto> {
+            return localVarFp.adminRestaurantControllerUpdate(id, updateRestaurantDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminRestaurantApi - object-oriented interface
+ * @export
+ * @class AdminRestaurantApi
+ * @extends {BaseAPI}
+ */
+export class AdminRestaurantApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateRestaurantDto} createRestaurantDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminRestaurantApi
+     */
+    public adminRestaurantControllerCreateForUser(createRestaurantDto: CreateRestaurantDto, options?: RawAxiosRequestConfig) {
+        return AdminRestaurantApiFp(this.configuration).adminRestaurantControllerCreateForUser(createRestaurantDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminRestaurantApi
+     */
+    public adminRestaurantControllerRemove(id: string, options?: RawAxiosRequestConfig) {
+        return AdminRestaurantApiFp(this.configuration).adminRestaurantControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateRestaurantDto} updateRestaurantDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminRestaurantApi
+     */
+    public adminRestaurantControllerUpdate(id: string, updateRestaurantDto: UpdateRestaurantDto, options?: RawAxiosRequestConfig) {
+        return AdminRestaurantApiFp(this.configuration).adminRestaurantControllerUpdate(id, updateRestaurantDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * AdminUserApi - axios parameter creator
  * @export
  */
@@ -1330,384 +2145,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminCartControllerGetAllCarts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/admin/cart`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminCartControllerGetCartById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('adminCartControllerGetCartById', 'id', id)
-            const localVarPath = `/admin/cart/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {CreateFoodDto} createFoodDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerAddFoodToCurrentUserRestaurant: async (createFoodDto: CreateFoodDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createFoodDto' is not null or undefined
-            assertParamExists('adminFoodControllerAddFoodToCurrentUserRestaurant', 'createFoodDto', createFoodDto)
-            const localVarPath = `/admin/food`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createFoodDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerFindAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/admin/food`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('adminFoodControllerFindOne', 'id', id)
-            const localVarPath = `/admin/food/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('adminFoodControllerRemove', 'id', id)
-            const localVarPath = `/admin/food/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {UpdateFoodDto} updateFoodDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerUpdate: async (id: string, updateFoodDto: UpdateFoodDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('adminFoodControllerUpdate', 'id', id)
-            // verify required parameter 'updateFoodDto' is not null or undefined
-            assertParamExists('adminFoodControllerUpdate', 'updateFoodDto', updateFoodDto)
-            const localVarPath = `/admin/food/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateFoodDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {CreateRestaurantDto} createRestaurantDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminRestaurantControllerCreateForUser: async (createRestaurantDto: CreateRestaurantDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createRestaurantDto' is not null or undefined
-            assertParamExists('adminRestaurantControllerCreateForUser', 'createRestaurantDto', createRestaurantDto)
-            const localVarPath = `/admin/restaurant`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createRestaurantDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminRestaurantControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('adminRestaurantControllerRemove', 'id', id)
-            const localVarPath = `/admin/restaurant/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {UpdateRestaurantDto} updateRestaurantDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminRestaurantControllerUpdate: async (id: string, updateRestaurantDto: UpdateRestaurantDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('adminRestaurantControllerUpdate', 'id', id)
-            // verify required parameter 'updateRestaurantDto' is not null or undefined
-            assertParamExists('adminRestaurantControllerUpdate', 'updateRestaurantDto', updateRestaurantDto)
-            const localVarPath = `/admin/restaurant/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateRestaurantDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         appControllerGetHello: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1805,126 +2242,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminCartControllerGetAllCarts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CartDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCartControllerGetAllCarts(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminCartControllerGetAllCarts']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminCartControllerGetCartById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CartDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminCartControllerGetCartById(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminCartControllerGetCartById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {CreateFoodDto} createFoodDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto: CreateFoodDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FoodDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminFoodControllerAddFoodToCurrentUserRestaurant']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminFoodControllerFindAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FoodDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerFindAll(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminFoodControllerFindAll']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminFoodControllerFindOne(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FoodDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerFindOne(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminFoodControllerFindOne']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminFoodControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FoodDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerRemove(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminFoodControllerRemove']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {UpdateFoodDto} updateFoodDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminFoodControllerUpdate(id: string, updateFoodDto: UpdateFoodDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FoodDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminFoodControllerUpdate(id, updateFoodDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminFoodControllerUpdate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {CreateRestaurantDto} createRestaurantDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminRestaurantControllerCreateForUser(createRestaurantDto: CreateRestaurantDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestaurantDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRestaurantControllerCreateForUser(createRestaurantDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminRestaurantControllerCreateForUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminRestaurantControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestaurantDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRestaurantControllerRemove(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminRestaurantControllerRemove']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {UpdateRestaurantDto} updateRestaurantDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async adminRestaurantControllerUpdate(id: string, updateRestaurantDto: UpdateRestaurantDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestaurantDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminRestaurantControllerUpdate(id, updateRestaurantDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.adminRestaurantControllerUpdate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         async appControllerGetHello(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.appControllerGetHello(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -1968,96 +2285,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminCartControllerGetAllCarts(options?: RawAxiosRequestConfig): AxiosPromise<Array<CartDto>> {
-            return localVarFp.adminCartControllerGetAllCarts(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminCartControllerGetCartById(id: string, options?: RawAxiosRequestConfig): AxiosPromise<CartDto> {
-            return localVarFp.adminCartControllerGetCartById(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {CreateFoodDto} createFoodDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto: CreateFoodDto, options?: RawAxiosRequestConfig): AxiosPromise<FoodDto> {
-            return localVarFp.adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerFindAll(options?: RawAxiosRequestConfig): AxiosPromise<Array<FoodDto>> {
-            return localVarFp.adminFoodControllerFindAll(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerFindOne(id: string, options?: RawAxiosRequestConfig): AxiosPromise<FoodDto> {
-            return localVarFp.adminFoodControllerFindOne(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<FoodDto> {
-            return localVarFp.adminFoodControllerRemove(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {UpdateFoodDto} updateFoodDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminFoodControllerUpdate(id: string, updateFoodDto: UpdateFoodDto, options?: RawAxiosRequestConfig): AxiosPromise<FoodDto> {
-            return localVarFp.adminFoodControllerUpdate(id, updateFoodDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {CreateRestaurantDto} createRestaurantDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminRestaurantControllerCreateForUser(createRestaurantDto: CreateRestaurantDto, options?: RawAxiosRequestConfig): AxiosPromise<RestaurantDto> {
-            return localVarFp.adminRestaurantControllerCreateForUser(createRestaurantDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminRestaurantControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<RestaurantDto> {
-            return localVarFp.adminRestaurantControllerRemove(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {UpdateRestaurantDto} updateRestaurantDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        adminRestaurantControllerUpdate(id: string, updateRestaurantDto: UpdateRestaurantDto, options?: RawAxiosRequestConfig): AxiosPromise<RestaurantDto> {
-            return localVarFp.adminRestaurantControllerUpdate(id, updateRestaurantDto, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         appControllerGetHello(options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.appControllerGetHello(options).then((request) => request(axios, basePath));
         },
@@ -2087,116 +2314,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminCartControllerGetAllCarts(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminCartControllerGetAllCarts(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminCartControllerGetCartById(id: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminCartControllerGetCartById(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CreateFoodDto} createFoodDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto: CreateFoodDto, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminFoodControllerAddFoodToCurrentUserRestaurant(createFoodDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminFoodControllerFindAll(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminFoodControllerFindAll(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminFoodControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminFoodControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminFoodControllerRemove(id: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminFoodControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {UpdateFoodDto} updateFoodDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminFoodControllerUpdate(id: string, updateFoodDto: UpdateFoodDto, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminFoodControllerUpdate(id, updateFoodDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CreateRestaurantDto} createRestaurantDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminRestaurantControllerCreateForUser(createRestaurantDto: CreateRestaurantDto, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminRestaurantControllerCreateForUser(createRestaurantDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminRestaurantControllerRemove(id: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminRestaurantControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {UpdateRestaurantDto} updateRestaurantDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public adminRestaurantControllerUpdate(id: string, updateRestaurantDto: UpdateRestaurantDto, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).adminRestaurantControllerUpdate(id, updateRestaurantDto, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @param {*} [options] Override http request option.

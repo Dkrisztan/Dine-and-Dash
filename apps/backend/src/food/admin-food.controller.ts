@@ -4,7 +4,9 @@ import { CreateFoodDto, FoodDto, UpdateFoodDto } from '../types/dtos/food.dto';
 import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../types/dtos/role.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('admin/food')
 @Controller('admin/food')
 @JwtAuth()
 @Roles(Role.ADMIN)

@@ -4,7 +4,9 @@ import { CartDto } from '../types/dtos/cart.dto';
 import { Role } from '../types/dtos/role.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuth } from '../auth/guards/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('admin/cart')
 @Controller('admin/cart')
 @Roles(Role.ADMIN)
 @JwtAuth()

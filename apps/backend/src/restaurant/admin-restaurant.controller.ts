@@ -4,7 +4,9 @@ import { CreateRestaurantDto, RestaurantDto, UpdateRestaurantDto } from '../type
 import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../types/dtos/role.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('admin/restaurant')
 @Controller('admin/restaurant')
 @JwtAuth()
 @Roles(Role.ADMIN)
