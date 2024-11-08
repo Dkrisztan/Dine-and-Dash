@@ -95,4 +95,27 @@ export class RestaurantService {
 
     return resturantDeleted;
   }
+
+  async findTopFive(): Promise<RestaurantDto[]> {
+    const result = await this.prisma.order.groupBy({
+      by: ['restaurantId'],
+      _count: {
+        restaurantId: true,
+      },
+      orderBy: {
+        _count: {
+          restaurantId: 'desc',
+        },
+      },
+      take: 5,
+    });
+
+    return this.prisma.restaurant.findMany({
+      where: {
+        id: {
+          in: result.map((r) => r.restaurantId),
+        },
+      },
+    });
+  }
 }

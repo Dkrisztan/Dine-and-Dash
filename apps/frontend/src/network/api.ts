@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import { AdminUserApi, CartApi, FoodApi, RestaurantApi, UserApi } from '@/api';
+import { AdminCartApi, AdminFoodApi, AdminRestaurantApi, AdminUserApi, CartApi, FoodApi, OrderApi, RestaurantApi, UserApi } from '@/api';
 
 export const axs = axios.create();
 export const authAxios = axios.create();
@@ -13,7 +13,15 @@ authAxios.interceptors.request.use((config) => {
 });
 
 export const userApi = new UserApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
-export const restaurantApi = new RestaurantApi(undefined, process.env.NEXT_PUBLIC_API_URL, axs);
-export const foodApi = new FoodApi(undefined, process.env.NEXT_PUBLIC_API_URL, axs);
-export const cartApi = new CartApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 export const adminUserApi = new AdminUserApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
+
+export const restaurantApi = new RestaurantApi(undefined, process.env.NEXT_PUBLIC_API_URL, axs);
+export const adminRestaurantApi = new AdminRestaurantApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
+
+export const foodApi = new FoodApi(undefined, process.env.NEXT_PUBLIC_API_URL, axs);
+export const adminFoodApi = new AdminFoodApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
+
+export const cartApi = new CartApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
+export const adminCartApi = new AdminCartApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
+
+export const orderApi = new OrderApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);

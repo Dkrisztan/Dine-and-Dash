@@ -31,4 +31,9 @@ export class UserController {
   async deleteProfile(@CurrentUser() user: UserDto): Promise<UserDto> {
     return this.userService.remove(user.id);
   }
+
+  @Get('/me/orders')
+  async getMyOrders(@CurrentUser() user: UserDto) {
+    return this.userService.getOrdersOfUser(user.id);
+  }
 }

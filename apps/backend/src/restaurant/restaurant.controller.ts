@@ -29,6 +29,12 @@ export class RestaurantController {
     return this.restaurantService.findAll();
   }
 
+  @Get('/topFive')
+  @UseGuards(JwtOptionalAuthGuard)
+  async getTopFive(): Promise<RestaurantDto[]> {
+    return this.restaurantService.findTopFive();
+  }
+
   @Get(':id')
   @UseGuards(JwtOptionalAuthGuard)
   async findOne(@Param('id') id: string): Promise<RestaurantDto> {

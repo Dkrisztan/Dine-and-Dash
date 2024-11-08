@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto, UserDto } from '../types/dtos/user.dto';
 import { PrismaService } from 'nestjs-prisma';
+import { OrderDto } from '../types/dtos/order.dto';
 
 @Injectable()
 export class UserService {
@@ -47,5 +48,9 @@ export class UserService {
 
   async findByEmail(email: string) {
     return this.prisma.user.findUnique({ where: { email }, include: { ownerOf: true, cart: true } });
+  }
+
+  async getOrdersOfUser(userId: string): Promise<OrderDto[]> {
+    return this.prisma.order.findMany({ where: { userId }, include: { items: { include: { food: true } } } });
   }
 }

@@ -1,7 +1,28 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', 'foodish-api.com', 'images.unsplash.com', 'lh3.googleusercontent.com', 'dine-and-dash-backend.vercel.app'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'dine-and-dash-backend.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'foodish-api.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
   },
 };
 
