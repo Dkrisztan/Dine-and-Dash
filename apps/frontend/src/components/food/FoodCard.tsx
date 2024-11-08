@@ -4,8 +4,10 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { LuMinusCircle, LuPlusCircle } from 'react-icons/lu';
 import { MdAttachMoney } from 'react-icons/md';
+import { toast } from 'sonner';
 
 import { AddToCartDto } from '@/api';
+import Spinner from '@/components/Spinner';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAddToCart } from '@/hooks/cart/useAddToCart';
@@ -21,7 +23,7 @@ interface FoodCardProps {
 export default function FoodCard({ food }: { food: FoodCardProps }) {
   const [quantity, setQuantity] = useState(0);
   const [cartItem, setCartItem] = useState<AddToCartDto>({ foodId: food.id, quantity: 0 });
-  const { trigger } = useAddToCart();
+  const { trigger, isMutating } = useAddToCart();
 
   const addFood = () => {
     setQuantity((prevQuantity) => {
@@ -74,6 +76,7 @@ export default function FoodCard({ food }: { food: FoodCardProps }) {
             <Button
               onClick={async () => {
                 await trigger(cartItem);
+                toast.success(`${food.name} has been added to the cart!`);
                 setQuantity(0);
               }}
               variant='outline'
@@ -82,7 +85,7 @@ export default function FoodCard({ food }: { food: FoodCardProps }) {
                 before:z-0 before:h-full before:w-0 before:bg-green-700 before:transition-all
                 before:duration-500 hover:text-white hover:before:left-0 hover:before:w-full'
             >
-              <span className='relative z-10'>Add to cart</span>
+              {isMutating ? <Spinner /> : <span className='relative z-10'>Add to cart</span>}
             </Button>
           )}
         </div>

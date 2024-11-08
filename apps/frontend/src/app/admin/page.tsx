@@ -5,9 +5,11 @@ import { RestaurantTable } from '@/components/data-tables/RestaurantTable';
 import { UserTable } from '@/components/data-tables/UserTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useUsers } from '@/hooks/admin/useUsers';
+import { useRestaurant } from '@/hooks/restaurant/useRestaurant';
 
 export default function AdminPage() {
   const { data: users } = useUsers();
+  const { data: restaurants } = useRestaurant();
   return (
     <>
       <div className='px-8 py-1'>
@@ -26,7 +28,7 @@ export default function AdminPage() {
             <OrderTable data={[]} />
           </TabsContent>
           <TabsContent value='restaurants'>
-            <RestaurantTable data={[]} />
+            <RestaurantTable data={restaurants ?? []} />
           </TabsContent>
         </Tabs>
       </div>

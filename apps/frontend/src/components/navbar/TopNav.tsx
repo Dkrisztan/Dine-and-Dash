@@ -84,7 +84,7 @@ export function TopNav() {
               <IoCartOutline fontSize={24} />
             </Button>
           </SheetTrigger>
-          <SheetContent side='right'>
+          <SheetContent side='right' className='overflow-y-scroll'>
             <SheetHeader>
               <SheetTitle>Your Cart</SheetTitle>
               <SheetDescription>Items in your cart.</SheetDescription>

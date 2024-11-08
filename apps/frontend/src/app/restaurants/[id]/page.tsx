@@ -9,7 +9,6 @@ export default async function RestaurantPage(props: Param) {
 
   const { id } = params;
 
-  //const { data: restaurant } = await restaurantApi.restaurantControllerFindOne(id);
   const { data: foods } = await foodApi.foodControllerFindAllForRestaurant(id);
 
   return (

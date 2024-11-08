@@ -5,6 +5,7 @@ import { Karla } from 'next/font/google';
 
 import Footer from '@/components/footer/Footer';
 import { TopNav } from '@/components/navbar/TopNav';
+import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </ThemeProvider>
+        <Toaster richColors />
       </body>
     </html>
   );

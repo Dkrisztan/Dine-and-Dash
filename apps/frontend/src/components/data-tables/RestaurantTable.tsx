@@ -5,21 +5,14 @@ import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFiltered
 import * as React from 'react';
 import { useState } from 'react';
 
+import { RestaurantDto } from '@/api';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-export type Person = {
-  id: string;
-  name: string;
-  email: string;
-  role: 'ADMIN' | 'CUSTOMER' | 'OWNER' | 'COURIER';
-  image: string;
-};
-
-export const columns: ColumnDef<Person>[] = [
+export const columns: ColumnDef<RestaurantDto>[] = [
   {
     id: 'select',
     header: ({ table }) => <Checkbox checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')} onCheckedChange={(value) => table.toggleAllPageRowsSelected(Boolean(value))} aria-label='Select all' />,
@@ -88,7 +81,7 @@ export const columns: ColumnDef<Person>[] = [
   },
 ];
 
-export function RestaurantTable({ data }: { data: Person[] }) {
+export function RestaurantTable({ data }: { data: RestaurantDto[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
