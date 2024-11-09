@@ -4,6 +4,7 @@ import { OrderTable } from '@/components/data-tables/OrderTable';
 import { RestaurantTable } from '@/components/data-tables/RestaurantTable';
 import { UserTable } from '@/components/data-tables/UserTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useOrders } from '@/hooks/admin/useOrders';
 import { useUsers } from '@/hooks/admin/useUsers';
 import { useRestaurant } from '@/hooks/restaurant/useRestaurant';
 
@@ -12,6 +13,7 @@ export const dynamic = 'force-dynamic';
 export default function AdminPage() {
   const { data: users } = useUsers();
   const { data: restaurants } = useRestaurant();
+  const { data: orders } = useOrders();
 
   return (
     <>
@@ -28,7 +30,7 @@ export default function AdminPage() {
             <UserTable data={users ?? []} />
           </TabsContent>
           <TabsContent value='orders'>
-            <OrderTable data={[]} />
+            <OrderTable data={orders ?? []} />
           </TabsContent>
           <TabsContent value='restaurants'>
             <RestaurantTable data={restaurants ?? []} />

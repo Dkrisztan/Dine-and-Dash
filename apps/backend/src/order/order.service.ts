@@ -80,4 +80,8 @@ export class OrderService {
       },
     });
   }
+
+  async findAll(): Promise<OrderDto[]> {
+    return this.prisma.order.findMany();
+  }
 }

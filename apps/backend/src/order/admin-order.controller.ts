@@ -17,4 +17,9 @@ export class AdminOrderController {
   async findAllForUser(@Param('id') userId: string): Promise<OrderDto[]> {
     return this.orderService.findAllForUser(userId);
   }
+
+  @Get()
+  async findAll(): Promise<OrderDto[]> {
+    return this.orderService.findAll();
+  }
 }
