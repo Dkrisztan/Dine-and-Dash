@@ -33,7 +33,7 @@ export class UserDto {
   cart?: CartDto;
 }
 
-export class CreateUserDto extends OmitType(UserDto, ['id', 'ownerOf', 'cart', 'role']) {
+export class CreateUserDto extends OmitType(UserDto, ['id', 'ownerOf', 'cart', 'role', 'phone']) {
   @ApiProperty({ example: 'John Doe' })
   @IsString()
   @IsNotEmpty()
@@ -43,12 +43,6 @@ export class CreateUserDto extends OmitType(UserDto, ['id', 'ownerOf', 'cart', '
   @IsNotEmpty()
   @IsEmail()
   email: string;
-
-  @ApiProperty({ example: '+3620111222' })
-  @IsPhoneNumber()
-  @IsString()
-  @IsNotEmpty()
-  phone: string;
 
   @ApiProperty({ example: ['1010 Budapest, Kossuth Lajos utca 1.'] })
   @IsNotEmpty()

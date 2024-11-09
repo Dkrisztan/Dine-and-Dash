@@ -19,8 +19,7 @@ export class AuthService {
         email,
         name,
         image,
-        addresses: [''],
-        phone: '',
+        addresses: [],
       });
     }
 
