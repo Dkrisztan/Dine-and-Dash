@@ -1249,6 +1249,114 @@ export class AdminFoodApi extends BaseAPI {
 
 
 /**
+ * AdminOrderApi - axios parameter creator
+ * @export
+ */
+export const AdminOrderApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminOrderControllerFindAllForUser: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('adminOrderControllerFindAllForUser', 'id', id)
+            const localVarPath = `/admin/order/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminOrderApi - functional programming interface
+ * @export
+ */
+export const AdminOrderApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminOrderApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminOrderControllerFindAllForUser(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrderDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrderControllerFindAllForUser(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminOrderApi.adminOrderControllerFindAllForUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminOrderApi - factory interface
+ * @export
+ */
+export const AdminOrderApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminOrderApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminOrderControllerFindAllForUser(id: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<OrderDto>> {
+            return localVarFp.adminOrderControllerFindAllForUser(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminOrderApi - object-oriented interface
+ * @export
+ * @class AdminOrderApi
+ * @extends {BaseAPI}
+ */
+export class AdminOrderApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOrderApi
+     */
+    public adminOrderControllerFindAllForUser(id: string, options?: RawAxiosRequestConfig) {
+        return AdminOrderApiFp(this.configuration).adminOrderControllerFindAllForUser(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * AdminRestaurantApi - axios parameter creator
  * @export
  */
@@ -2839,6 +2947,39 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerFindAllForCurrentUser: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2860,6 +3001,17 @@ export const OrderApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerCreateOrderFromCart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerFindAllForCurrentUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrderDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerFindAllForCurrentUser(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerFindAllForCurrentUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -2877,6 +3029,14 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
          */
         orderControllerCreateOrderFromCart(options?: RawAxiosRequestConfig): AxiosPromise<OrderDto> {
             return localVarFp.orderControllerCreateOrderFromCart(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerFindAllForCurrentUser(options?: RawAxiosRequestConfig): AxiosPromise<Array<OrderDto>> {
+            return localVarFp.orderControllerFindAllForCurrentUser(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2896,6 +3056,16 @@ export class OrderApi extends BaseAPI {
      */
     public orderControllerCreateOrderFromCart(options?: RawAxiosRequestConfig) {
         return OrderApiFp(this.configuration).orderControllerCreateOrderFromCart(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerFindAllForCurrentUser(options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerFindAllForCurrentUser(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

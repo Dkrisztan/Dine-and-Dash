@@ -65,4 +65,19 @@ export class OrderService {
       items,
     };
   }
+
+  async findAllForUser(userId: string): Promise<OrderDto[]> {
+    return this.prisma.order.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        items: {
+          include: {
+            food: true,
+          },
+        },
+      },
+    });
+  }
 }

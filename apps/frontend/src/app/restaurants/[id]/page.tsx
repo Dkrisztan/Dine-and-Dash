@@ -5,9 +5,7 @@ import { foodApi } from '@/network/api';
 export const dynamic = 'force-dynamic';
 
 export default async function RestaurantPage(props: Param) {
-  const params = await props.params;
-
-  const { id } = params;
+  const { id } = props.params;
 
   const { data: foods } = await foodApi.foodControllerFindAllForRestaurant(id);
 

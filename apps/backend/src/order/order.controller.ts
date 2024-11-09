@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -18,5 +18,10 @@ export class OrderController {
   @Post()
   async createOrderFromCart(@CurrentUser() user: UserDto): Promise<OrderDto> {
     return this.orderService.createOrderFromCart(user);
+  }
+
+  @Get()
+  async findAllForCurrentUser(@CurrentUser() user: UserDto): Promise<OrderDto[]> {
+    return this.orderService.findAllForUser(user.id);
   }
 }

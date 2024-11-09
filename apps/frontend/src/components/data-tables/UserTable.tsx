@@ -3,8 +3,11 @@
 import { CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from '@tanstack/react-table';
 import Image from 'next/image';
+import Link from 'next/link';
 import * as React from 'react';
 import { useState } from 'react';
+import { LuCopy } from 'react-icons/lu';
+import { PiUserRectangleDuotone } from 'react-icons/pi';
 
 import { UserDto } from '@/api';
 import { Button } from '@/components/ui/button';
@@ -57,7 +60,7 @@ export const columns: ColumnDef<UserDto>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const Person = row.original;
+      const User = row.original;
 
       return (
         <DropdownMenu>
@@ -69,10 +72,17 @@ export const columns: ColumnDef<UserDto>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(Person.id)}>Copy Person ID</DropdownMenuItem>
+            <DropdownMenuItem className='gap-1' onClick={() => navigator.clipboard.writeText(User.id)}>
+              <LuCopy fontSize={18} />
+              Copy Customer ID
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View Person details</DropdownMenuItem>
+            <Link href={`/admin/users/${User.id}`}>
+              <DropdownMenuItem className='gap-1'>
+                <PiUserRectangleDuotone fontSize={18} />
+                View customer
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       );
