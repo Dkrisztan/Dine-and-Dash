@@ -1,11 +1,9 @@
 'use client';
 
-import { UserDto } from '@/api';
 import { OrderTable } from '@/components/data-tables/OrderTable';
 import { RestaurantTable } from '@/components/data-tables/RestaurantTable';
 import { UserTable } from '@/components/data-tables/UserTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useDeleteUser } from '@/hooks/admin/useDeleteUser';
 import { useUsers } from '@/hooks/admin/useUsers';
 import { useRestaurant } from '@/hooks/restaurant/useRestaurant';
 
@@ -14,11 +12,6 @@ export const dynamic = 'force-dynamic';
 export default function AdminPage() {
   const { data: users } = useUsers();
   const { data: restaurants } = useRestaurant();
-  const { data: user, trigger } = useDeleteUser();
-
-  const deleteUser = async (user: UserDto) => {
-    await trigger(user);
-  };
 
   return (
     <>
@@ -32,7 +25,7 @@ export default function AdminPage() {
             </TabsList>
           </div>
           <TabsContent value='users'>
-            <UserTable data={users ?? []} deleteUser={deleteUser} />
+            <UserTable data={users ?? []} />
           </TabsContent>
           <TabsContent value='orders'>
             <OrderTable data={[]} />
