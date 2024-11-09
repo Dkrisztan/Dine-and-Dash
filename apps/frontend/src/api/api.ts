@@ -226,12 +226,6 @@ export interface CreateUserDto {
     'email': string;
     /**
      * 
-     * @type {string}
-     * @memberof CreateUserDto
-     */
-    'phone': string;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof CreateUserDto
      */
@@ -601,12 +595,6 @@ export interface UpdateUserDto {
     'email'?: string;
     /**
      * 
-     * @type {string}
-     * @memberof UpdateUserDto
-     */
-    'phone'?: string;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof UpdateUserDto
      */
@@ -617,6 +605,12 @@ export interface UpdateUserDto {
      * @memberof UpdateUserDto
      */
     'image'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateUserDto
+     */
+    'phone': string;
 }
 /**
  * 
