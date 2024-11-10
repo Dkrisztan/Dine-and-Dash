@@ -3,8 +3,8 @@
 import { notFound } from 'next/navigation';
 
 import Spinner from '@/components/Spinner';
-import { useOrder } from '@/hooks/admin/useOrder';
-import { useUser } from '@/hooks/admin/useUser';
+import { useOrder } from '@/hooks/admin/order/useOrder';
+import { useUser } from '@/hooks/admin/user/useUser';
 import { Param } from '@/lib/param';
 
 export default function UserPage(props: Param) {

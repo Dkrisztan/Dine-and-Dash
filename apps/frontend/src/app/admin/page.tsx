@@ -4,8 +4,8 @@ import { OrderTable } from '@/components/data-tables/OrderTable';
 import { RestaurantTable } from '@/components/data-tables/RestaurantTable';
 import { UserTable } from '@/components/data-tables/UserTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useOrders } from '@/hooks/admin/useOrders';
-import { useUsers } from '@/hooks/admin/useUsers';
+import { useOrders } from '@/hooks/admin/order/useOrders';
+import { useUsers } from '@/hooks/admin/user/useUsers';
 import { useRestaurant } from '@/hooks/restaurant/useRestaurant';
 
 export const dynamic = 'force-dynamic';
