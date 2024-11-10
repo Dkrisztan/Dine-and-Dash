@@ -23,7 +23,7 @@ interface FoodCardProps {
 export default function FoodCard({ food }: { food: FoodCardProps }) {
   const [quantity, setQuantity] = useState(0);
   const [cartItem, setCartItem] = useState<AddToCartDto>({ foodId: food.id, quantity: 0 });
-  const { trigger, isMutating } = useAddToCart();
+  const addToCart = useAddToCart();
 
   const addFood = () => {
     setQuantity((prevQuantity) => {
@@ -61,7 +61,7 @@ export default function FoodCard({ food }: { food: FoodCardProps }) {
             <MdAttachMoney className='text-xl' />
             {food.price}
           </span>
-          <div className='flex flex-row justify-center items-center gap-2'>
+          <div className='flex flex-row justify-center items-center gap-2 rounded-3xl bg-atcb'>
             <Button variant='link' size='icon' className='rounded-full' onClick={removeFood}>
               <LuMinusCircle className='text-xl transition-transform duration-300 ease-in-out hover:scale-110' />
             </Button>
@@ -71,11 +71,11 @@ export default function FoodCard({ food }: { food: FoodCardProps }) {
             </Button>
           </div>
         </CardFooter>
-        <div className='flex flex-col items-end'>
+        <div className='flex flex-col items-end mt-2'>
           {quantity !== 0 && (
             <Button
               onClick={async () => {
-                await trigger(cartItem);
+                await addToCart.trigger(cartItem);
                 toast.success(`${food.name} has been added to the cart!`);
                 setQuantity(0);
               }}
@@ -85,7 +85,7 @@ export default function FoodCard({ food }: { food: FoodCardProps }) {
                 before:z-0 before:h-full before:w-0 before:bg-green-700 before:transition-all
                 before:duration-500 hover:text-white hover:before:left-0 hover:before:w-full'
             >
-              {isMutating ? <Spinner /> : <span className='relative z-10'>Add to cart</span>}
+              {addToCart.isMutating ? <Spinner className='text-white' /> : <span className='relative z-10'>Add to cart</span>}
             </Button>
           )}
         </div>

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { IoCartOutline } from 'react-icons/io5';
 import { LuLogIn, LuLogOut, LuUser } from 'react-icons/lu';
+import { toast } from 'sonner';
 
 import { UserDto } from '@/api';
 import Logo from '@/components/logo/Logo';
@@ -15,12 +16,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/hooks/cart/useCart';
+import { useCreateOrder } from '@/hooks/order/useCreateOrder';
 import { userApi } from '@/network/api';
 
 export function TopNav() {
   const router = useRouter();
   const [user, setUser] = useState<UserDto | null>(null);
   const { data: cart, refreshCart } = useCart();
+  const createOrder = useCreateOrder();
 
   const fetchUser = async () => {
     const token = Cookies.get('accessToken');
@@ -111,7 +114,16 @@ export function TopNav() {
             </div>
             <SheetFooter>
               <SheetClose asChild>
-                <Button type='submit'>Order</Button>
+                <Button
+                  type='submit'
+                  onClick={async () => {
+                    await createOrder.trigger();
+                    refreshCart();
+                    toast.success(`Order created successfully!`);
+                  }}
+                >
+                  Order
+                </Button>
               </SheetClose>
             </SheetFooter>
           </SheetContent>

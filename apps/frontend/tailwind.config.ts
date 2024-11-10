@@ -46,6 +46,7 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        atcb: 'hsl(var(--add-to-cart-background))',
       },
       borderRadius: {
         lg: 'var(--radius)',

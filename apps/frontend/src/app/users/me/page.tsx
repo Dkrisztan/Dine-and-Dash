@@ -1,15 +1,22 @@
 'use client';
 
+import Spinner from '@/components/Spinner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useOrder } from '@/hooks/order/useOrder';
 import { useUserSelf } from '@/hooks/user/useUserSelf';
 
 export const dynamic = 'force-dynamic';
 
 export default function ProfilePage() {
-  const { data: user } = useUserSelf();
+  const { data: user, isLoading, error } = useUserSelf();
+  const { data: orders } = useOrder();
 
-  if (!user) {
+  if (error) {
     return <div>Some error occured</div>;
+  }
+
+  if (!user || isLoading) {
+    return <Spinner />;
   }
 
   return (
@@ -76,7 +83,7 @@ export default function ProfilePage() {
         <div>{user.name}</div>
         <div>{user.name}</div>
       </TabsContent>
-      <TabsContent value='orders'></TabsContent>
+      <TabsContent value='orders'>{orders?.map((order) => <div key={order.id}>{order.id}</div>)}</TabsContent>
       <TabsContent value='addresses'></TabsContent>
     </Tabs>
   );

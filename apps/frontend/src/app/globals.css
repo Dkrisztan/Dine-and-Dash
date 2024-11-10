@@ -51,6 +51,8 @@ body {
     --chart-5: 27 87% 67%;
 
     --radius: 0.5rem;
+
+    --add-to-cart-background: 0 0% 95%;
   }
   .dark {
     --background: 0 0% 12%;
@@ -90,6 +92,8 @@ body {
     --chart-5: 340 75% 55%;
 
     --radius: 0.5rem;
+
+    --add-to-cart-background: 0 0% 20%;
   }
 }
 
