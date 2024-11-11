@@ -15,7 +15,7 @@ export class UserDto {
   email: string;
 
   @ApiProperty({ example: '+3620111222' })
-  phone: string;
+  phone?: string;
 
   @ApiProperty({ example: ['1010 Budapest, Kossuth Lajos utca 1.'] })
   addresses: string[];
@@ -71,7 +71,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsPhoneNumber()
   @IsString()
   @IsOptional()
-  phone: string;
+  phone?: string;
 
   @ApiProperty({ example: ['1010 Budapest, Kossuth Lajos utca 1.'] })
   @IsString({ each: true })

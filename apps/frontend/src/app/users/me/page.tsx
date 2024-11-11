@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { MdOutlineEmail, MdOutlinePhone } from 'react-icons/md';
+import { toast } from 'sonner';
 
 import Spinner from '@/components/Spinner';
 import { Button } from '@/components/ui/button';
@@ -11,12 +13,14 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useOrder } from '@/hooks/order/useOrder';
 import { useUserSelf } from '@/hooks/user/useUserSelf';
+import { UploadButton } from '@/utils/uploadthing';
 
 export const dynamic = 'force-dynamic';
 
 export default function ProfilePage() {
   const { data: user, isLoading, error } = useUserSelf();
   const { data: orders } = useOrder();
+  const router = useRouter();
 
   if (error) {
     return <div>Some error occurred</div>;
@@ -74,7 +78,22 @@ export default function ProfilePage() {
                       <Label htmlFor='image' className='text-right'>
                         Image
                       </Label>
-                      <Input id='image' type='file' className='col-span-3' />
+                      {/*<Input id='image' type='file' className='col-span-3' />*/}
+                      <UploadButton
+                        className='col-span-3'
+                        endpoint='imageUploader'
+                        appearance={{
+                          button: 'ut-ready:bg-green-500 ut-uploading:cursor-not-allowed rounded-r-none bg-red-500 bg-none after:bg-orange-400',
+                          container: 'w-max flex-row rounded-md border-cyan-300 bg-slate-800',
+                          allowedContent: 'flex h-8 flex-col items-center justify-center px-2 text-white',
+                        }}
+                        onClientUploadComplete={() => {
+                          router.refresh();
+                        }}
+                        onUploadError={(error: Error) => {
+                          toast.error(`ERROR! ${error.message}`);
+                        }}
+                      />
                     </div>
                   </div>
                   <DialogFooter>

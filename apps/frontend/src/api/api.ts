@@ -610,7 +610,7 @@ export interface UpdateUserDto {
      * @type {string}
      * @memberof UpdateUserDto
      */
-    'phone': string;
+    'phone'?: string;
 }
 /**
  * 
@@ -641,7 +641,7 @@ export interface UserDto {
      * @type {string}
      * @memberof UserDto
      */
-    'phone': string;
+    'phone'?: string;
     /**
      * 
      * @type {Array<string>}
