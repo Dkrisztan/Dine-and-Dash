@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { MdOutlineEmail, MdOutlinePhone } from 'react-icons/md';
 import { toast } from 'sonner';
 
@@ -12,15 +13,47 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useOrder } from '@/hooks/order/useOrder';
+import { useUpdateSelf } from '@/hooks/user/useUpdateSelf';
 import { useUserSelf } from '@/hooks/user/useUserSelf';
 import { UploadButton } from '@/utils/uploadthing';
 
 export const dynamic = 'force-dynamic';
 
+type UserEdit = {
+  name: string | undefined;
+  phone: string | undefined;
+};
+
 export default function ProfilePage() {
-  const { data: user, isLoading, error } = useUserSelf();
+  const { data: user, isLoading, error, refreshUser } = useUserSelf();
   const { data: orders } = useOrder();
+  const updateSelf = useUpdateSelf();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [updateUser, setUpdateUser] = useState<UserEdit>({ name: user?.name, phone: user?.phone || '' });
+
+  useEffect(() => {
+    setUpdateUser({ name: user?.name, phone: user?.phone || '' });
+  }, [user]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateUser((prevProfile) => ({
+      ...prevProfile,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      await updateSelf.trigger(updateUser);
+      setOpen(false);
+      toast.success('Profile updated successfully');
+      refreshUser();
+    } catch (error) {
+      toast.error(`Failed to update profile: ${error.message}`);
+    }
+  };
 
   if (error) {
     return <div>Some error occurred</div>;
@@ -50,7 +83,7 @@ export default function ProfilePage() {
           <div className='flex flex-row items-center gap-8'>
             <div className='flex flex-col items-center'>
               <Image src={user.image} alt='avatar' width={150} height={150} className='rounded-full' />
-              <Dialog>
+              <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button variant='outline' className='mt-5'>
                     Edit Profile
@@ -66,19 +99,18 @@ export default function ProfilePage() {
                       <Label htmlFor='name' className='text-right'>
                         Name
                       </Label>
-                      <Input id='name' value={user.name} className='col-span-3' />
+                      <Input id='name' name='name' value={updateUser.name} onChange={handleInputChange} className='col-span-3' />
                     </div>
                     <div className='grid grid-cols-4 items-center gap-4'>
                       <Label htmlFor='phone' className='text-right'>
                         Phone
                       </Label>
-                      <Input id='phone' value={user.phone || ''} className='col-span-3' />
+                      <Input id='phone' name='phone' value={updateUser.phone} onChange={handleInputChange} className='col-span-3' />
                     </div>
                     <div className='grid grid-cols-4 items-center gap-4'>
                       <Label htmlFor='image' className='text-right'>
                         Image
                       </Label>
-                      {/*<Input id='image' type='file' className='col-span-3' />*/}
                       <UploadButton
                         className='col-span-3'
                         endpoint='imageUploader'
@@ -97,7 +129,9 @@ export default function ProfilePage() {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button type='submit'>Save changes</Button>
+                    <Button type='submit' onClick={handleSaveChanges}>
+                      {updateSelf.isMutating ? <Spinner /> : 'Save changes'}
+                    </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
