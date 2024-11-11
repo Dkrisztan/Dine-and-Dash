@@ -36,8 +36,7 @@ export default function ProfilePage() {
     setUpdateUser({ name: user?.name, phone: user?.phone || '' });
   }, [user]);
 
-  // @ts-ignore
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
     setUpdateUser((prevProfile) => ({
       ...prevProfile,
