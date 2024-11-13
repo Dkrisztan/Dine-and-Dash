@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MdOutlineEmail, MdOutlinePhone } from 'react-icons/md';
 import { toast } from 'sonner';
 
+import CustomUploadButton from '@/components/custom-upload-button/CustomUploadButton';
 import Spinner from '@/components/Spinner';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -15,7 +15,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useOrder } from '@/hooks/order/useOrder';
 import { useUpdateSelf } from '@/hooks/user/useUpdateSelf';
 import { useUserSelf } from '@/hooks/user/useUserSelf';
-import { UploadButton } from '@/utils/uploadthing';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,7 +27,6 @@ export default function ProfilePage() {
   const { data: user, isLoading, error, refreshUser } = useUserSelf();
   const { data: orders } = useOrder();
   const updateSelf = useUpdateSelf();
-  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [updateUser, setUpdateUser] = useState<UserEdit>({ name: user?.name, phone: user?.phone || '' });
 
@@ -77,6 +75,9 @@ export default function ProfilePage() {
             <TabsTrigger value='addresses' className='px-24 text-lg'>
               Addresses
             </TabsTrigger>
+            <TabsTrigger value='my-restaurant' className='px-24 text-lg'>
+              My Restaurant
+            </TabsTrigger>
           </TabsList>
         </div>
         <TabsContent value='profile-info' className='py-5 px-8 flex flex-col'>
@@ -111,19 +112,9 @@ export default function ProfilePage() {
                       <Label htmlFor='image' className='text-right'>
                         Image
                       </Label>
-                      <UploadButton
-                        className='col-span-3'
-                        endpoint='imageUploader'
-                        appearance={{
-                          button: 'ut-ready:bg-green-500 ut-uploading:cursor-not-allowed rounded-r-none bg-red-500 bg-none after:bg-orange-400',
-                          container: 'w-max flex-row rounded-md border-cyan-300 bg-slate-800',
-                          allowedContent: 'flex h-8 flex-col items-center justify-center px-2 text-white',
-                        }}
-                        onClientUploadComplete={() => {
-                          router.refresh();
-                        }}
-                        onUploadError={(error: Error) => {
-                          toast.error(`ERROR! ${error.message}`);
+                      <CustomUploadButton
+                        onComplete={() => {
+                          refreshUser();
                         }}
                       />
                     </div>
@@ -166,6 +157,9 @@ export default function ProfilePage() {
         </TabsContent>
         <TabsContent value='addresses' className='py-5 px-8'>
           <p>Your saved addresses will appear here.</p>
+        </TabsContent>
+        <TabsContent value='my-restaurant' className='py-5 px-8'>
+          {user.ownerOf ? <p>this is the restaurant you own: {user.ownerOf.id}</p> : <p>You do not own a restaurant yet.</p>}
         </TabsContent>
       </Tabs>
     </div>
