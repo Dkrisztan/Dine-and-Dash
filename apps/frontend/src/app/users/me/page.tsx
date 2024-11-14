@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
+import { IoRestaurantOutline } from 'react-icons/io5';
 import { MdOutlineEmail, MdOutlinePhone } from 'react-icons/md';
 import { toast } from 'sonner';
 
@@ -46,7 +48,7 @@ export default function ProfilePage() {
     try {
       await updateSelf.trigger(updateUser);
       setOpen(false);
-      toast.success('Profile updated successfully');
+      toast.success('Profile updated successfully!');
       refreshUser();
     } catch (error) {
       toast.error(`Failed to update profile!`);
@@ -75,8 +77,9 @@ export default function ProfilePage() {
             <TabsTrigger value='addresses' className='px-24 text-lg'>
               Addresses
             </TabsTrigger>
-            <TabsTrigger value='my-restaurant' className='px-24 text-lg'>
+            <TabsTrigger value='my-restaurant' className='px-24 text-lg gap-2'>
               My Restaurant
+              <IoRestaurantOutline />
             </TabsTrigger>
           </TabsList>
         </div>
@@ -158,8 +161,20 @@ export default function ProfilePage() {
         <TabsContent value='addresses' className='py-5 px-8'>
           <p>Your saved addresses will appear here.</p>
         </TabsContent>
-        <TabsContent value='my-restaurant' className='py-5 px-8'>
-          {user.ownerOf ? <p>this is the restaurant you own: {user.ownerOf.id}</p> : <p>You do not own a restaurant yet.</p>}
+        <TabsContent value='my-restaurant' className='py-0 px-8'>
+          <div className='flex flex-col items-center justify-center gap-8'>
+            {user.ownerOf ? (
+              <p>this is your restaurant {user.ownerOf.id}</p>
+            ) : (
+              <>
+                <span className='text-2xl font-bold'>You don&apos;t have a restaurant yet.</span>
+                <Button variant='outline' className='w-1/2 gap-2'>
+                  <FaPlus />
+                  Create Restaurant
+                </Button>
+              </>
+            )}
+          </div>
         </TabsContent>
       </Tabs>
     </div>
