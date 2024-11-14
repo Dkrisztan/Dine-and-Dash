@@ -23,6 +23,7 @@ export const dynamic = 'force-dynamic';
 type UserEdit = {
   name: string | undefined;
   phone: string | undefined;
+  image: string | undefined;
 };
 
 export default function ProfilePage() {
@@ -30,10 +31,10 @@ export default function ProfilePage() {
   const { data: orders } = useOrder();
   const updateSelf = useUpdateSelf();
   const [open, setOpen] = useState(false);
-  const [updateUser, setUpdateUser] = useState<UserEdit>({ name: user?.name, phone: user?.phone || '' });
+  const [updateUser, setUpdateUser] = useState<UserEdit>({ name: user?.name, phone: user?.phone || '', image: user?.image });
 
   useEffect(() => {
-    setUpdateUser({ name: user?.name, phone: user?.phone || '' });
+    setUpdateUser({ name: user?.name, phone: user?.phone || '', image: user?.image });
   }, [user]);
 
   const handleInputChange = (e: { target: { name: string; value: string } }) => {
@@ -116,8 +117,11 @@ export default function ProfilePage() {
                         Image
                       </Label>
                       <CustomUploadButton
-                        onComplete={() => {
-                          refreshUser();
+                        onComplete={(url: string) => {
+                          setUpdateUser((prevProfile) => ({
+                            ...prevProfile,
+                            image: url,
+                          }));
                         }}
                       />
                     </div>

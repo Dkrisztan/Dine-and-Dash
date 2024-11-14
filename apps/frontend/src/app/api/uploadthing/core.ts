@@ -6,46 +6,13 @@ import { UserApi } from '@/api';
 
 const f = createUploadthing();
 
-// FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
   profileImageUploader: f({ image: { maxFileSize: '16MB' } })
-    // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
-      // This code runs on your server before upload
-      const authAxios = axios.create();
-      authAxios.interceptors.request.use((config) => {
-        const token = req.cookies.get('accessToken')?.value;
-        config.headers.Authorization = `Bearer ${token}`;
-        return config;
-      });
-
-      const userApi = new UserApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
-      const { data: user } = await userApi.userControllerMe();
-
-      // If you throw, the user will not be able to upload
-      if (!user) throw new UploadThingError('Unauthorized');
-
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.id, token: req.cookies.get('accessToken')?.value };
+    .middleware(async () => {
+      return {};
     })
-    .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
-      // console.log('Upload complete for userId:', metadata.userId);
-      // console.log('file url', file.url);
-
-      const authAxios = axios.create();
-      authAxios.interceptors.request.use((config) => {
-        const token = metadata.token;
-        config.headers.Authorization = `Bearer ${token}`;
-        return config;
-      });
-
-      const userApi = new UserApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
-      await userApi.userControllerUpdateProfile({ image: file.url });
-
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { uploadedBy: metadata.userId };
+    .onUploadComplete(async ({ file }) => {
+      return { fileUrl: file.url };
     }),
 
   restaurantImageUploader: f({ image: { maxFileSize: '16MB' } })
