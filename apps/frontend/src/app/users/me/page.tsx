@@ -7,6 +7,7 @@ import { IoRestaurantOutline } from 'react-icons/io5';
 import { MdOutlineEmail, MdOutlinePhone } from 'react-icons/md';
 import { toast } from 'sonner';
 
+import { UpdateUserDto } from '@/api';
 import CustomUploadButton from '@/components/custom-upload-button/CustomUploadButton';
 import Spinner from '@/components/Spinner';
 import { Button } from '@/components/ui/button';
@@ -20,18 +21,12 @@ import { useUserSelf } from '@/hooks/user/useUserSelf';
 
 export const dynamic = 'force-dynamic';
 
-type UserEdit = {
-  name: string | undefined;
-  phone: string | undefined;
-  image: string | undefined;
-};
-
 export default function ProfilePage() {
   const { data: user, isLoading, error, refreshUser } = useUserSelf();
   const { data: orders } = useOrder();
   const updateSelf = useUpdateSelf();
   const [open, setOpen] = useState(false);
-  const [updateUser, setUpdateUser] = useState<UserEdit>({ name: user?.name, phone: user?.phone || '', image: user?.image });
+  const [updateUser, setUpdateUser] = useState<UpdateUserDto>({ name: user?.name, phone: user?.phone || '', image: user?.image });
 
   useEffect(() => {
     setUpdateUser({ name: user?.name, phone: user?.phone || '', image: user?.image });
