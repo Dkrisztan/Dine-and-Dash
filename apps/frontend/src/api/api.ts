@@ -161,12 +161,6 @@ export interface CreateRestaurantDto {
     'addresses': Array<string>;
     /**
      * 
-     * @type {Array<number>}
-     * @memberof CreateRestaurantDto
-     */
-    'rating': Array<number>;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof CreateRestaurantDto
      */
@@ -496,12 +490,6 @@ export interface UpdateRestaurantDto {
      * @memberof UpdateRestaurantDto
      */
     'addresses'?: Array<string>;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof UpdateRestaurantDto
-     */
-    'rating'?: Array<number>;
     /**
      * 
      * @type {Array<string>}

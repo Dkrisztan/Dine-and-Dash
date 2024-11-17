@@ -16,6 +16,7 @@ export const userApi = new UserApi(undefined, process.env.NEXT_PUBLIC_API_URL, a
 export const adminUserApi = new AdminUserApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 
 export const restaurantApi = new RestaurantApi(undefined, process.env.NEXT_PUBLIC_API_URL, axs);
+export const userRestaurantApi = new RestaurantApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 export const adminRestaurantApi = new AdminRestaurantApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 
 export const foodApi = new FoodApi(undefined, process.env.NEXT_PUBLIC_API_URL, axs);

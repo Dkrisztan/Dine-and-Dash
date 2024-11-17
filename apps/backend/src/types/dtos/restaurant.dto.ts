@@ -28,7 +28,7 @@ export class RestaurantDto {
   image: string;
 }
 
-export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id', 'ownerId']) {
+export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id', 'ownerId', 'rating']) {
   @ApiProperty({ example: 'Pizza Place' })
   @IsString()
   @IsNotEmpty()
