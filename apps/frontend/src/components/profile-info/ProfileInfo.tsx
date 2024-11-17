@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MdOutlineEmail, MdOutlinePhone } from 'react-icons/md';
 import { toast } from 'sonner';
 
@@ -16,10 +16,6 @@ export default function ProfileInfo({ user, refreshUser }: { user: UserDto; refr
   const updateSelf = useUpdateSelf();
   const [open, setOpen] = useState(false);
   const [updateUser, setUpdateUser] = useState<UpdateUserDto>({ name: user?.name, phone: user?.phone || '', image: user?.image });
-
-  useEffect(() => {
-    setUpdateUser({ name: user?.name, phone: user?.phone || '', image: user?.image });
-  }, [user]);
 
   const handleInputChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
@@ -41,7 +37,7 @@ export default function ProfileInfo({ user, refreshUser }: { user: UserDto; refr
   };
 
   return (
-    <div className='flex flex-row items-center gap-8'>
+    <div className='flex flex-row items-center justify-center gap-8'>
       <div className='flex flex-col items-center'>
         <Image src={user.image} alt='avatar' width={150} height={150} className='rounded-full' />
         <Dialog open={open} onOpenChange={setOpen}>

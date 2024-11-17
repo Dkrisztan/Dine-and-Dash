@@ -1,13 +1,12 @@
 'use client';
 
-import { FaPlus } from 'react-icons/fa';
 import { IoRestaurantOutline } from 'react-icons/io5';
 
 import Address from '@/components/address/Address';
 import Order from '@/components/order/Order';
 import ProfileInfo from '@/components/profile-info/ProfileInfo';
+import Restaurant from '@/components/restaurant/Restaurant';
 import Spinner from '@/components/Spinner';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useOrder } from '@/hooks/order/useOrder';
 import { useUserSelf } from '@/hooks/user/useUserSelf';
@@ -53,22 +52,10 @@ export default function ProfilePage() {
           <Order orders={orders} />
         </TabsContent>
         <TabsContent value='addresses' className='py-5 px-8'>
-          <Address addresses={user.addresses} />
+          <Address addresses={user.addresses} refreshUser={refreshUser} />
         </TabsContent>
         <TabsContent value='my-restaurant' className='py-0 px-8'>
-          <div className='flex flex-col items-center justify-center gap-8'>
-            {user.ownerOf ? (
-              <p>this is your restaurant {user.ownerOf.id}</p>
-            ) : (
-              <>
-                <span className='text-2xl font-bold'>You don&apos;t have a restaurant yet.</span>
-                <Button variant='outline' className='w-1/2 gap-2'>
-                  <FaPlus />
-                  Create Restaurant
-                </Button>
-              </>
-            )}
-          </div>
+          <Restaurant user={user} />
         </TabsContent>
       </Tabs>
     </div>

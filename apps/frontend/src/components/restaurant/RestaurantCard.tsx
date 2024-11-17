@@ -1,22 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { RestaurantDto } from '@/api';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Ratings from '@/components/ui/ratings';
 
-interface RestaurantCardProps {
-  id: string;
-  name: string;
-  description: string;
-  addresses: string[];
-  rating: number[];
-  image: string;
-  ownerId: string;
-  tags: string[];
-}
-
-export default function RestaurantCard({ restaurant }: { restaurant: RestaurantCardProps }) {
+export default function RestaurantCard({ restaurant }: { restaurant: RestaurantDto }) {
   const rating = restaurant.rating.reduce((a, b) => a + b, 0) / restaurant.rating.length;
 
   return (
