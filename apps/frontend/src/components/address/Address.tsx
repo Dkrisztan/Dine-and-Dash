@@ -56,6 +56,17 @@ export default function Addresses({ addresses, refreshUser }: { addresses: strin
     }
   };
 
+  const handleDeleteAddress = async (currentAddress: string) => {
+    try {
+      const updatedAddresses = address.filter((addr) => addr !== currentAddress);
+      setAddress(updatedAddresses);
+      await updateSelf.trigger({ addresses: updatedAddresses });
+      refreshUser();
+    } catch (error) {
+      toast.error(`Failed to update profile!`);
+    }
+  };
+
   return (
     <div className='flex flex-col items-center justify-center gap-8'>
       <Dialog open={openAddDialog} onOpenChange={setOpenAddDialog}>
@@ -93,7 +104,7 @@ export default function Addresses({ addresses, refreshUser }: { addresses: strin
               <Button variant='ghost' size='icon' onClick={() => handleEditAddress(addr)}>
                 <MdEdit fontSize={24} />
               </Button>
-              <Button variant='ghost' size='icon' onClick={() => handleEditAddress(addr)}>
+              <Button variant='ghost' size='icon' onClick={() => handleDeleteAddress(addr)}>
                 <MdDelete fontSize={24} />
               </Button>
             </div>
