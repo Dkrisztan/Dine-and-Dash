@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { FaEye, FaPlus } from 'react-icons/fa';
 import { MdDelete, MdEdit } from 'react-icons/md';
@@ -22,6 +23,8 @@ import { useUpdateRestaurant } from '@/hooks/user/useUpdateRestaurant';
 export default function Restaurant({ user, refreshUser }: { user: UserDto; refreshUser: () => void }) {
   const [openCreate, setOpenCreate] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+
+  const router = useRouter();
 
   const createRestaurant = useCreateRestaurant();
   const deleteRestaurant = useDeleteRestaurant();
@@ -117,7 +120,13 @@ export default function Restaurant({ user, refreshUser }: { user: UserDto; refre
             <CardFooter className='flex flex-row items-center justify-between'>
               <Ratings value={rating} size={15} variant='yellow' />
               <div className='flex gap-2'>
-                <Button variant='secondary' size='icon'>
+                <Button
+                  variant='secondary'
+                  size='icon'
+                  onClick={() => {
+                    router.push(`/owner/restaurant`);
+                  }}
+                >
                   <FaEye fontSize={24} />
                 </Button>
                 <Button variant='secondary' size='icon' onClick={populateEditForm}>
