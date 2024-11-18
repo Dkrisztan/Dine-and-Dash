@@ -502,12 +502,6 @@ export interface UpdateRestaurantDto {
      * @memberof UpdateRestaurantDto
      */
     'image'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof UpdateRestaurantDto
-     */
-    'tag': Array<UpdateRestaurantDtoTagEnum>;
 }
 
 export const UpdateRestaurantDtoTagsEnum = {
@@ -536,32 +530,6 @@ export const UpdateRestaurantDtoTagsEnum = {
 } as const;
 
 export type UpdateRestaurantDtoTagsEnum = typeof UpdateRestaurantDtoTagsEnum[keyof typeof UpdateRestaurantDtoTagsEnum];
-export const UpdateRestaurantDtoTagEnum = {
-    Burger: 'BURGER',
-    American: 'AMERICAN',
-    Pizza: 'PIZZA',
-    Salad: 'SALAD',
-    Italian: 'ITALIAN',
-    Chicken: 'CHICKEN',
-    Breakfast: 'BREAKFAST',
-    Pasta: 'PASTA',
-    Asian: 'ASIAN',
-    Vegetarian: 'VEGETARIAN',
-    Vegan: 'VEGAN',
-    Soup: 'SOUP',
-    Gyros: 'GYROS',
-    Street: 'STREET',
-    Dessert: 'DESSERT',
-    Thai: 'THAI',
-    Kebab: 'KEBAB',
-    Sandwich: 'SANDWICH',
-    Japanese: 'JAPANESE',
-    Mediteranean: 'MEDITERANEAN',
-    Mexican: 'MEXICAN',
-    Sushi: 'SUSHI'
-} as const;
-
-export type UpdateRestaurantDtoTagEnum = typeof UpdateRestaurantDtoTagEnum[keyof typeof UpdateRestaurantDtoTagEnum];
 
 /**
  * 

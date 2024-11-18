@@ -1,5 +1,6 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+
 import { RestaurantTag } from './restaurant-tag.dto';
 
 export class RestaurantDto {
@@ -76,7 +77,7 @@ export class UpdateRestaurantDto extends PartialType(CreateRestaurantDto) {
   @ApiProperty({ example: [RestaurantTag.STREET, RestaurantTag.KEBAB], enum: RestaurantTag, isArray: true })
   @IsArray()
   @IsOptional()
-  tag: RestaurantTag[];
+  tags: RestaurantTag[];
 
   @ApiProperty({ example: 'https://www.example.com/pizza.jpg' })
   @IsString()

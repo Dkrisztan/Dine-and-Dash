@@ -54,8 +54,8 @@ export default function ProfilePage() {
         <TabsContent value='addresses' className='py-5 px-8'>
           <Address addresses={user.addresses} refreshUser={refreshUser} />
         </TabsContent>
-        <TabsContent value='my-restaurant' className='py-0 px-8'>
-          <Restaurant user={user} />
+        <TabsContent value='my-restaurant' className='py-5 px-8'>
+          <Restaurant user={user} refreshUser={refreshUser} />
         </TabsContent>
       </Tabs>
     </div>
