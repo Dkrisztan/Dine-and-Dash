@@ -20,6 +20,7 @@ export const userRestaurantApi = new RestaurantApi(undefined, process.env.NEXT_P
 export const adminRestaurantApi = new AdminRestaurantApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 
 export const foodApi = new FoodApi(undefined, process.env.NEXT_PUBLIC_API_URL, axs);
+export const userFodApi = new FoodApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 export const adminFoodApi = new AdminFoodApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 
 export const cartApi = new CartApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);

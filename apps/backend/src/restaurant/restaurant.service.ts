@@ -38,7 +38,10 @@ export class RestaurantService {
         Logger.debug(`Updated user with id: ${id} to OWNER role`, RestaurantService.name);
       }
 
-      return restaurant;
+      return await this.prisma.restaurant.update({
+        where: { id: restaurant.id },
+        data: { rating: [0] },
+      });
     } catch (error) {
       throw new InternalServerErrorException('Error creating restaurant');
     }

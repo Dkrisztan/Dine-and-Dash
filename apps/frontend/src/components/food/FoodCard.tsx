@@ -6,21 +6,13 @@ import { LuMinusCircle, LuPlusCircle } from 'react-icons/lu';
 import { MdAttachMoney } from 'react-icons/md';
 import { toast } from 'sonner';
 
-import { AddToCartDto } from '@/api';
+import { AddToCartDto, FoodDto } from '@/api';
 import Spinner from '@/components/Spinner';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAddToCart } from '@/hooks/cart/useAddToCart';
 
-interface FoodCardProps {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-}
-
-export default function FoodCard({ food }: { food: FoodCardProps }) {
+export default function FoodCard({ food }: { food: FoodDto }) {
   const [quantity, setQuantity] = useState(0);
   const [cartItem, setCartItem] = useState<AddToCartDto>({ foodId: food.id, quantity: 0 });
   const addToCart = useAddToCart();
