@@ -8,6 +8,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { LuCopy } from 'react-icons/lu';
 import { PiUserRectangleDuotone } from 'react-icons/pi';
+import { toast } from 'sonner';
 
 import { UserDto } from '@/api';
 import { Button } from '@/components/ui/button';
@@ -72,7 +73,13 @@ export const columns: ColumnDef<UserDto>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className='gap-1' onClick={() => navigator.clipboard.writeText(User.id)}>
+            <DropdownMenuItem
+              className='gap-1'
+              onClick={() => {
+                navigator.clipboard.writeText(User.id);
+                toast.success('Customer ID copied to clipboard!');
+              }}
+            >
               <LuCopy fontSize={18} />
               Copy Customer ID
             </DropdownMenuItem>

@@ -50,7 +50,7 @@ export const columns: ColumnDef<OrderDto>[] = [
   {
     accessorKey: 'total',
     header: () => <div className='text-base'>Total</div>,
-    cell: ({ row }) => <div className='text-base'>{row.getValue('total')}</div>,
+    cell: ({ row }) => <div className='text-base'>{row.original.total.toFixed(2)}</div>,
   },
   {
     accessorKey: 'createdAt',

@@ -21,14 +21,14 @@ export const columns: ColumnDef<RestaurantDto>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'id',
-    header: 'ID',
-    cell: ({ row }) => <div className='capitalize'>{row.getValue('id')}</div>,
-  },
-  {
     accessorKey: 'image',
     header: 'Image',
     cell: ({ row }) => <img src={row.getValue('image')} alt={row.getValue('name')} className='h-16 w-16 rounded-xl' />,
+  },
+  {
+    accessorKey: 'id',
+    header: 'ID',
+    cell: ({ row }) => <div className='capitalize'>{row.getValue('id')}</div>,
   },
   {
     accessorKey: 'name',
@@ -38,21 +38,50 @@ export const columns: ColumnDef<RestaurantDto>[] = [
     },
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'description',
+    header: () => <div>Description</div>,
+    cell: ({ row }) => {
+      return <div>{row.getValue('description')}</div>;
+    },
+  },
+  {
+    accessorKey: 'addresses',
+    header: () => <div>Addresses</div>,
+    cell: ({ row }) => (
+      <div className='capitalize flex flex-col'>
+        {row.original.addresses.map((address, index) => (
+          <div key={index}>{address}</div>
+        ))}
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'rating',
     header: ({ column }) => {
       return (
-        <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Email
+        <Button variant='ghost' className='px-0 mx-0' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+          <div className='text-base'>Rating</div>
           <CaretSortIcon className='ml-2 h-4 w-4' />
         </Button>
       );
     },
-    cell: ({ row }) => <div className='lowercase'>{row.getValue('email')}</div>,
+    cell: ({ row }) => <div className='capitalize text-base'>{row.original.rating.reduce((acc, rating) => acc + rating, 0) / (row.original.rating.length - 1)}</div>,
   },
   {
-    accessorKey: 'role',
-    header: 'Role',
-    cell: ({ row }) => <div className='capitalize'>{row.getValue('role')}</div>,
+    accessorKey: 'tags',
+    header: 'Tags',
+    cell: ({ row }) => (
+      <div className='capitalize flex flex-col'>
+        {row.original.tags.map((tag, index) => (
+          <div key={index}>{tag}</div>
+        ))}
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'ownerId',
+    header: 'Owner ID',
+    cell: ({ row }) => <div className='capitalize'>{row.getValue('ownerId')}</div>,
   },
   {
     id: 'actions',

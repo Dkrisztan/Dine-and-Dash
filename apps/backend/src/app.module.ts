@@ -9,6 +9,11 @@ import { RestaurantModule } from './restaurant/restaurant.module';
 import { PrismaModule } from 'nestjs-prisma';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
+import { RemoveUnusedFiles } from './RemoveUnusedFiles';
+import { UserService } from './user/user.service';
+import { RestaurantService } from './restaurant/restaurant.service';
+import { FoodService } from './food/food.service';
 
 @Module({
   imports: [
@@ -20,8 +25,9 @@ import { ConfigModule } from '@nestjs/config';
     RestaurantModule,
     PrismaModule.forRoot({ isGlobal: true }),
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RemoveUnusedFiles, UserService, FoodService, RestaurantService],
 })
 export class AppModule {}
