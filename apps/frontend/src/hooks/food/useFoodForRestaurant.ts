@@ -1,10 +1,10 @@
 import useSWR, { mutate } from 'swr';
 
-import { userFodApi } from '@/network/api';
+import { userFoodApi } from '@/network/api';
 
 export function useFoodForRestaurant() {
   const { data, error, isLoading } = useSWR('useFoodForRestaurant', async () => {
-    const response = await userFodApi.foodControllerFindAllForOwnedRestaurant();
+    const response = await userFoodApi.foodControllerFindAllForOwnedRestaurant();
     return response.data;
   });
 

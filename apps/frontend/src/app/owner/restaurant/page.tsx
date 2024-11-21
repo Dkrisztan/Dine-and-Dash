@@ -115,7 +115,7 @@ export default function OwnedRestaurantPage() {
         {foods.map((item, index) => {
           return (
             <div key={index} className='container mx-auto py-3'>
-              <FoodCardForOwner food={item} refreshFoods={refreshFoods} />
+              <FoodCardForOwner food={item} refreshFoodsAction={refreshFoods} />
             </div>
           );
         })}

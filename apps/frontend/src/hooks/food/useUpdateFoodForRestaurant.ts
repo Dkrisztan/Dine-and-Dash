@@ -1,20 +1,20 @@
 import useSWRMutation from 'swr/mutation';
 
-import { CreateFoodDto } from '@/api';
+import { UpdateFoodDto } from '@/api';
 import { userFoodApi } from '@/network/api';
 
-export function useCreateFoodForRestaurant() {
+export function useUpdateFoodForRestaurant(id: string) {
   const { data, error, isMutating, trigger } = useSWRMutation(
-    'useCreateFoodForRestaurant',
+    ['useUpdateFoodForRestaurant', id],
     async (
-      _: string,
+      _: string[],
       {
         arg,
       }: {
-        arg: CreateFoodDto;
+        arg: UpdateFoodDto;
       }
     ) => {
-      const response = await userFoodApi.foodControllerAddFoodToCurrentUserRestaurant(arg);
+      const response = await userFoodApi.foodControllerUpdateOneForRestaurant(id, arg);
       return response.data;
     }
   );

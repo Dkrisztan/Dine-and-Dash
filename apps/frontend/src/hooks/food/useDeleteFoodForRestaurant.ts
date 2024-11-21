@@ -1,10 +1,10 @@
 import useSWRMutation from 'swr/mutation';
 
-import { userFodApi } from '@/network/api';
+import { userFoodApi } from '@/network/api';
 
 export function useDeleteFoodForRestaurant(id: string) {
   const { data, error, isMutating, trigger } = useSWRMutation(['useDeleteFoodForRestaurant', id], async () => {
-    const response = await userFodApi.foodControllerRemoveFromRestaurant(id);
+    const response = await userFoodApi.foodControllerRemoveFromRestaurant(id);
     return response.data;
   });
 
