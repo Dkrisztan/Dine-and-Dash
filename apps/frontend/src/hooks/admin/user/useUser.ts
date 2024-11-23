@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 import { adminUserApi } from '@/network/api';
 
@@ -8,5 +8,9 @@ export function useUser(id: string) {
     return response.data;
   });
 
-  return { data, isLoading, error };
+  const refreshUser = () => {
+    mutate(['useUser', id]);
+  };
+
+  return { data, isLoading, error, refreshUser };
 }

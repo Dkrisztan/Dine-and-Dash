@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto, UpdateUserDto, UserDto } from '../types/dtos/user.dto';
+import { AdminUpdateUserDto, CreateUserDto, UserDto } from '../types/dtos/user.dto';
 import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../types/dtos/role.dto';
@@ -29,8 +29,8 @@ export class AdminUserController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
-    return this.userService.update(id, updateUserDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: AdminUpdateUserDto): Promise<UserDto> {
+    return this.userService.updateByAdmin(id, updateUserDto);
   }
 
   @Delete(':id')

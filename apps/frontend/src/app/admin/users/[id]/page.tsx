@@ -2,6 +2,7 @@
 
 import { notFound } from 'next/navigation';
 
+import AdminProfileInfo from '@/components/admin-profile-info/AdminProfileInfo';
 import Spinner from '@/components/Spinner';
 import { useOrder } from '@/hooks/admin/order/useOrder';
 import { useUser } from '@/hooks/admin/user/useUser';
@@ -9,7 +10,7 @@ import { Param } from '@/lib/param';
 
 export default function UserPage(props: Param) {
   const { id } = props.params;
-  const { data: user, isLoading } = useUser(id);
+  const { data: user, isLoading, refreshUser } = useUser(id);
   const { data: orders, isLoading: orderLoading } = useOrder(id);
 
   // make this to a skeleton once the design is ready
@@ -25,14 +26,5 @@ export default function UserPage(props: Param) {
     return notFound();
   }
 
-  return (
-    <div>
-      <h1>{user.name}</h1>
-      {orders?.map((order) => (
-        <div key={order.id}>
-          <h2>{order.id}</h2>
-        </div>
-      ))}
-    </div>
-  );
+  return <AdminProfileInfo user={user} refreshUser={refreshUser} />;
 }

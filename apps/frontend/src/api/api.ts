@@ -45,6 +45,59 @@ export interface AddToCartDto {
 /**
  * 
  * @export
+ * @interface AdminUpdateUserDto
+ */
+export interface AdminUpdateUserDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUpdateUserDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUpdateUserDto
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUpdateUserDto
+     */
+    'phone'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AdminUpdateUserDto
+     */
+    'addresses'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUpdateUserDto
+     */
+    'image'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUpdateUserDto
+     */
+    'role'?: AdminUpdateUserDtoRoleEnum;
+}
+
+export const AdminUpdateUserDtoRoleEnum = {
+    Admin: 'ADMIN',
+    Customer: 'CUSTOMER',
+    Courier: 'COURIER',
+    Owner: 'OWNER'
+} as const;
+
+export type AdminUpdateUserDtoRoleEnum = typeof AdminUpdateUserDtoRoleEnum[keyof typeof AdminUpdateUserDtoRoleEnum];
+
+/**
+ * 
+ * @export
  * @interface CartDto
  */
 export interface CartDto {
@@ -1780,15 +1833,15 @@ export const AdminUserApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @param {string} id 
-         * @param {UpdateUserDto} updateUserDto 
+         * @param {AdminUpdateUserDto} adminUpdateUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminUserControllerUpdate: async (id: string, updateUserDto: UpdateUserDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminUserControllerUpdate: async (id: string, adminUpdateUserDto: AdminUpdateUserDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('adminUserControllerUpdate', 'id', id)
-            // verify required parameter 'updateUserDto' is not null or undefined
-            assertParamExists('adminUserControllerUpdate', 'updateUserDto', updateUserDto)
+            // verify required parameter 'adminUpdateUserDto' is not null or undefined
+            assertParamExists('adminUserControllerUpdate', 'adminUpdateUserDto', adminUpdateUserDto)
             const localVarPath = `/admin/user/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1813,7 +1866,7 @@ export const AdminUserApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateUserDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(adminUpdateUserDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1880,12 +1933,12 @@ export const AdminUserApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
-         * @param {UpdateUserDto} updateUserDto 
+         * @param {AdminUpdateUserDto} adminUpdateUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminUserControllerUpdate(id: string, updateUserDto: UpdateUserDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserControllerUpdate(id, updateUserDto, options);
+        async adminUserControllerUpdate(id: string, adminUpdateUserDto: AdminUpdateUserDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserControllerUpdate(id, adminUpdateUserDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUserApi.adminUserControllerUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1938,12 +1991,12 @@ export const AdminUserApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @param {string} id 
-         * @param {UpdateUserDto} updateUserDto 
+         * @param {AdminUpdateUserDto} adminUpdateUserDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminUserControllerUpdate(id: string, updateUserDto: UpdateUserDto, options?: RawAxiosRequestConfig): AxiosPromise<UserDto> {
-            return localVarFp.adminUserControllerUpdate(id, updateUserDto, options).then((request) => request(axios, basePath));
+        adminUserControllerUpdate(id: string, adminUpdateUserDto: AdminUpdateUserDto, options?: RawAxiosRequestConfig): AxiosPromise<UserDto> {
+            return localVarFp.adminUserControllerUpdate(id, adminUpdateUserDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2001,13 +2054,13 @@ export class AdminUserApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
-     * @param {UpdateUserDto} updateUserDto 
+     * @param {AdminUpdateUserDto} adminUpdateUserDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUserApi
      */
-    public adminUserControllerUpdate(id: string, updateUserDto: UpdateUserDto, options?: RawAxiosRequestConfig) {
-        return AdminUserApiFp(this.configuration).adminUserControllerUpdate(id, updateUserDto, options).then((request) => request(this.axios, this.basePath));
+    public adminUserControllerUpdate(id: string, adminUpdateUserDto: AdminUpdateUserDto, options?: RawAxiosRequestConfig) {
+        return AdminUserApiFp(this.configuration).adminUserControllerUpdate(id, adminUpdateUserDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

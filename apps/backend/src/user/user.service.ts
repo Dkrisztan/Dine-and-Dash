@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto, UserDto } from '../types/dtos/user.dto';
+import { AdminUpdateUserDto, CreateUserDto, UpdateUserDto, UserDto } from '../types/dtos/user.dto';
 import { PrismaService } from 'nestjs-prisma';
 import { OrderDto } from '../types/dtos/order.dto';
 
@@ -32,6 +32,17 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
+    try {
+      const user = this.prisma.user.update({ where: { id }, data: updateUserDto });
+      Logger.debug(`Updated user with id: ${id}`, UserService.name);
+      return user;
+    } catch (error) {
+      Logger.error(`Error updating user: ${error.message}`);
+      throw new InternalServerErrorException('Error updating user');
+    }
+  }
+
+  async updateByAdmin(id: string, updateUserDto: AdminUpdateUserDto): Promise<UserDto> {
     try {
       const user = this.prisma.user.update({ where: { id }, data: updateUserDto });
       Logger.debug(`Updated user with id: ${id}`, UserService.name);

@@ -84,3 +84,37 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsOptional()
   image: string;
 }
+
+export class AdminUpdateUserDto {
+  @ApiProperty({ example: 'John Doe' })
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @ApiProperty({ example: 'johndoe@email.com' })
+  @IsEmail()
+  @IsOptional()
+  email?: string;
+
+  @ApiProperty({ example: '+3620111222' })
+  @IsPhoneNumber()
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
+  @ApiProperty({ example: ['1010 Budapest, Kossuth Lajos utca 1.'] })
+  @IsString({ each: true })
+  @IsArray()
+  @IsOptional()
+  addresses?: string[];
+
+  @ApiProperty({ example: 'https://example.com/image.jpg' })
+  @IsString()
+  @IsOptional()
+  image?: string;
+
+  @ApiProperty({ example: Role.CUSTOMER, enum: Role })
+  @IsString()
+  @IsOptional()
+  role?: 'ADMIN' | 'CUSTOMER' | 'COURIER' | 'OWNER';
+}
