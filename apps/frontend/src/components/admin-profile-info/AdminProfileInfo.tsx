@@ -1,18 +1,23 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaUserShield } from 'react-icons/fa';
-import { MdOutlineEmail, MdOutlinePhone } from 'react-icons/md';
+import { MdDelete, MdOutlineEmail, MdOutlinePhone } from 'react-icons/md';
 import { toast } from 'sonner';
 
 import { AdminUpdateUserDtoRoleEnum, UserDto } from '@/api';
 import Spinner from '@/components/Spinner';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useDeleteUser } from '@/hooks/admin/user/useDeleteUser';
 import { useUpdateUser } from '@/hooks/admin/user/useUpdateUser';
 
 export default function AdminProfileInfo({ user, refreshUser }: { user: UserDto; refreshUser: () => void }) {
   const updateUserAdmin = useUpdateUser(user.id);
+  const deleteUserAdmin = useDeleteUser(user.id);
+  const router = useRouter();
   const [updateUser, setUpdateUser] = useState({
     role: user.role,
   });
@@ -31,6 +36,37 @@ export default function AdminProfileInfo({ user, refreshUser }: { user: UserDto;
     <div className='flex flex-row items-center justify-center gap-8 mt-5'>
       <div className='flex flex-col items-center'>
         <Image src={user.image} alt='avatar' width={150} height={150} className='rounded-full' />
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant='destructive' className='mt-4 gap-1'>
+              <MdDelete fontSize={20} />
+              Delete User
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>This action cannot be undone. This will permanently delete this account and remove the corresponding data.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className='flex items-center justify-end gap-1'>
+              <AlertDialogCancel className='mt-0'>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={async () => {
+                  try {
+                    await deleteUserAdmin.trigger();
+                    toast.success('User deleted successfully!');
+                    router.push('/admin');
+                  } catch (error) {
+                    toast.error(`Failed to delete user!`);
+                  }
+                }}
+                className='mt-0'
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       <div className='flex flex-col gap-2 pl-2'>
         <span className='text-2xl font-bold'>{user.name}</span>
