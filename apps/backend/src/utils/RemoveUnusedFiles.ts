@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
-import { UserService } from './user/user.service';
-import { FoodService } from './food/food.service';
-import { RestaurantService } from './restaurant/restaurant.service';
+import { UserService } from '../user/user.service';
+import { FoodService } from '../food/food.service';
+import { RestaurantService } from '../restaurant/restaurant.service';
 import { UTApi } from 'uploadthing/server';
 
 @Injectable()

@@ -362,6 +362,12 @@ export interface OrderDto {
      * @type {string}
      * @memberof OrderDto
      */
+    'paymentStatus': OrderDtoPaymentStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDto
+     */
     'createdAt': string;
     /**
      * 
@@ -379,6 +385,13 @@ export const OrderDtoStatusEnum = {
 } as const;
 
 export type OrderDtoStatusEnum = typeof OrderDtoStatusEnum[keyof typeof OrderDtoStatusEnum];
+export const OrderDtoPaymentStatusEnum = {
+    Pending: 'PENDING',
+    Paid: 'PAID',
+    Failed: 'FAILED'
+} as const;
+
+export type OrderDtoPaymentStatusEnum = typeof OrderDtoPaymentStatusEnum[keyof typeof OrderDtoPaymentStatusEnum];
 
 /**
  * 
@@ -3131,6 +3144,168 @@ export class OrderApi extends BaseAPI {
      */
     public orderControllerFindAllForCurrentUser(options?: RawAxiosRequestConfig) {
         return OrderApiFp(this.configuration).orderControllerFindAllForCurrentUser(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PaymentApi - axios parameter creator
+ * @export
+ */
+export const PaymentApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentControllerCreatePaymentIntent: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('paymentControllerCreatePaymentIntent', 'id', id)
+            const localVarPath = `/payment/intent/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentControllerHandleWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/payment/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PaymentApi - functional programming interface
+ * @export
+ */
+export const PaymentApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PaymentApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async paymentControllerCreatePaymentIntent(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentControllerCreatePaymentIntent(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentApi.paymentControllerCreatePaymentIntent']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async paymentControllerHandleWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentControllerHandleWebhook(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentApi.paymentControllerHandleWebhook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PaymentApi - factory interface
+ * @export
+ */
+export const PaymentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PaymentApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentControllerCreatePaymentIntent(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.paymentControllerCreatePaymentIntent(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentControllerHandleWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.paymentControllerHandleWebhook(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PaymentApi - object-oriented interface
+ * @export
+ * @class PaymentApi
+ * @extends {BaseAPI}
+ */
+export class PaymentApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PaymentApi
+     */
+    public paymentControllerCreatePaymentIntent(id: string, options?: RawAxiosRequestConfig) {
+        return PaymentApiFp(this.configuration).paymentControllerCreatePaymentIntent(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PaymentApi
+     */
+    public paymentControllerHandleWebhook(options?: RawAxiosRequestConfig) {
+        return PaymentApiFp(this.configuration).paymentControllerHandleWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

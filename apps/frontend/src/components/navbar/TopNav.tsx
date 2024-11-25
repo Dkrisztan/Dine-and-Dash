@@ -117,7 +117,8 @@ export function TopNav() {
                 <Button
                   type='submit'
                   onClick={async () => {
-                    await createOrder.trigger();
+                    const order = await createOrder.trigger();
+                    router.push(`/payment/${order.id}`);
                     refreshCart();
                     toast.success(`Order created successfully!`);
                   }}

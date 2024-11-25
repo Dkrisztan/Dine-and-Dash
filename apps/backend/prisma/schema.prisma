@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum Role {
@@ -19,6 +20,12 @@ enum Status {
   ONGOING
   FINISHED
   CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
 }
 
 enum Tag {
@@ -88,15 +95,16 @@ model CartItem {
 }
 
 model Order {
-  id           String      @id @default(uuid())
-  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String
-  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
-  restaurantId String
-  total        Float
-  items        OrderItem[]
-  status       Status      @default(PENDING)
-  createdAt    DateTime    @default(now())
+  id            String        @id @default(uuid())
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  restaurant    Restaurant    @relation(fields: [restaurantId], references: [id])
+  restaurantId  String
+  total         Float
+  items         OrderItem[]
+  status        Status        @default(PENDING)
+  paymentStatus PaymentStatus @default(PENDING)
+  createdAt     DateTime      @default(now())
 }
 
 model OrderItem {

@@ -84,4 +84,17 @@ export class OrderService {
   async findAll(): Promise<OrderDto[]> {
     return this.prisma.order.findMany();
   }
+
+  async getOrderById(id: string): Promise<OrderDto> {
+    return this.prisma.order.findUnique({
+      where: { id },
+    });
+  }
+
+  async updateOrderStatus(id: string, paymentStatus: OrderDto['paymentStatus']): Promise<OrderDto> {
+    return this.prisma.order.update({
+      where: { id },
+      data: { paymentStatus },
+    });
+  }
 }

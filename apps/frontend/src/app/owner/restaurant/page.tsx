@@ -60,7 +60,7 @@ export default function OwnedRestaurantPage() {
         {foods.length === 0 && <span className='text-2xl font-bold mb-5'>You don&apos;t have any food added yet.</span>}
         <Dialog open={openCreate} onOpenChange={setOpenCreate}>
           <DialogTrigger asChild>
-            <Button variant='outline' className='w-1/2 gap-2'>
+            <Button variant='outline' className='w-1/7 gap-2'>
               <FaPlus />
               Add Food
             </Button>

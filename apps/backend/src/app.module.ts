@@ -10,10 +10,11 @@ import { PrismaModule } from 'nestjs-prisma';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
-import { RemoveUnusedFiles } from './RemoveUnusedFiles';
+import { RemoveUnusedFiles } from './utils/RemoveUnusedFiles';
 import { UserService } from './user/user.service';
 import { RestaurantService } from './restaurant/restaurant.service';
 import { FoodService } from './food/food.service';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { FoodService } from './food/food.service';
     CartModule,
     OrderModule,
     RestaurantModule,
+    PaymentModule,
     PrismaModule.forRoot({ isGlobal: true }),
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
