@@ -5,7 +5,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { rawBody: true });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -31,4 +31,5 @@ async function bootstrap() {
 
   await app.listen(BACKEND_PORT || 3001);
 }
+
 bootstrap().then(() => Logger.log(`Backend server running on ${BACKEND_URL}:${BACKEND_PORT || 3001}`));
