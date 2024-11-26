@@ -64,4 +64,8 @@ export class UserService {
   async getOrdersOfUser(userId: string): Promise<OrderDto[]> {
     return this.prisma.order.findMany({ where: { userId }, include: { items: { include: { food: true } } } });
   }
+
+  async becomeCourier(userId: string): Promise<UserDto> {
+    return this.prisma.user.update({ where: { id: userId }, data: { role: 'COURIER' } });
+  }
 }

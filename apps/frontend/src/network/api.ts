@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import { AdminCartApi, AdminFoodApi, AdminOrderApi, AdminRestaurantApi, AdminUserApi, CartApi, FoodApi, OrderApi, PaymentApi, RestaurantApi, UserApi } from '@/api';
+import { AdminCartApi, AdminFoodApi, AdminOrderApi, AdminRestaurantApi, AdminUserApi, CartApi, CourierOrderApi, FoodApi, OrderApi, PaymentApi, RestaurantApi, UserApi } from '@/api';
 
 export const axs = axios.create();
 export const authAxios = axios.create();
@@ -28,5 +28,6 @@ export const adminCartApi = new AdminCartApi(undefined, process.env.NEXT_PUBLIC_
 
 export const orderApi = new OrderApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 export const adminOrderApi = new AdminOrderApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
+export const courierOrderApi = new CourierOrderApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);
 
 export const paymentApi = new PaymentApi(undefined, process.env.NEXT_PUBLIC_API_URL, authAxios);

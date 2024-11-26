@@ -105,4 +105,48 @@ export class OrderService {
       data: { paymentStatus },
     });
   }
+
+  async getAllPendingOrders(): Promise<OrderDto[]> {
+    return this.prisma.order.findMany({
+      where: {
+        status: 'PENDING',
+      },
+      include: {
+        items: {
+          include: {
+            food: true,
+          },
+        },
+        restaurant: {
+          select: {
+            name: true,
+            description: true,
+            image: true,
+            addresses: true,
+          },
+        },
+        user: {
+          select: {
+            email: true,
+            name: true,
+            phone: true,
+          },
+        },
+      },
+    });
+  }
+
+  async acceptOrder(courierId: string, orderId: string): Promise<OrderDto> {
+    return this.prisma.order.update({
+      where: { id: orderId },
+      data: {
+        status: 'DELIVERING',
+        courier: {
+          connect: {
+            id: courierId,
+          },
+        },
+      },
+    });
+  }
 }

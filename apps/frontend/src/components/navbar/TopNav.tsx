@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { IoCartOutline } from 'react-icons/io5';
 import { LuLogIn, LuLogOut, LuUser } from 'react-icons/lu';
+import { MdDeliveryDining } from 'react-icons/md';
 import { toast } from 'sonner';
 
 import { DeliveryDto, UserDto } from '@/api';
@@ -18,6 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/hooks/cart/useCart';
 import { useCreateOrder } from '@/hooks/order/useCreateOrder';
+import { useBecomeCourier } from '@/hooks/user/useBecomeCourier';
 import { userApi } from '@/network/api';
 
 export function TopNav() {
@@ -28,6 +30,7 @@ export function TopNav() {
   });
   const { data: cart, refreshCart } = useCart();
   const createOrder = useCreateOrder();
+  const becomeCourier = useBecomeCourier();
 
   const fetchUser = async () => {
     const token = Cookies.get('accessToken');
@@ -192,6 +195,18 @@ export function TopNav() {
                   <LuLogOut fontSize={18} />
                   Log out
                 </DropdownMenuItem>
+                {user.role === 'CUSTOMER' && (
+                  <DropdownMenuItem
+                    onClick={async () => {
+                      await becomeCourier.trigger();
+                      fetchUser();
+                    }}
+                    className='gap-1'
+                  >
+                    <MdDeliveryDining fontSize={18} />
+                    Become a Courier
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

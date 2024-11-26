@@ -28,7 +28,7 @@ export class OrderDto {
   total: number;
 
   @ApiProperty({ example: OrderStatus.PENDING, enum: OrderStatus })
-  status: 'PENDING' | 'ONGOING' | 'FINISHED' | 'CANCELLED';
+  status: 'PENDING' | 'ONGOING' | 'FINISHED' | 'CANCELLED' | 'DELIVERING';
 
   @ApiProperty({ example: PaymentStatus.PENDING, enum: PaymentStatus })
   paymentStatus: 'PENDING' | 'PAID' | 'FAILED';
@@ -56,4 +56,11 @@ export class DeliveryDto {
   @IsNotEmpty()
   @ApiProperty({ example: '1234 Main St, Springfield, IL 62701' })
   deliveryTo: string;
+}
+
+export class OrderId {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
+  orderId: string;
 }

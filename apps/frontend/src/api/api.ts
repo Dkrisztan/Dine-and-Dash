@@ -400,7 +400,8 @@ export const OrderDtoStatusEnum = {
     Pending: 'PENDING',
     Ongoing: 'ONGOING',
     Finished: 'FINISHED',
-    Cancelled: 'CANCELLED'
+    Cancelled: 'CANCELLED',
+    Delivering: 'DELIVERING'
 } as const;
 
 export type OrderDtoStatusEnum = typeof OrderDtoStatusEnum[keyof typeof OrderDtoStatusEnum];
@@ -412,6 +413,19 @@ export const OrderDtoPaymentStatusEnum = {
 
 export type OrderDtoPaymentStatusEnum = typeof OrderDtoPaymentStatusEnum[keyof typeof OrderDtoPaymentStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface OrderId
+ */
+export interface OrderId {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderId
+     */
+    'orderId': string;
+}
 /**
  * 
  * @export
@@ -2340,6 +2354,178 @@ export class CartApi extends BaseAPI {
 
 
 /**
+ * CourierOrderApi - axios parameter creator
+ * @export
+ */
+export const CourierOrderApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {OrderId} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        courierOrderControllerAcceptOrder: async (orderId: OrderId, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('courierOrderControllerAcceptOrder', 'orderId', orderId)
+            const localVarPath = `/courier/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(orderId, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        courierOrderControllerGetAllPendingOrders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/courier/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CourierOrderApi - functional programming interface
+ * @export
+ */
+export const CourierOrderApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CourierOrderApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {OrderId} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async courierOrderControllerAcceptOrder(orderId: OrderId, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.courierOrderControllerAcceptOrder(orderId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CourierOrderApi.courierOrderControllerAcceptOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async courierOrderControllerGetAllPendingOrders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrderDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.courierOrderControllerGetAllPendingOrders(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CourierOrderApi.courierOrderControllerGetAllPendingOrders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CourierOrderApi - factory interface
+ * @export
+ */
+export const CourierOrderApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CourierOrderApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {OrderId} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        courierOrderControllerAcceptOrder(orderId: OrderId, options?: RawAxiosRequestConfig): AxiosPromise<OrderDto> {
+            return localVarFp.courierOrderControllerAcceptOrder(orderId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        courierOrderControllerGetAllPendingOrders(options?: RawAxiosRequestConfig): AxiosPromise<Array<OrderDto>> {
+            return localVarFp.courierOrderControllerGetAllPendingOrders(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CourierOrderApi - object-oriented interface
+ * @export
+ * @class CourierOrderApi
+ * @extends {BaseAPI}
+ */
+export class CourierOrderApi extends BaseAPI {
+    /**
+     * 
+     * @param {OrderId} orderId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CourierOrderApi
+     */
+    public courierOrderControllerAcceptOrder(orderId: OrderId, options?: RawAxiosRequestConfig) {
+        return CourierOrderApiFp(this.configuration).courierOrderControllerAcceptOrder(orderId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CourierOrderApi
+     */
+    public courierOrderControllerGetAllPendingOrders(options?: RawAxiosRequestConfig) {
+        return CourierOrderApiFp(this.configuration).courierOrderControllerGetAllPendingOrders(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * DefaultApi - axios parameter creator
  * @export
  */
@@ -3774,6 +3960,39 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        userControllerBecomeCourier: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/user/courier`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         userControllerDeleteProfile: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/user/me`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3922,6 +4141,17 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async userControllerBecomeCourier(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerBecomeCourier(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.userControllerBecomeCourier']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async userControllerDeleteProfile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerDeleteProfile(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -3977,6 +4207,14 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        userControllerBecomeCourier(options?: RawAxiosRequestConfig): AxiosPromise<UserDto> {
+            return localVarFp.userControllerBecomeCourier(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         userControllerDeleteProfile(options?: RawAxiosRequestConfig): AxiosPromise<UserDto> {
             return localVarFp.userControllerDeleteProfile(options).then((request) => request(axios, basePath));
         },
@@ -4015,6 +4253,16 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
  * @extends {BaseAPI}
  */
 export class UserApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public userControllerBecomeCourier(options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).userControllerBecomeCourier(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.

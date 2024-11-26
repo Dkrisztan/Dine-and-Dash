@@ -26,6 +26,12 @@ export class UserController {
     return this.userService.update(user.id, updateDto);
   }
 
+  @Patch('courier')
+  @ApiOkResponse({ type: UserDto })
+  async becomeCourier(@CurrentUser() user: UserDto): Promise<UserDto> {
+    return this.userService.becomeCourier(user.id);
+  }
+
   @Delete('me')
   @ApiOkResponse({ type: UserDto })
   async deleteProfile(@CurrentUser() user: UserDto): Promise<UserDto> {
