@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { JwtAuth } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -16,8 +16,8 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  async createOrderFromCart(@CurrentUser() user: UserDto): Promise<OrderDto> {
-    return this.orderService.createOrderFromCart(user);
+  async createOrderFromCart(@CurrentUser() user: UserDto, @Body() address: string): Promise<OrderDto> {
+    return this.orderService.createOrderFromCart(user, address);
   }
 
   @Get()

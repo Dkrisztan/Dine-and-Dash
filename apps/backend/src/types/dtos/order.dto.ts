@@ -45,4 +45,7 @@ export class OrderDto {
     ],
   })
   items?: OrderItemDto[];
+
+  @ApiProperty({ example: '1234 Main St, Springfield, IL 62701' })
+  deliveryTo: string;
 }

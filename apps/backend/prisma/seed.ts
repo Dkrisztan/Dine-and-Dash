@@ -35,7 +35,14 @@ async function main() {
   const cart = await client.cart.create({ data: { ...MockCart, userId: user.id } });
   const restaurant = await client.restaurant.create({ data: { ...MockRestaurant, ownerId: user.id } });
   const food = await client.food.create({ data: { ...MockFood, restaurantId: restaurant.id } });
-  const order = await client.order.create({ data: { ...MockOrder, userId: user.id, restaurantId: restaurant.id } });
+  const order = await client.order.create({
+    data: {
+      ...MockOrder,
+      userId: user.id,
+      restaurantId: restaurant.id,
+      deliveryTo: 'Test Address',
+    },
+  });
 
   return { user, cart, restaurant, food, order };
 }

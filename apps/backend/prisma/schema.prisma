@@ -105,6 +105,7 @@ model Order {
   status        Status        @default(PENDING)
   paymentStatus PaymentStatus @default(PENDING)
   createdAt     DateTime      @default(now())
+  deliveryTo    String
 }
 
 model OrderItem {

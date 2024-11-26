@@ -7,7 +7,7 @@ import { OrderDto } from '../types/dtos/order.dto';
 export class OrderService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createOrderFromCart(user: UserDto): Promise<OrderDto> {
+  async createOrderFromCart(user: UserDto, address: string): Promise<OrderDto> {
     const cart = await this.prisma.cart.findUnique({
       where: { id: user.cart.id },
       include: { items: true },
@@ -34,6 +34,7 @@ export class OrderService {
         userId: user.id,
         restaurantId: restaurantId,
         total: cart.total,
+        deliveryTo: address,
       },
     });
 

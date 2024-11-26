@@ -14,6 +14,7 @@ import Logo from '@/components/logo/Logo';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ModeToggle } from '@/components/ui/mode-toggle';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/hooks/cart/useCart';
 import { useCreateOrder } from '@/hooks/order/useCreateOrder';
@@ -22,6 +23,7 @@ import { userApi } from '@/network/api';
 export function TopNav() {
   const router = useRouter();
   const [user, setUser] = useState<UserDto | null>(null);
+  const [deliveryAddress, setDeliveryAddress] = useState<string | undefined>(user?.addresses.at(0));
   const { data: cart, refreshCart } = useCart();
   const createOrder = useCreateOrder();
 
@@ -84,7 +86,14 @@ export function TopNav() {
 
         <Sheet key={user?.id}>
           <SheetTrigger asChild>
-            <Button variant='ghost' size='icon' onClick={refreshCart}>
+            <Button
+              variant='ghost'
+              size='icon'
+              onClick={() => {
+                refreshCart();
+                fetchUser();
+              }}
+            >
               <IoCartOutline fontSize={24} />
             </Button>
           </SheetTrigger>
@@ -112,16 +121,38 @@ export function TopNav() {
                   );
                 })}
             </div>
+            <div className='flex flex-row items-center justify-center pb-5'>
+              {user?.addresses.length === 0 ? (
+                <div className='text-red-500'>Please add a delivery address to proceed.</div>
+              ) : (
+                <>
+                  <div className='text-md font-bold'>Delivery Address</div>
+                  <Select defaultValue={user?.addresses.at(0)} onValueChange={(value) => setDeliveryAddress(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder={user?.addresses.at(0)} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {user?.addresses.map((address) => (
+                        <SelectItem key={address} value={address}>
+                          {address}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </>
+              )}
+            </div>
             <SheetFooter>
               <SheetClose asChild>
                 <Button
                   type='submit'
                   onClick={async () => {
-                    const order = await createOrder.trigger();
+                    const order = await createOrder.trigger(deliveryAddress ? deliveryAddress : '');
                     router.push(`/payment/${order.id}`);
                     refreshCart();
                     toast.success(`Order created successfully!`);
                   }}
+                  disabled={user?.addresses.length === 0}
                 >
                   Order
                 </Button>
