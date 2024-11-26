@@ -1,5 +1,6 @@
 import useSWRMutation from 'swr/mutation';
 
+import { DeliveryDto } from '@/api';
 import { orderApi } from '@/network/api';
 
 export function useCreateOrder() {
@@ -10,7 +11,7 @@ export function useCreateOrder() {
       {
         arg,
       }: {
-        arg: string;
+        arg: DeliveryDto;
       }
     ) => {
       const response = await orderApi.orderControllerCreateOrderFromCart(arg);

@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { OrderStatus } from './order-status.dto';
 import { PaymentStatus } from './payment-status.dto';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class OrderItemDto {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
@@ -46,6 +47,13 @@ export class OrderDto {
   })
   items?: OrderItemDto[];
 
+  @ApiProperty({ example: '1234 Main St, Springfield, IL 62701' })
+  deliveryTo: string;
+}
+
+export class DeliveryDto {
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty({ example: '1234 Main St, Springfield, IL 62701' })
   deliveryTo: string;
 }

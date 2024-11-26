@@ -9,7 +9,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import { LuLogIn, LuLogOut, LuUser } from 'react-icons/lu';
 import { toast } from 'sonner';
 
-import { UserDto } from '@/api';
+import { DeliveryDto, UserDto } from '@/api';
 import Logo from '@/components/logo/Logo';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -23,7 +23,9 @@ import { userApi } from '@/network/api';
 export function TopNav() {
   const router = useRouter();
   const [user, setUser] = useState<UserDto | null>(null);
-  const [deliveryAddress, setDeliveryAddress] = useState<string | undefined>(user?.addresses.at(0));
+  const [deliveryAddress, setDeliveryAddress] = useState<DeliveryDto>({
+    deliveryTo: '',
+  });
   const { data: cart, refreshCart } = useCart();
   const createOrder = useCreateOrder();
 
@@ -38,6 +40,7 @@ export function TopNav() {
     try {
       const { data: userData } = await userApi.userControllerMe();
       setUser(userData);
+      setDeliveryAddress({ deliveryTo: userData.addresses.at(0) || '' });
     } catch (error) {
       console.error('Error fetching user:', error);
     }
@@ -127,7 +130,15 @@ export function TopNav() {
               ) : (
                 <>
                   <div className='text-md font-bold'>Delivery Address</div>
-                  <Select defaultValue={user?.addresses.at(0)} onValueChange={(value) => setDeliveryAddress(value)}>
+                  <Select
+                    defaultValue={user?.addresses.at(0)}
+                    onValueChange={(value) => {
+                      setDeliveryAddress((prev) => ({
+                        ...prev,
+                        deliveryTo: value,
+                      }));
+                    }}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder={user?.addresses.at(0)} />
                     </SelectTrigger>
@@ -147,7 +158,8 @@ export function TopNav() {
                 <Button
                   type='submit'
                   onClick={async () => {
-                    const order = await createOrder.trigger(deliveryAddress ? deliveryAddress : '');
+                    if (!deliveryAddress) return;
+                    const order = await createOrder.trigger(deliveryAddress);
                     router.push(`/payment/${order.id}`);
                     refreshCart();
                     toast.success(`Order created successfully!`);

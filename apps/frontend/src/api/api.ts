@@ -287,6 +287,19 @@ export interface CreateUserDto {
 /**
  * 
  * @export
+ * @interface DeliveryDto
+ */
+export interface DeliveryDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeliveryDto
+     */
+    'deliveryTo': string;
+}
+/**
+ * 
+ * @export
  * @interface FoodDto
  */
 export interface FoodDto {
@@ -3000,13 +3013,13 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
-         * @param {string} body 
+         * @param {DeliveryDto} deliveryDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerCreateOrderFromCart: async (body: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('orderControllerCreateOrderFromCart', 'body', body)
+        orderControllerCreateOrderFromCart: async (deliveryDto: DeliveryDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deliveryDto' is not null or undefined
+            assertParamExists('orderControllerCreateOrderFromCart', 'deliveryDto', deliveryDto)
             const localVarPath = `/order`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3030,7 +3043,7 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(deliveryDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3082,12 +3095,12 @@ export const OrderApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {string} body 
+         * @param {DeliveryDto} deliveryDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async orderControllerCreateOrderFromCart(body: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerCreateOrderFromCart(body, options);
+        async orderControllerCreateOrderFromCart(deliveryDto: DeliveryDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerCreateOrderFromCart(deliveryDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerCreateOrderFromCart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3115,12 +3128,12 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
-         * @param {string} body 
+         * @param {DeliveryDto} deliveryDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerCreateOrderFromCart(body: string, options?: RawAxiosRequestConfig): AxiosPromise<OrderDto> {
-            return localVarFp.orderControllerCreateOrderFromCart(body, options).then((request) => request(axios, basePath));
+        orderControllerCreateOrderFromCart(deliveryDto: DeliveryDto, options?: RawAxiosRequestConfig): AxiosPromise<OrderDto> {
+            return localVarFp.orderControllerCreateOrderFromCart(deliveryDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3142,13 +3155,13 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
 export class OrderApi extends BaseAPI {
     /**
      * 
-     * @param {string} body 
+     * @param {DeliveryDto} deliveryDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrderApi
      */
-    public orderControllerCreateOrderFromCart(body: string, options?: RawAxiosRequestConfig) {
-        return OrderApiFp(this.configuration).orderControllerCreateOrderFromCart(body, options).then((request) => request(this.axios, this.basePath));
+    public orderControllerCreateOrderFromCart(deliveryDto: DeliveryDto, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerCreateOrderFromCart(deliveryDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
