@@ -77,6 +77,13 @@ export class OrderService {
             food: true,
           },
         },
+        restaurant: {
+          select: {
+            name: true,
+            description: true,
+            image: true,
+          },
+        },
       },
     });
   }

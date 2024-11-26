@@ -48,6 +48,18 @@ export const columns: ColumnDef<OrderDto>[] = [
     cell: ({ row }) => <div className='uppercase text-base'>{row.getValue('status')}</div>,
   },
   {
+    accessorKey: 'paymentStatus',
+    header: ({ column }) => {
+      return (
+        <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+          <div className='text-base'>Status</div>
+          <CaretSortIcon className='ml-2 h-4 w-4' />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className='uppercase text-base'>{row.getValue('paymentStatus')}</div>,
+  },
+  {
     accessorKey: 'total',
     header: () => <div className='text-base'>Total</div>,
     cell: ({ row }) => <div className='text-base'>{row.original.total.toFixed(2)}</div>,

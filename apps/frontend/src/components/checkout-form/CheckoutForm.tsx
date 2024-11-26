@@ -24,7 +24,6 @@ export function CheckoutForm({ clientSecret, orderId }: CheckoutFormProps) {
       <PaymentElement />
       {stripeIntent.message && <p className='text-red-500 my-5'>{stripeIntent.message}</p>}
       {payment.message && <p className='text-red-500 my-5'>{payment.message}</p>}
-      <p className='mt-10 text-right'>A fizetéseket a Stripe kezeli.</p>
       <Button className='mt-3'>Fizetés</Button>
     </form>
   );

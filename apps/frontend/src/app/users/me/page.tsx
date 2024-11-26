@@ -26,9 +26,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className='flex flex-col items-center'>
-      <Tabs defaultValue='profile-info' className='w-1/2 mx-auto mt-6 border-0 rounded-md'>
-        <div className='flex justify-center border-b-0'>
+    <div className='flex flex-col items-center space-y-5'>
+      <Tabs defaultValue='profile-info' className='w-1/2 mx-auto mt-6 rounded-md'>
+        <div className='flex justify-center'>
           <TabsList className='h-11'>
             <TabsTrigger value='profile-info' className='px-24 text-lg'>
               Profile Info
@@ -45,7 +45,7 @@ export default function ProfilePage() {
             </TabsTrigger>
           </TabsList>
         </div>
-        <TabsContent value='profile-info' className='py-5 px-8 flex flex-col'>
+        <TabsContent value='profile-info' className='py-5 px-8'>
           <ProfileInfo user={user} refreshUser={refreshUser} />
         </TabsContent>
         <TabsContent value='orders' className='py-5 px-8'>

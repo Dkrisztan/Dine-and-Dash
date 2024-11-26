@@ -1,11 +1,72 @@
-import { OrderDto } from '@/api';
+import { useMemo } from 'react';
 
-export default function Order({ orders = [] }: { orders?: OrderDto[] }) {
+import { FoodDto, OrderDto, OrderItemDto, RestaurantDto } from '@/api';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+interface ExtendedOrderDto extends OrderItemDto {
+  food?: FoodDto;
+}
+
+interface OrderProps extends OrderDto {
+  items?: ExtendedOrderDto[];
+  restaurant?: RestaurantDto;
+}
+
+export default function Order({ orders = [] }: { orders?: OrderProps[] }) {
+  const orderFoodMap = useMemo(() => {
+    const map: Record<string, Record<string, number>> = {};
+    orders.forEach((order) => {
+      const foodQuantity: Record<string, number> = {};
+      order.items?.forEach((item) => {
+        const foodType = item.food?.name;
+        if (foodType) {
+          foodQuantity[foodType] = (foodQuantity[foodType] || 0) + 1;
+        }
+      });
+      map[order.id] = foodQuantity;
+    });
+    return map;
+  }, [orders]);
+
   return (
-    <div>
-      {orders.map((order) => (
-        <div key={order.id}>{order.id}</div>
-      ))}
+    <div className='mx-32'>
+      <Accordion type='single' collapsible>
+        {orders
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .map((order) => (
+            <AccordionItem key={order.id} value={order.id}>
+              <AccordionTrigger className='text-xl flex flex-row justify-between'>
+                <div>{order.restaurant?.name}</div>
+                <div className='pl-80'>
+                  {new Date(order.createdAt)
+                    .toLocaleString('en-CA', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false,
+                    })
+                    .replace(',', '')}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className='text-lg'>
+                <div className='flex flex-col'>
+                  {Object.keys(orderFoodMap[order.id]).map((foodType) => (
+                    <div key={foodType} className='flex flex-row gap-4'>
+                      <div>{foodType}</div>
+                      <div>x{orderFoodMap[order.id][foodType]}</div>
+                    </div>
+                  ))}
+                  <div className='flex flex-row justify-end pr-8 gap-2'>
+                    <div>Total:</div>
+                    {order.total}
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+      </Accordion>
     </div>
   );
 }
