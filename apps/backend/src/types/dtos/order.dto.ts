@@ -64,3 +64,8 @@ export class OrderId {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   orderId: string;
 }
+
+export class OrderStatusDto {
+  @ApiProperty({ example: OrderStatus.PENDING, enum: OrderStatus })
+  status: 'PENDING' | 'ONGOING' | 'FINISHED' | 'CANCELLED' | 'DELIVERING';
+}

@@ -24,4 +24,14 @@ export class CourierOrderController {
   async acceptOrder(@CurrentUser() user: UserDto, @Body() order: OrderId): Promise<OrderDto> {
     return this.orderService.acceptOrder(user.id, order.orderId);
   }
+
+  @Get('my-deliveries')
+  async getMyDeliveries(@CurrentUser() user: UserDto): Promise<OrderDto[]> {
+    return this.orderService.getMyDeliveries(user.id);
+  }
+
+  @Post('finish')
+  async finishOrder(@CurrentUser() user: UserDto, @Body() order: OrderId): Promise<OrderDto> {
+    return this.orderService.finishOrder(user.id, order.orderId);
+  }
 }

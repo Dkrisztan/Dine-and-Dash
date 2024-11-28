@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 import { courierOrderApi } from '@/network/api';
 
@@ -8,5 +8,9 @@ export function usePendingOrders() {
     return response.data;
   });
 
-  return { data, error, isLoading };
+  const refresh = () => {
+    mutate('usePendingOrders');
+  };
+
+  return { data, error, isLoading, refresh };
 }

@@ -149,4 +149,43 @@ export class OrderService {
       },
     });
   }
+
+  async getMyDeliveries(courierId: string): Promise<OrderDto[]> {
+    return this.prisma.order.findMany({
+      where: {
+        courierId,
+      },
+      include: {
+        items: {
+          include: {
+            food: true,
+          },
+        },
+        restaurant: {
+          select: {
+            name: true,
+            description: true,
+            image: true,
+            addresses: true,
+          },
+        },
+        user: {
+          select: {
+            email: true,
+            name: true,
+            phone: true,
+          },
+        },
+      },
+    });
+  }
+
+  async finishOrder(id: string, orderId: string): Promise<OrderDto> {
+    return this.prisma.order.update({
+      where: { id: orderId, courierId: id },
+      data: {
+        status: 'FINISHED',
+      },
+    });
+  }
 }

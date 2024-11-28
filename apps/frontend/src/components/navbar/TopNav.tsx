@@ -88,7 +88,7 @@ export function TopNav() {
       </div>
       <div className='flex flex-row items-center gap-4 px-2'>
         {user?.role === 'ADMIN' && <Link href='/admin'>Admin</Link>}
-        {user?.role === 'COURIER' && <Link href='/admin'>Deliveries</Link>}
+        {user?.role === 'COURIER' && <Link href='/deliveries'>Deliveries</Link>}
 
         <Sheet key={user?.id}>
           <SheetTrigger asChild>
