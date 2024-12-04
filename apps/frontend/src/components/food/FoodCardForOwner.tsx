@@ -48,8 +48,6 @@ export default function FoodCardForOwner({ food, refreshFoodsAction }: { food: F
     refreshFoodsAction();
   };
 
-  // asdf
-
   return (
     <Card>
       <CardHeader className='p-0 mb-2'>

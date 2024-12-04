@@ -11,7 +11,7 @@ import { useUserSelf } from '@/hooks/user/useUserSelf';
 export const dynamic = 'force-dynamic';
 
 export default function DeliveriesPage() {
-  const { data: user, isLoading, error, refreshUser } = useUserSelf();
+  const { data: user, isLoading, error } = useUserSelf();
   const { data: orders, refresh: refreshPendingOrders } = usePendingOrders();
   const { data: myDeliveries, refresh: refreshMyDeliveries } = useMyDeliveries();
 
