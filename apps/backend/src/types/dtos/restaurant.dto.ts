@@ -3,6 +3,17 @@ import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { RestaurantTag } from './restaurant-tag.dto';
 
+export class RatingDto {
+  @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
+  userId: string;
+
+  @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
+  restaurantId: string;
+
+  @ApiProperty({ example: 4.5 })
+  score: number;
+}
+
 export class RestaurantDto {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   id: string;
@@ -16,8 +27,8 @@ export class RestaurantDto {
   @ApiProperty({ example: ['Bp utca 1.'] })
   addresses: string[];
 
-  @ApiProperty({ example: 4.5 })
-  rating: number[];
+  @ApiProperty({ type: RatingDto, isArray: true })
+  ratings: RatingDto[];
 
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   ownerId: string;
@@ -29,7 +40,7 @@ export class RestaurantDto {
   image: string;
 }
 
-export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id', 'ownerId', 'rating']) {
+export class CreateRestaurantDto extends OmitType(RestaurantDto, ['id', 'ownerId', 'ratings']) {
   @ApiProperty({ example: 'Pizza Place' })
   @IsString()
   @IsNotEmpty()

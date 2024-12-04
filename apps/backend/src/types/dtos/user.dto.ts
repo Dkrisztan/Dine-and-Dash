@@ -1,6 +1,6 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsArray, IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
-import { RestaurantDto } from './restaurant.dto';
+import { RatingDto, RestaurantDto } from './restaurant.dto';
 import { CartDto } from './cart.dto';
 import { Role } from './role.dto';
 
@@ -31,9 +31,12 @@ export class UserDto {
 
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   cart?: CartDto;
+
+  @ApiProperty({ type: RatingDto, isArray: true })
+  ratings: RatingDto[];
 }
 
-export class CreateUserDto extends OmitType(UserDto, ['id', 'ownerOf', 'cart', 'role', 'phone']) {
+export class CreateUserDto extends OmitType(UserDto, ['id', 'ownerOf', 'cart', 'role', 'phone', 'ratings']) {
   @ApiProperty({ example: 'John Doe' })
   @IsString()
   @IsNotEmpty()

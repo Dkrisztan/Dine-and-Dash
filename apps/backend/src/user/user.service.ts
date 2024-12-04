@@ -9,7 +9,7 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
     try {
-      const user = await this.prisma.user.create({ data: createUserDto });
+      const user = await this.prisma.user.create({ data: createUserDto, include: { ratings: true } });
       Logger.debug(`Created user with id: ${user.id}`, UserService.name);
       await this.prisma.cart.create({ data: { user: { connect: { id: user.id } } } });
       return user;
@@ -20,11 +20,32 @@ export class UserService {
   }
 
   async findAll(): Promise<UserDto[]> {
-    return this.prisma.user.findMany({ include: { ownerOf: true, cart: true } });
+    return this.prisma.user.findMany({
+      include: {
+        ownerOf: {
+          include: {
+            ratings: true,
+          },
+        },
+        cart: true,
+        ratings: true,
+      },
+    });
   }
 
   async findOne(id: string): Promise<UserDto> {
-    const user = await this.prisma.user.findUnique({ where: { id }, include: { ownerOf: true, cart: true } });
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        ownerOf: {
+          include: {
+            ratings: true,
+          },
+        },
+        cart: true,
+        ratings: true,
+      },
+    });
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
@@ -33,7 +54,7 @@ export class UserService {
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
     try {
-      const user = this.prisma.user.update({ where: { id }, data: updateUserDto });
+      const user = this.prisma.user.update({ where: { id }, data: updateUserDto, include: { ratings: true } });
       Logger.debug(`Updated user with id: ${id}`, UserService.name);
       return user;
     } catch (error) {
@@ -44,7 +65,7 @@ export class UserService {
 
   async updateByAdmin(id: string, updateUserDto: AdminUpdateUserDto): Promise<UserDto> {
     try {
-      const user = this.prisma.user.update({ where: { id }, data: updateUserDto });
+      const user = this.prisma.user.update({ where: { id }, data: updateUserDto, include: { ratings: true } });
       Logger.debug(`Updated user with id: ${id}`, UserService.name);
       return user;
     } catch (error) {
@@ -54,7 +75,7 @@ export class UserService {
   }
 
   async remove(id: string): Promise<UserDto> {
-    return this.prisma.user.delete({ where: { id } });
+    return this.prisma.user.delete({ where: { id }, include: { ratings: true } });
   }
 
   async findByEmail(email: string) {
@@ -66,6 +87,6 @@ export class UserService {
   }
 
   async becomeCourier(userId: string): Promise<UserDto> {
-    return this.prisma.user.update({ where: { id: userId }, data: { role: 'COURIER' } });
+    return this.prisma.user.update({ where: { id: userId }, data: { role: 'COURIER' }, include: { ratings: true } });
   }
 }

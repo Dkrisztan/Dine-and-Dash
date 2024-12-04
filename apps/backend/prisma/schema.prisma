@@ -66,6 +66,7 @@ model User {
   deliveries Order[]     @relation("UserDeliveries")
   cart       Cart?
   ownerOf    Restaurant?
+  ratings    Rating[]
 }
 
 model Food {
@@ -125,11 +126,22 @@ model Restaurant {
   name        String
   description String
   addresses   String[]
-  rating      Float[]
   tags        Tag[]
   image       String?
   foods       Food[]
   order       Order[]
   owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId     String   @unique
+  ratings     Rating[]
+}
+
+model Rating {
+  id           String     @id @default(uuid())
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId String
+  score        Int
+
+  @@unique([userId, restaurantId])
 }

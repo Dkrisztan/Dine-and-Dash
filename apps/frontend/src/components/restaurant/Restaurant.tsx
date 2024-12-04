@@ -31,9 +31,14 @@ export default function Restaurant({ user, refreshUser }: { user: UserDto; refre
   const updateRestaurant = useUpdateRestaurant();
 
   const restaurant = user.ownerOf;
-  let rating;
-  if (restaurant) {
-    rating = restaurant.rating.reduce((acc, curr) => acc + curr, 0) / (restaurant.rating.length - 1);
+
+  let rating = 0;
+
+  if (restaurant && restaurant.ratings) {
+    if (restaurant.ratings.length > 0) {
+      const total = restaurant.ratings.reduce((acc, rating) => acc + rating.score, 0);
+      rating = total / restaurant.ratings.length;
+    }
   }
 
   const [formData, setFormData] = useState({

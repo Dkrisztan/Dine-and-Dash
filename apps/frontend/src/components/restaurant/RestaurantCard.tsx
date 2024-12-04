@@ -7,7 +7,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import Ratings from '@/components/ui/ratings';
 
 export default function RestaurantCard({ restaurant }: { restaurant: RestaurantDto }) {
-  const rating = restaurant.rating.reduce((acc, curr) => acc + curr, 0) / (restaurant.rating.length - 1);
+  let rating = 0;
+
+  if (restaurant.ratings.length > 0) {
+    const total = restaurant.ratings.reduce((acc, rating) => acc + rating.score, 0);
+    rating = total / restaurant.ratings.length;
+  }
 
   return (
     <Link href={`/restaurants/${restaurant.id}`}>

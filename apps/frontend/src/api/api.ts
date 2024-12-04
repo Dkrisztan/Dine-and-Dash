@@ -454,6 +454,31 @@ export interface OrderItemDto {
 /**
  * 
  * @export
+ * @interface RatingDto
+ */
+export interface RatingDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof RatingDto
+     */
+    'userId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RatingDto
+     */
+    'restaurantId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RatingDto
+     */
+    'score': number;
+}
+/**
+ * 
+ * @export
  * @interface RestaurantDto
  */
 export interface RestaurantDto {
@@ -483,10 +508,10 @@ export interface RestaurantDto {
     'addresses': Array<string>;
     /**
      * 
-     * @type {Array<number>}
+     * @type {Array<RatingDto>}
      * @memberof RestaurantDto
      */
-    'rating': Array<number>;
+    'ratings': Array<RatingDto>;
     /**
      * 
      * @type {string}
@@ -727,6 +752,12 @@ export interface UserDto {
      * @memberof UserDto
      */
     'cart'?: CartDto;
+    /**
+     * 
+     * @type {Array<RatingDto>}
+     * @memberof UserDto
+     */
+    'ratings': Array<RatingDto>;
 }
 
 export const UserDtoRoleEnum = {
@@ -3770,35 +3801,6 @@ export const RestaurantApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restaurantControllerGetTopFive: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/restaurant/topFive`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         restaurantControllerRemoveOwnRestaurant: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/restaurant`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3916,17 +3918,6 @@ export const RestaurantApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async restaurantControllerGetTopFive(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RestaurantDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.restaurantControllerGetTopFive(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RestaurantApi.restaurantControllerGetTopFive']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         async restaurantControllerRemoveOwnRestaurant(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RestaurantDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.restaurantControllerRemoveOwnRestaurant(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -3986,14 +3977,6 @@ export const RestaurantApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restaurantControllerGetTopFive(options?: RawAxiosRequestConfig): AxiosPromise<Array<RestaurantDto>> {
-            return localVarFp.restaurantControllerGetTopFive(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         restaurantControllerRemoveOwnRestaurant(options?: RawAxiosRequestConfig): AxiosPromise<RestaurantDto> {
             return localVarFp.restaurantControllerRemoveOwnRestaurant(options).then((request) => request(axios, basePath));
         },
@@ -4046,16 +4029,6 @@ export class RestaurantApi extends BaseAPI {
      */
     public restaurantControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
         return RestaurantApiFp(this.configuration).restaurantControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RestaurantApi
-     */
-    public restaurantControllerGetTopFive(options?: RawAxiosRequestConfig) {
-        return RestaurantApiFp(this.configuration).restaurantControllerGetTopFive(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
