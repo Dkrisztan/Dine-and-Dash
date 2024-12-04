@@ -90,7 +90,7 @@ export default function Addresses({ addresses, refreshUser }: { addresses: strin
             </div>
           </div>
           <DialogFooter>
-            <Button type='submit' onClick={handleSaveChanges}>
+            <Button type='submit' variant='outline' onClick={handleSaveChanges}>
               {updateSelf.isMutating ? <Spinner /> : 'Save changes'}
             </Button>
           </DialogFooter>
@@ -126,7 +126,7 @@ export default function Addresses({ addresses, refreshUser }: { addresses: strin
             </div>
           </div>
           <DialogFooter>
-            <Button type='submit' onClick={handleSaveEditedAddress}>
+            <Button type='submit' variant='outline' onClick={handleSaveEditedAddress}>
               {updateSelf.isMutating ? <Spinner /> : 'Save changes'}
             </Button>
           </DialogFooter>

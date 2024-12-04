@@ -40,6 +40,10 @@ export default function FoodCard({ food }: { food: FoodDto }) {
     });
   };
 
+  if (addToCart.error) {
+    toast.error('You need to be logged in to add items to the cart!');
+  }
+
   return (
     <Card>
       <CardHeader className='p-0 mb-2'>

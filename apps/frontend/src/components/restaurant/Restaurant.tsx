@@ -159,7 +159,7 @@ export default function Restaurant({ user, refreshUser }: { user: UserDto; refre
               </div>
             </div>
             <DialogFooter>
-              <Button type='submit' onClick={handleCreateSubmit}>
+              <Button type='submit' variant='outline' onClick={handleCreateSubmit}>
                 {createRestaurant.isMutating ? <Spinner /> : 'Save changes'}
               </Button>
             </DialogFooter>
@@ -263,7 +263,7 @@ export default function Restaurant({ user, refreshUser }: { user: UserDto; refre
               </div>
             </div>
             <DialogFooter>
-              <Button type='submit' onClick={handleEditSubmit}>
+              <Button type='submit' variant='outline' onClick={handleEditSubmit}>
                 {updateRestaurant.isMutating ? <Spinner /> : 'Save changes'}
               </Button>
             </DialogFooter>

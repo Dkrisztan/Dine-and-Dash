@@ -111,7 +111,7 @@ export default function FoodCardForOwner({ food, refreshFoodsAction }: { food: F
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button type='submit' onClick={handleEditSubmit}>
+                  <Button type='submit' variant='outline' onClick={handleEditSubmit}>
                     {updateFood.isMutating ? <Spinner /> : 'Save changes'}
                   </Button>
                 </DialogFooter>

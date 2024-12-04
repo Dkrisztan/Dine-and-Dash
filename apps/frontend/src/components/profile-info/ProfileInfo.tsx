@@ -15,7 +15,11 @@ import { useUpdateSelf } from '@/hooks/user/useUpdateSelf';
 export default function ProfileInfo({ user, refreshUser }: { user: UserDto; refreshUser: () => void }) {
   const updateSelf = useUpdateSelf();
   const [open, setOpen] = useState(false);
-  const [updateUser, setUpdateUser] = useState<UpdateUserDto>({ name: user?.name, phone: user?.phone || '', image: user?.image });
+  const [updateUser, setUpdateUser] = useState<UpdateUserDto>({
+    name: user?.name,
+    phone: user?.phone || '',
+    image: user?.image,
+  });
 
   const handleInputChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
@@ -79,7 +83,7 @@ export default function ProfileInfo({ user, refreshUser }: { user: UserDto; refr
               </div>
             </div>
             <DialogFooter>
-              <Button type='submit' onClick={handleSaveChanges}>
+              <Button type='submit' variant='outline' onClick={handleSaveChanges}>
                 {updateSelf.isMutating ? <Spinner /> : 'Save changes'}
               </Button>
             </DialogFooter>
