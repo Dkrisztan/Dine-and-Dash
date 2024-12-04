@@ -40,7 +40,7 @@ export class RestaurantService {
 
       return await this.prisma.restaurant.update({
         where: { id: restaurant.id },
-        data: { rating: [0] },
+        data: { rating: [0, 1] },
       });
     } catch (error) {
       throw new InternalServerErrorException('Error creating restaurant');
