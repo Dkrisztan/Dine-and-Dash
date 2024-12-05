@@ -65,7 +65,7 @@ export const columns: ColumnDef<RestaurantDto>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className='capitalize text-base'>{row.original.rating.reduce((acc, rating) => acc + rating, 0) / (row.original.rating.length - 1)}</div>,
+    cell: ({ row }) => <div className='capitalize text-base'>{row.original.ratings.reduce((acc, rating) => acc + rating.score, 0) / row.original.ratings.length}</div>,
   },
   {
     accessorKey: 'tags',

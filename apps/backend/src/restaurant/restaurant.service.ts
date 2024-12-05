@@ -5,7 +5,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateRestaurantDto, RestaurantDto, UpdateRestaurantDto } from '../types/dtos/restaurant.dto';
+import { CreateRestaurantDto, RatingDto, RestaurantDto, UpdateRestaurantDto } from '../types/dtos/restaurant.dto';
 import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
@@ -104,5 +104,19 @@ export class RestaurantService {
     });
 
     return resturantDeleted;
+  }
+
+  async rate(restaurantId: string, userId: string, score: number): Promise<RatingDto> {
+    return this.prisma.rating.create({
+      data: {
+        score,
+        restaurant: {
+          connect: { id: restaurantId },
+        },
+        user: {
+          connect: { id: userId },
+        },
+      },
+    });
   }
 }
