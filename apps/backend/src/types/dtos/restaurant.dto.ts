@@ -14,6 +14,12 @@ export class RatingDto {
   score: number;
 }
 
+export class CreateRatingDto extends OmitType(RatingDto, ['userId', 'restaurantId']) {
+  @ApiProperty({ example: 4.5 })
+  @IsNotEmpty()
+  score: number;
+}
+
 export class RestaurantDto {
   @ApiProperty({ example: '1e9b39c7-7a10-4bd7-ba03-b89f78887e4a' })
   id: string;

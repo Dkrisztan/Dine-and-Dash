@@ -1,6 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { RestaurantService } from './restaurant.service';
-import { CreateRestaurantDto, RatingDto, RestaurantDto, UpdateRestaurantDto } from '../types/dtos/restaurant.dto';
+import {
+  CreateRatingDto,
+  CreateRestaurantDto,
+  RatingDto,
+  RestaurantDto,
+  UpdateRestaurantDto,
+} from '../types/dtos/restaurant.dto';
 import { JwtAuth, JwtOptionalAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { UserDto } from '../types/dtos/user.dto';
@@ -38,8 +44,12 @@ export class RestaurantController {
   @Post(':id/rate')
   @JwtAuth()
   @Roles(Role.ADMIN, Role.OWNER, Role.COURIER, Role.CUSTOMER)
-  async rate(@CurrentUser() user: UserDto, @Param('id') id: string, @Body() score: number): Promise<RatingDto> {
-    return this.restaurantService.rate(id, user.id, score);
+  async rate(
+    @CurrentUser() user: UserDto,
+    @Param('id') id: string,
+    @Body() rating: CreateRatingDto
+  ): Promise<RatingDto> {
+    return this.restaurantService.rate(id, user.id, rating.score);
   }
 
   @Patch()
