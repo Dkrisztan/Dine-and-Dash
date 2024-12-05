@@ -80,9 +80,11 @@ export class OrderService {
         },
         restaurant: {
           select: {
+            id: true,
             name: true,
             description: true,
             image: true,
+            ratings: true,
           },
         },
       },

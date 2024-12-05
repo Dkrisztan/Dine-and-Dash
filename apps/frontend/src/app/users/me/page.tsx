@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic';
 
 export default function ProfilePage() {
   const { data: user, isLoading, error, refreshUser } = useUserSelf();
-  const { data: orders } = useOrder();
+  const { data: orders, refresh: refreshOrders } = useOrder();
 
   if (error) {
     return <div>Some error occurred</div>;
@@ -49,7 +49,7 @@ export default function ProfilePage() {
           <ProfileInfo user={user} refreshUser={refreshUser} />
         </TabsContent>
         <TabsContent value='orders' className='py-5 px-8'>
-          <Order orders={orders} />
+          <Order orders={orders} user={user} refreshOrders={refreshOrders} refreshUser={refreshUser} />
         </TabsContent>
         <TabsContent value='addresses' className='py-5 px-8'>
           <Address addresses={user.addresses} refreshUser={refreshUser} />

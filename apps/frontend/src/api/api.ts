@@ -191,6 +191,19 @@ export interface CreateFoodDto {
 /**
  * 
  * @export
+ * @interface CreateRatingDto
+ */
+export interface CreateRatingDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateRatingDto
+     */
+    'score': number;
+}
+/**
+ * 
+ * @export
  * @interface CreateRestaurantDto
  */
 export interface CreateRestaurantDto {
@@ -3798,6 +3811,49 @@ export const RestaurantApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @param {string} id 
+         * @param {CreateRatingDto} createRatingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restaurantControllerRate: async (id: string, createRatingDto: CreateRatingDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('restaurantControllerRate', 'id', id)
+            // verify required parameter 'createRatingDto' is not null or undefined
+            assertParamExists('restaurantControllerRate', 'createRatingDto', createRatingDto)
+            const localVarPath = `/restaurant/{id}/rate`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createRatingDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3915,6 +3971,19 @@ export const RestaurantApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} id 
+         * @param {CreateRatingDto} createRatingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async restaurantControllerRate(id: string, createRatingDto: CreateRatingDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RatingDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restaurantControllerRate(id, createRatingDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RestaurantApi.restaurantControllerRate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3974,6 +4043,16 @@ export const RestaurantApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
+         * @param {string} id 
+         * @param {CreateRatingDto} createRatingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restaurantControllerRate(id: string, createRatingDto: CreateRatingDto, options?: RawAxiosRequestConfig): AxiosPromise<RatingDto> {
+            return localVarFp.restaurantControllerRate(id, createRatingDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4029,6 +4108,18 @@ export class RestaurantApi extends BaseAPI {
      */
     public restaurantControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
         return RestaurantApiFp(this.configuration).restaurantControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {CreateRatingDto} createRatingDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RestaurantApi
+     */
+    public restaurantControllerRate(id: string, createRatingDto: CreateRatingDto, options?: RawAxiosRequestConfig) {
+        return RestaurantApiFp(this.configuration).restaurantControllerRate(id, createRatingDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

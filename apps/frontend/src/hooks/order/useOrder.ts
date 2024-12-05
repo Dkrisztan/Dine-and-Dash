@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 import { orderApi } from '@/network/api';
 
@@ -8,5 +8,9 @@ export function useOrder() {
     return response.data;
   });
 
-  return { data, error, isLoading };
+  const refresh = async () => {
+    mutate('useOrder');
+  };
+
+  return { data, error, isLoading, refresh };
 }

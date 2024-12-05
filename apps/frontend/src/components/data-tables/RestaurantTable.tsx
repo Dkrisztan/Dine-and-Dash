@@ -87,7 +87,7 @@ export const columns: ColumnDef<RestaurantDto>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const Person = row.original;
+      const Restaurant = row.original;
 
       return (
         <DropdownMenu>
@@ -99,10 +99,9 @@ export const columns: ColumnDef<RestaurantDto>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(Person.id)}>Copy Person ID</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(Restaurant.id)}>Copy Restaurant ID</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View Person details</DropdownMenuItem>
+            <DropdownMenuItem>View restaurant</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
