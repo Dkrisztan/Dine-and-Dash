@@ -67,5 +67,7 @@ export class OrderId {
 
 export class OrderStatusDto {
   @ApiProperty({ example: OrderStatus.PENDING, enum: OrderStatus })
+  @IsString()
+  @IsNotEmpty()
   status: 'PENDING' | 'ONGOING' | 'FINISHED' | 'CANCELLED' | 'DELIVERING';
 }

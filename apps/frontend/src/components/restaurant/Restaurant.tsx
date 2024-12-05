@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { FaEye, FaPlus } from 'react-icons/fa';
 import { MdDelete, MdEdit } from 'react-icons/md';
+import { RiMotorbikeLine } from 'react-icons/ri';
 import { toast } from 'sonner';
 
 import { UserDto } from '@/api';
@@ -203,6 +204,15 @@ export default function Restaurant({ user, refreshUser }: { user: UserDto; refre
                 }}
               >
                 <FaEye fontSize={24} />
+              </Button>
+              <Button
+                variant='secondary'
+                size='icon'
+                onClick={() => {
+                  router.push(`/owner/restaurant/orders`);
+                }}
+              >
+                <RiMotorbikeLine fontSize={24} />
               </Button>
               <Button variant='secondary' size='icon' onClick={populateEditForm}>
                 <MdEdit fontSize={24} />

@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { CreateRestaurantDto, RatingDto, RestaurantDto, UpdateRestaurantDto } from '../types/dtos/restaurant.dto';
 import { PrismaService } from 'nestjs-prisma';
+import { OrderDto, OrderStatusDto } from '../types/dtos/order.dto';
 
 @Injectable()
 export class RestaurantService {
@@ -117,6 +118,45 @@ export class RestaurantService {
           connect: { id: userId },
         },
       },
+    });
+  }
+
+  async getRestaurantOrders(userId: string): Promise<OrderDto[]> {
+    const restaurant = await this.prisma.restaurant.findFirst({ where: { ownerId: userId } });
+    return this.prisma.order.findMany({
+      where: { restaurantId: restaurant.id },
+      include: {
+        items: {
+          include: { food: true },
+        },
+        restaurant: {
+          select: {
+            name: true,
+            description: true,
+            image: true,
+            addresses: true,
+          },
+        },
+        user: {
+          select: {
+            email: true,
+            name: true,
+            phone: true,
+          },
+        },
+      },
+    });
+  }
+
+  async updateRestaurantOrder(userId: string, orderId: string, orderStatus: OrderStatusDto): Promise<OrderDto> {
+    const restaurant = await this.prisma.restaurant.findFirst({ where: { ownerId: userId } });
+    if (!restaurant) {
+      throw new NotFoundException(`Restaurant for user with id ${userId} not found`);
+    }
+
+    return this.prisma.order.update({
+      where: { id: orderId },
+      data: { status: orderStatus.status },
     });
   }
 }

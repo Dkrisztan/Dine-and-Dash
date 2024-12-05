@@ -467,6 +467,30 @@ export interface OrderItemDto {
 /**
  * 
  * @export
+ * @interface OrderStatusDto
+ */
+export interface OrderStatusDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderStatusDto
+     */
+    'status': OrderStatusDtoStatusEnum;
+}
+
+export const OrderStatusDtoStatusEnum = {
+    Pending: 'PENDING',
+    Ongoing: 'ONGOING',
+    Finished: 'FINISHED',
+    Cancelled: 'CANCELLED',
+    Delivering: 'DELIVERING'
+} as const;
+
+export type OrderStatusDtoStatusEnum = typeof OrderStatusDtoStatusEnum[keyof typeof OrderStatusDtoStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface RatingDto
  */
 export interface RatingDto {
@@ -3811,6 +3835,39 @@ export const RestaurantApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restaurantControllerGetRestaurantOrders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/restaurant/restaurant/orders`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {CreateRatingDto} createRatingDto 
          * @param {*} [options] Override http request option.
@@ -3924,6 +3981,49 @@ export const RestaurantApiAxiosParamCreator = function (configuration?: Configur
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} orderId 
+         * @param {OrderStatusDto} orderStatusDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restaurantControllerUpdateRestaurantOrder: async (orderId: string, orderStatusDto: OrderStatusDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('restaurantControllerUpdateRestaurantOrder', 'orderId', orderId)
+            // verify required parameter 'orderStatusDto' is not null or undefined
+            assertParamExists('restaurantControllerUpdateRestaurantOrder', 'orderStatusDto', orderStatusDto)
+            const localVarPath = `/restaurant/restaurant/orders/{orderId}`
+                .replace(`{${"orderId"}}`, encodeURIComponent(String(orderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(orderStatusDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -3971,6 +4071,17 @@ export const RestaurantApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async restaurantControllerGetRestaurantOrders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrderDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restaurantControllerGetRestaurantOrders(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RestaurantApi.restaurantControllerGetRestaurantOrders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {CreateRatingDto} createRatingDto 
          * @param {*} [options] Override http request option.
@@ -4003,6 +4114,19 @@ export const RestaurantApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.restaurantControllerUpdateOwnRestaurant(updateRestaurantDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RestaurantApi.restaurantControllerUpdateOwnRestaurant']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} orderId 
+         * @param {OrderStatusDto} orderStatusDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async restaurantControllerUpdateRestaurantOrder(orderId: string, orderStatusDto: OrderStatusDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restaurantControllerUpdateRestaurantOrder(orderId, orderStatusDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RestaurantApi.restaurantControllerUpdateRestaurantOrder']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -4043,6 +4167,14 @@ export const RestaurantApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restaurantControllerGetRestaurantOrders(options?: RawAxiosRequestConfig): AxiosPromise<Array<OrderDto>> {
+            return localVarFp.restaurantControllerGetRestaurantOrders(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {CreateRatingDto} createRatingDto 
          * @param {*} [options] Override http request option.
@@ -4067,6 +4199,16 @@ export const RestaurantApiFactory = function (configuration?: Configuration, bas
          */
         restaurantControllerUpdateOwnRestaurant(updateRestaurantDto: UpdateRestaurantDto, options?: RawAxiosRequestConfig): AxiosPromise<RestaurantDto> {
             return localVarFp.restaurantControllerUpdateOwnRestaurant(updateRestaurantDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orderId 
+         * @param {OrderStatusDto} orderStatusDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restaurantControllerUpdateRestaurantOrder(orderId: string, orderStatusDto: OrderStatusDto, options?: RawAxiosRequestConfig): AxiosPromise<OrderDto> {
+            return localVarFp.restaurantControllerUpdateRestaurantOrder(orderId, orderStatusDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4112,6 +4254,16 @@ export class RestaurantApi extends BaseAPI {
 
     /**
      * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RestaurantApi
+     */
+    public restaurantControllerGetRestaurantOrders(options?: RawAxiosRequestConfig) {
+        return RestaurantApiFp(this.configuration).restaurantControllerGetRestaurantOrders(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} id 
      * @param {CreateRatingDto} createRatingDto 
      * @param {*} [options] Override http request option.
@@ -4141,6 +4293,18 @@ export class RestaurantApi extends BaseAPI {
      */
     public restaurantControllerUpdateOwnRestaurant(updateRestaurantDto: UpdateRestaurantDto, options?: RawAxiosRequestConfig) {
         return RestaurantApiFp(this.configuration).restaurantControllerUpdateOwnRestaurant(updateRestaurantDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orderId 
+     * @param {OrderStatusDto} orderStatusDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RestaurantApi
+     */
+    public restaurantControllerUpdateRestaurantOrder(orderId: string, orderStatusDto: OrderStatusDto, options?: RawAxiosRequestConfig) {
+        return RestaurantApiFp(this.configuration).restaurantControllerUpdateRestaurantOrder(orderId, orderStatusDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

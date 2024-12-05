@@ -13,6 +13,7 @@ import { UserDto } from '../types/dtos/user.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../types/dtos/role.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { OrderDto, OrderStatusDto } from '../types/dtos/order.dto';
 
 @ApiTags('restaurant')
 @Controller('restaurant')
@@ -60,6 +61,24 @@ export class RestaurantController {
     @Body() updateRestaurantDto: UpdateRestaurantDto
   ): Promise<RestaurantDto> {
     return this.restaurantService.updateSelf(user.id, updateRestaurantDto);
+  }
+
+  @Get('restaurant/orders')
+  @JwtAuth()
+  @Roles(Role.ADMIN, Role.OWNER)
+  async getRestaurantOrders(@CurrentUser() user: UserDto): Promise<OrderDto[]> {
+    return this.restaurantService.getRestaurantOrders(user.id);
+  }
+
+  @Patch('restaurant/orders/:orderId')
+  @JwtAuth()
+  @Roles(Role.ADMIN, Role.OWNER)
+  async updateRestaurantOrder(
+    @CurrentUser() user: UserDto,
+    @Param('orderId') orderId: string,
+    @Body() orderStatus: OrderStatusDto
+  ): Promise<OrderDto> {
+    return this.restaurantService.updateRestaurantOrder(user.id, orderId, orderStatus);
   }
 
   @Delete()
