@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 body {
-  font-family: Fredoka Regular, sans-serif;
+  font-family:
+    Fredoka Regular,
+    sans-serif;
 }
 
 @layer utilities {
