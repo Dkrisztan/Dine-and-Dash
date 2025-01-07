@@ -23,6 +23,12 @@ export class CartService {
   }
 
   async getCartByUserId(userId: string): Promise<CartDto> {
+    const cart = await this.prisma.cart.findFirst({
+      where: { userId },
+    });
+
+    await this.updateCartTotal(cart.id);
+
     return this.prisma.cart.findFirst({
       where: { userId },
       include: { items: { include: { food: true } } },
